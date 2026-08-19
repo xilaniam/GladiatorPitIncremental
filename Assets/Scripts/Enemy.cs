@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour,IDamageable
 {
     [SerializeField] private float health = 10f;
+    [SerializeField] private int coinValue = 1;
     [Header("Roaming Settings")]
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float rotationSpeed = 5f;
@@ -21,18 +21,24 @@ public class Enemy : MonoBehaviour,IDamageable
     private Vector3 targetPosition;
     private float waitTimer;
     private bool isWaiting;
+    private bool isDead;
+
+    private System.Action<Enemy> onEnemyDead;
 
     public float Health => health;
+    public bool IsDead => isDead;
+    public int CoinValue => coinValue;
 
     private void Awake()
     {
-        startPosition = transform.position; // center of the roam area
+        startPosition = transform.position;
     }
 
-    public void Setup(float ringRadius)
+    public void Setup(float ringRadius , System.Action<Enemy> callback)
     {
         maxRoamRadius = ringRadius;
-        minRoamRadius = ringRadius * 0.2f; // Example: half of the max radius
+        minRoamRadius = ringRadius * 0.2f; 
+        onEnemyDead = callback;
     }
 
     private void Start()
@@ -67,10 +73,8 @@ public class Enemy : MonoBehaviour,IDamageable
     {
         Vector3 direction = (targetPosition - transform.position).normalized;
 
-        // Move
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
-        // Rotate to face movement direction
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
@@ -88,9 +92,13 @@ public class Enemy : MonoBehaviour,IDamageable
 
     public void TakeDamage(float damage)
     {
-        if (health <= 0) { Destroy(gameObject); return; }
         health -= damage;
         FlashEffect();
+        if (health <= 0) 
+        {
+            Die();
+            return; 
+        }
     }
 
     void FlashEffect()
@@ -98,6 +106,12 @@ public class Enemy : MonoBehaviour,IDamageable
         StartCoroutine(FlashEffectCoroutine());
     }
 
+    void Die()
+    {
+        isDead = true;
+        onEnemyDead?.Invoke(this);
+        Destroy(gameObject);
+    }
     IEnumerator FlashEffectCoroutine()
     {
         float flashDuration = 0.1f;
@@ -106,10 +120,7 @@ public class Enemy : MonoBehaviour,IDamageable
         {
             float value = t / flashDuration;
 
-            foreach (MeshRenderer renderer in meshRenderers)
-            {
-                renderer.material.SetFloat("_FlashAmount", value);
-            }
+            SetFlashValue(value);
 
             yield return null;
         }
@@ -119,18 +130,18 @@ public class Enemy : MonoBehaviour,IDamageable
         {
             float value = 1f - (t / flashDuration);
 
-            foreach (MeshRenderer renderer in meshRenderers)
-            {
-                renderer.material.SetFloat("_FlashAmount", value);
-            }
+            SetFlashValue(value);
 
             yield return null;
         }
 
-        // Make sure it ends at exactly 0
+        SetFlashValue(0);
+    }
+    void SetFlashValue(float value)
+    {
         foreach (MeshRenderer renderer in meshRenderers)
         {
-            renderer.material.SetFloat("_FlashAmount", 0f);
+            renderer.material.SetFloat("_FlashAmount", value);
         }
     }
 }

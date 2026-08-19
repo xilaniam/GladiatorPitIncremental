@@ -7,28 +7,37 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] List<Enemy> enemyPrefabs = new List<Enemy>();
     [SerializeField] float ringRadius;
     [SerializeField] int initialSpawnCount;
-    void Start()
-    {
-        SpawnEnemy();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private List<Enemy> spawnedEnemy = new List<Enemy>();
 
-    void SpawnEnemy()
+    private int currentEnemyCount;
+    void Awake()
     {
-        for(int i = 0; i< initialSpawnCount; i++)
+        currentEnemyCount = initialSpawnCount;
+    }
+    public void SpawnEnemies()
+    {
+        for(int i = 0; i< currentEnemyCount; i++)
         {
             Vector3 spawnPosition = GetRandomPositionInsideCircle();
             Enemy randomEnemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
             Enemy enemy = Instantiate(randomEnemyPrefab, spawnPosition, Quaternion.identity,transform);
-            enemy.Setup(ringRadius);
+            enemy.Setup(ringRadius,ClearDeadEnemy);
+            spawnedEnemy.Add(enemy);
         }
     }
 
+    public void Cleanup()
+    {
+        foreach (Enemy enemy in spawnedEnemy)
+        {
+            if (enemy != null)
+            {
+                Destroy(enemy.gameObject);
+            }
+        }
+        spawnedEnemy.Clear();
+    }
     Vector3 GetRandomPositionInsideCircle()
     {
         float angle = Random.Range(0f, Mathf.PI * 2);
@@ -37,7 +46,15 @@ public class EnemyManager : MonoBehaviour
         float z = Mathf.Sin(angle) * radius;
         return new Vector3(x, 0f, z);
     }
-
+    void ClearDeadEnemy(Enemy deadEnemy)
+    {
+        EventManager.InvokeCoinDroppedEvent(deadEnemy.CoinValue);
+        spawnedEnemy.RemoveAll(enemy => enemy.IsDead);
+        if(spawnedEnemy.Count == 0)
+        {
+            RoundManager.Instance.EndRound();
+        }
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;

@@ -43,6 +43,8 @@ public class ThrowableWeapon : MonoBehaviour
             targetPosition
         );
 
+        arcHeight = Random.Range(1.5f, 4);
+
         duration = distance / speed;
 
         travelTime = 0f;

@@ -1,12 +1,17 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class EventManager 
 {
-    public static Action<Vector3> OnCircleTickAction;
-
-    public static void InvokeCircleTick(Vector3 position)
+    public static Action<List<Transform>> OnCircleTickEvent;
+    public static Action<int> OnCoinDroppedEvent;
+    public static void InvokeCircleTick(List<Transform> position)
     {
-        OnCircleTickAction?.Invoke(position);
+        OnCircleTickEvent?.Invoke(position);
+    }
+    public static void InvokeCoinDroppedEvent(int amount)
+    {
+        OnCoinDroppedEvent?.Invoke(amount);
     }
 }

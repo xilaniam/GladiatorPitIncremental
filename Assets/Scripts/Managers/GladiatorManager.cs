@@ -12,23 +12,42 @@ public class GladiatorManager : MonoBehaviour
     [SerializeField] int initialGladiators = 3;
     List<GameObject> spawnedGladiators = new List<GameObject>();
     HashSet<Vector3> spawnPositions = new HashSet<Vector3>();
+
+    private int currentGladiatorCount = 0;
     void Awake()
     {
+        currentGladiatorCount = initialGladiators;
         GenerateSpawnPos();
     }
 
     private void Start()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            SpawnGladiator();
-        }
-        EventManager.OnCircleTickAction += Attack;
+        EventManager.OnCircleTickEvent += Attack;
     }
 
     private void OnDestroy()
     {
-        EventManager.OnCircleTickAction -= Attack;
+        EventManager.OnCircleTickEvent -= Attack;
+    }
+
+    public void SpawnGladiators()
+    {
+        for (int i = 0; i < currentGladiatorCount; i++)
+        {
+            SpawnGladiator();
+        }
+    }
+
+    public void Cleanup()
+    {
+        foreach (GameObject gladiator in spawnedGladiators)
+        {
+            if (gladiator != null)
+            {
+                Destroy(gladiator);
+            }
+        }
+        spawnedGladiators.Clear();
     }
 
     private void SpawnGladiator()
@@ -36,10 +55,7 @@ public class GladiatorManager : MonoBehaviour
         Vector3 spawnPos = GetRandomUniquePositions();
         Vector3 worldSpawnPos = transform.position + spawnPos;
 
-        // Direction from spawn position toward the center
         Vector3 directionToCenter = transform.position - worldSpawnPos;
-
-        // Rotation so the gladiator faces the center
         Quaternion rotation = Quaternion.LookRotation(directionToCenter);
 
         GameObject gladiator = Instantiate(
@@ -54,20 +70,30 @@ public class GladiatorManager : MonoBehaviour
         spawnedGladiators.Add(gladiator);
     }
 
-    private void Attack(Vector3 targetPosition)
+    private void Attack(List<Transform> targets)
     {
-       StartCoroutine(ExecuteAttackCoroutine(targetPosition));
+       StartCoroutine(ExecuteAttackCoroutine(targets));
     }
 
-    IEnumerator ExecuteAttackCoroutine(Vector3 targetPosition)
+    IEnumerator ExecuteAttackCoroutine(List<Transform> targets)
     {
+        if(targets.Count == 0)
+        {
+            yield break;
+        }
+
+        int currentTarget = 0;
+            
         foreach (GameObject gladiator in spawnedGladiators)
         {
+            float randomDuration = Random.Range(0.1f, 0.35f);
             Gladiator gladiatorScript = gladiator.GetComponent<Gladiator>();
             if (gladiatorScript != null)
             {
-                gladiatorScript.Attack(1, targetPosition);
-                yield return new WaitForSeconds(0.1f);
+                gladiatorScript.Attack(1, targets[currentTarget].position);
+                yield return new WaitForSeconds(randomDuration);
+                if (targets.Count <= 0) yield break;
+                currentTarget = (currentTarget + 1) % targets.Count;
             }
         }
     }

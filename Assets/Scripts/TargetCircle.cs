@@ -1,4 +1,7 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TargetCircle : MonoBehaviour
@@ -11,9 +14,11 @@ public class TargetCircle : MonoBehaviour
     [SerializeField] private float radius = 1f;         // max distance handle can move from center
     [SerializeField] private float followSpeed = 15f;
     [SerializeField] private float attackSpeedPerSecond = 0.5f;// 0 = instant snap to mouse
+    [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask groundLayer;      // optional: layer for raycast plane
 
     private Plane movementPlane;
+    private List<Transform> overlappedTargets = new();
 
     private void Awake()
     {
@@ -53,13 +58,39 @@ public class TargetCircle : MonoBehaviour
                 transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
             }
         }
+        overlappedTargets.RemoveAll(target => target == null);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (((1 << other.gameObject.layer) & enemyLayer) == 0)
+            return;
+
+        Transform target = other.transform;
+
+        // Prevent duplicates
+        if (!overlappedTargets.Contains(target))
+        {
+            overlappedTargets.Add(target);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (((1 << other.gameObject.layer) & enemyLayer) == 0)
+            return;
+
+        Transform target = other.transform;
+
+        overlappedTargets.Remove(target);
     }
 
     IEnumerator InvokeAttackEvent()
     {
         while (true)
         {
-            EventManager.InvokeCircleTick(transform.position);
+            overlappedTargets.RemoveAll(target => target == null);
+            EventManager.InvokeCircleTick(overlappedTargets);
             yield return new WaitForSeconds(attackSpeedPerSecond);
         }
     }

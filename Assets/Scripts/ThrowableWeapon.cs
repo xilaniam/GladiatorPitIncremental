@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class ThrowableWeapon : MonoBehaviour
 {
-    [SerializeField] float damageAmount = 3f;
+    [SerializeField] FloatVariable damageAmount;
 
     [Header("Settings")]
     [SerializeField] float defaultSpeed = 15f;
@@ -133,7 +133,7 @@ public class ThrowableWeapon : MonoBehaviour
         if (hitObject.TryGetComponent<IDamageable>(
             out var damageable))
         {
-            damageable.TakeDamage(damageAmount);
+            damageable.TakeDamage(damageAmount.Value);
         }
 
         Destroy(gameObject);

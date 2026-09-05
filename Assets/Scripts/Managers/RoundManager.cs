@@ -6,7 +6,8 @@ public class RoundManager : MonoBehaviour
 {
     public static RoundManager Instance { get; private set; }
 
-    [SerializeField] private float currentRoundTimer = 15f;
+    [SerializeField] private FloatVariable currentRoundTimer; //15
+    [SerializeField] private RoundUI RoundUI;
 
     public event Action RoundStartedEvent;
     public event Action RoundEndedEvent;
@@ -14,6 +15,7 @@ public class RoundManager : MonoBehaviour
     public bool IsRoundActive { get; private set; }
 
     private Coroutine roundCoroutine;
+    private float currentTime = 0;
 
     private void Awake()
     {
@@ -22,7 +24,7 @@ public class RoundManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        IsRoundActive = false;
         Instance = this;
     }
 
@@ -30,6 +32,18 @@ public class RoundManager : MonoBehaviour
     {
         yield return null;
         StartRound();
+    }
+
+    private void Update()
+    {
+        if (!IsRoundActive) return;
+        //Start Round Timer
+        currentTime += Time.deltaTime;
+        RoundUI.UpdateRoundTimerUI(currentTime, currentRoundTimer.Value);
+        if (currentTime >= currentRoundTimer.Value)
+        {
+            EndRound();
+        }
     }
 
     public void StartRound()
@@ -41,7 +55,7 @@ public class RoundManager : MonoBehaviour
 
         RoundStartedEvent?.Invoke();
 
-        roundCoroutine = StartCoroutine(RoundTimerCoroutine());
+        //roundCoroutine = StartCoroutine(RoundTimerCoroutine());
     }
 
     public void EndRound()
@@ -49,20 +63,20 @@ public class RoundManager : MonoBehaviour
         if (!IsRoundActive)
             return;
 
-        if (roundCoroutine != null)
+       /* if (roundCoroutine != null)
         {
             StopCoroutine(roundCoroutine);
             roundCoroutine = null;
-        }
+        }*/
 
         IsRoundActive = false;
-
+        currentTime = 0;
         RoundEndedEvent?.Invoke();
     }
 
     private IEnumerator RoundTimerCoroutine()
     {
-        yield return new WaitForSeconds(currentRoundTimer);
+        yield return new WaitForSeconds(currentRoundTimer.Value);
         EndRound();
     }
 }

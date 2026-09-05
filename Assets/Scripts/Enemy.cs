@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour,IDamageable
 {
-    [SerializeField] private float health = 10f;
-    [SerializeField] private int coinValue = 1;
+    [SerializeField] private float health = 7f;
+    [SerializeField] private IntVariable coinValue;
     [Header("Roaming Settings")]
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float rotationSpeed = 5f;
@@ -23,22 +23,23 @@ public class Enemy : MonoBehaviour,IDamageable
     private bool isWaiting;
     private bool isDead;
 
-    private System.Action<Enemy> onEnemyDead;
+    public System.Action<Enemy> OnEnemyDeadAction;
+    public System.Action<Enemy> OnDamageTakenAction;
+
 
     public float Health => health;
     public bool IsDead => isDead;
-    public int CoinValue => coinValue;
+    public int CoinValue => coinValue.Value;
 
     private void Awake()
     {
         startPosition = transform.position;
     }
 
-    public void Setup(float ringRadius , System.Action<Enemy> callback)
+    public void Setup(float ringRadius)
     {
         maxRoamRadius = ringRadius;
         minRoamRadius = ringRadius * 0.2f; 
-        onEnemyDead = callback;
     }
 
     private void Start()
@@ -93,6 +94,7 @@ public class Enemy : MonoBehaviour,IDamageable
     public void TakeDamage(float damage)
     {
         health -= damage;
+        OnDamageTakenAction?.Invoke(this);
         FlashEffect();
         if (health <= 0) 
         {
@@ -109,7 +111,7 @@ public class Enemy : MonoBehaviour,IDamageable
     void Die()
     {
         isDead = true;
-        onEnemyDead?.Invoke(this);
+        OnEnemyDeadAction?.Invoke(this);
         Destroy(gameObject);
     }
     IEnumerator FlashEffectCoroutine()

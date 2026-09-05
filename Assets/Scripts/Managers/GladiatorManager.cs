@@ -5,18 +5,21 @@ using UnityEngine;
 
 public class GladiatorManager : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] GameObject gladiatorPrefab;
     [SerializeField] ThrowableWeapon weaponPrefab;
+    [Header("DataSetup")]
     [SerializeField] float ringOuterRadius = 5f;
     [SerializeField] int maxGladiators = 10;
-    [SerializeField] int initialGladiators = 3;
+    [Header("Variables")]
+    [SerializeField] IntVariable gladiatorCount;
+    [SerializeField] IntVariable weaponThrowCount;
+
     List<GameObject> spawnedGladiators = new List<GameObject>();
     HashSet<Vector3> spawnPositions = new HashSet<Vector3>();
 
-    private int currentGladiatorCount = 0;
     void Awake()
     {
-        currentGladiatorCount = initialGladiators;
         GenerateSpawnPos();
     }
 
@@ -32,7 +35,8 @@ public class GladiatorManager : MonoBehaviour
 
     public void SpawnGladiators()
     {
-        for (int i = 0; i < currentGladiatorCount; i++)
+        if (gladiatorCount.Value > maxGladiators) return;
+        for (int i = 0; i < gladiatorCount.Value; i++)
         {
             SpawnGladiator();
         }
@@ -90,7 +94,7 @@ public class GladiatorManager : MonoBehaviour
             Gladiator gladiatorScript = gladiator.GetComponent<Gladiator>();
             if (gladiatorScript != null)
             {
-                gladiatorScript.Attack(1, targets[currentTarget].position);
+                gladiatorScript.Attack(weaponThrowCount.Value, targets[currentTarget].position);
                 yield return new WaitForSeconds(randomDuration);
                 if (targets.Count <= 0) yield break;
                 currentTarget = (currentTarget + 1) % targets.Count;

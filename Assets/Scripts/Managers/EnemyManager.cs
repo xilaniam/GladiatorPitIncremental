@@ -6,25 +6,28 @@ public class EnemyManager : MonoBehaviour
 {
     [SerializeField] List<Enemy> enemyPrefabs = new List<Enemy>();
     [SerializeField] float ringRadius;
-    [SerializeField] int initialSpawnCount;
+    [SerializeField] IntVariable enemyCount;
 
     private List<Enemy> spawnedEnemy = new List<Enemy>();
 
-    private int currentEnemyCount;
-    void Awake()
-    {
-        currentEnemyCount = initialSpawnCount;
-    }
     public void SpawnEnemies()
     {
-        for(int i = 0; i< currentEnemyCount; i++)
+        for(int i = 0; i< enemyCount.Value ; i++)
         {
-            Vector3 spawnPosition = GetRandomPositionInsideCircle();
-            Enemy randomEnemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
-            Enemy enemy = Instantiate(randomEnemyPrefab, spawnPosition, Quaternion.identity,transform);
-            enemy.Setup(ringRadius,ClearDeadEnemy);
-            spawnedEnemy.Add(enemy);
+            SpawnEnemy();
         }
+    }
+
+    public void SpawnEnemy()
+    {
+        Vector3 spawnPosition = GetRandomPositionInsideCircle();
+        Enemy randomEnemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
+        Enemy enemy = Instantiate(randomEnemyPrefab, spawnPosition, Quaternion.identity, transform);
+        enemy.Setup(ringRadius);
+        spawnedEnemy.Add(enemy);
+
+        enemy.OnEnemyDeadAction += ClearDeadEnemy;
+        enemy.OnDamageTakenAction += OnDamageTaken;
     }
 
     public void Cleanup()
@@ -33,11 +36,32 @@ public class EnemyManager : MonoBehaviour
         {
             if (enemy != null)
             {
+                enemy.OnEnemyDeadAction -= ClearDeadEnemy;
+                enemy.OnDamageTakenAction -= OnDamageTaken;
                 Destroy(enemy.gameObject);
             }
         }
         spawnedEnemy.Clear();
     }
+    void ClearDeadEnemy(Enemy deadEnemy)
+    {
+        EventManager.InvokeCoinDroppedEvent(deadEnemy.CoinValue);
+        EventManager.InvokeEnemyDeadEvent(deadEnemy);
+
+        deadEnemy.OnEnemyDeadAction -= ClearDeadEnemy;
+        deadEnemy.OnDamageTakenAction -= OnDamageTaken;
+
+        spawnedEnemy.RemoveAll(enemy => enemy.IsDead);
+        if(spawnedEnemy.Count == 0)
+        {
+            RoundManager.Instance.EndRound();
+        }
+    }
+    void OnDamageTaken(Enemy damageable)
+    {
+        EventManager.InvokeEnemyDamagedEvent(damageable);
+    }
+
     Vector3 GetRandomPositionInsideCircle()
     {
         float angle = Random.Range(0f, Mathf.PI * 2);
@@ -45,15 +69,6 @@ public class EnemyManager : MonoBehaviour
         float x = Mathf.Cos(angle) * radius;
         float z = Mathf.Sin(angle) * radius;
         return new Vector3(x, 0f, z);
-    }
-    void ClearDeadEnemy(Enemy deadEnemy)
-    {
-        EventManager.InvokeCoinDroppedEvent(deadEnemy.CoinValue);
-        spawnedEnemy.RemoveAll(enemy => enemy.IsDead);
-        if(spawnedEnemy.Count == 0)
-        {
-            RoundManager.Instance.EndRound();
-        }
     }
     private void OnDrawGizmos()
     {

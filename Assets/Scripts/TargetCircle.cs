@@ -12,8 +12,8 @@ public class TargetCircle : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private float radius = 1f;         // max distance handle can move from center
-    [SerializeField] private float followSpeed = 15f;
-    [SerializeField] private float attackSpeedPerSecond = 0.5f;// 0 = instant snap to mouse
+    [SerializeField] private float followSpeed = 15f;  // 0 = instant snap to mouse 
+    [SerializeField] private FloatVariable attackSpeedPerSecond; //0.5f
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask groundLayer;      // optional: layer for raycast plane
 
@@ -91,7 +91,7 @@ public class TargetCircle : MonoBehaviour
         {
             overlappedTargets.RemoveAll(target => target == null);
             EventManager.InvokeCircleTick(overlappedTargets);
-            yield return new WaitForSeconds(attackSpeedPerSecond);
+            yield return new WaitForSeconds(attackSpeedPerSecond.Value);
         }
     }
 

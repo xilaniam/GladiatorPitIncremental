@@ -14,7 +14,7 @@ public class Gladiator : MonoBehaviour
     {
         currentWeaponPrefab = weaponPrefab;
     }
-    public void Attack(int count, Vector3 targetPosition)
+    public void Attack(int weaponThrowCount, Vector3 targetPosition)
     {
         if (currentWeaponPrefab == null)
         {
@@ -27,16 +27,16 @@ public class Gladiator : MonoBehaviour
             StopCoroutine(attackRoutine);
         }
 
-        attackRoutine = StartCoroutine(ThrowSequence(count, targetPosition));
+        attackRoutine = StartCoroutine(ThrowNWeapons(weaponThrowCount, targetPosition));
     }
 
-    private IEnumerator ThrowSequence(int count, Vector3 targetPosition)
+    private IEnumerator ThrowNWeapons(int weaponThrowCount, Vector3 targetPosition)
     {
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < weaponThrowCount; i++)
         {
             ThrowSingle(targetPosition);
 
-            if (i < count - 1)
+            if (i < weaponThrowCount - 1)
             {
                 yield return new WaitForSeconds(delayBetweenThrows);
             }

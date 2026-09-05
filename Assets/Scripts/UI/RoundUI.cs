@@ -1,27 +1,30 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RoundUI : BaseUIPopup
+public class RoundUI : MonoBehaviour
 {
-    [SerializeField] Button ContinueButton;
+    [SerializeField] Image fillImage;
+    [SerializeField] TextMeshProUGUI balance;
 
     private void Start()
     {
-        ContinueButton.onClick.AddListener(OnContinueButtonClicked);
-
-        RoundManager.Instance.RoundEndedEvent += OpenPopup;
+        balance.text = EconomyManager.Instance.Balance.ToString();
+        EventManager.OnBalanceUpdatedEvent += UpdateBalanceUI;
     }
 
     private void OnDestroy()
     {
-        ContinueButton.onClick.RemoveListener(OnContinueButtonClicked);
-
-        RoundManager.Instance.RoundEndedEvent -= OpenPopup;
+        EventManager.OnBalanceUpdatedEvent -= UpdateBalanceUI;
     }
 
-    public void OnContinueButtonClicked()
+    void UpdateBalanceUI(int value)
     {
-        RoundManager.Instance.StartRound();
-        ClosePopup();
+        balance.text = value.ToString();
+    }
+
+    public void UpdateRoundTimerUI(float current , float max)
+    {
+        fillImage.fillAmount = 1  - (current / max);
     }
 }

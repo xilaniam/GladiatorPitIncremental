@@ -17,23 +17,23 @@ public class GameManager : MonoBehaviour
 
     void SubscribeToEvents()
     {
-        RoundManager.Instance.RoundStartedEvent += StartRound;
-        RoundManager.Instance.RoundEndedEvent += Cleanup;
+        RoundManager.Instance.RoundStartedEvent += RoundStarted;
+        RoundManager.Instance.RoundEndedEvent += RoundEnded;
     }
 
     void UnsubscribeAllEvents()
     {
-        RoundManager.Instance.RoundStartedEvent -= StartRound;
-        RoundManager.Instance.RoundEndedEvent -= Cleanup;
+        RoundManager.Instance.RoundStartedEvent -= RoundStarted;
+        RoundManager.Instance.RoundEndedEvent -= RoundEnded;
     }
 
-    void StartRound()
+    void RoundStarted()
     {
         gladiatorManager.SpawnGladiators();
         enemyManager.SpawnEnemies();
     }
 
-    void Cleanup()
+    void RoundEnded()
     {
         gladiatorManager.Cleanup();
         enemyManager.Cleanup();

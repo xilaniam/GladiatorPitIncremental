@@ -160,12 +160,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0030de7861875ef4394868ab828158d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 4
+  damageAmount: {fileID: 11400000, guid: fc3c2959dfc8dfb40b6c355b0bd31736, type: 2}
   defaultSpeed: 15
   rotateTowardsTarget: 1
   hitMask:
     serializedVersion: 2
     m_Bits: 64
+  arcHeight: 2
 --- !u!65 &2285528680088115208
 BoxCollider:
   m_ObjectHideFlags: 0

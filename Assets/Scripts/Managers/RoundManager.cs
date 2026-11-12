@@ -2,19 +2,15 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class RoundManager : MonoBehaviour
+public class RoundManager : GameEventListener
 {
     public static RoundManager Instance { get; private set; }
 
     [SerializeField] private FloatVariable currentRoundTimer; //15
     [SerializeField] private RoundUI RoundUI;
 
-    public event Action RoundStartedEvent;
-    public event Action RoundEndedEvent;
-
     public bool IsRoundActive { get; private set; }
 
-    private Coroutine roundCoroutine;
     private float currentTime = 0;
 
     private void Awake()
@@ -31,7 +27,20 @@ public class RoundManager : MonoBehaviour
     IEnumerator Start()
     {
         yield return null;
+        SubscribeEvents();
         StartRound();
+    }
+
+    protected override void SubscribeEvents()
+    {
+        MenuUI.OnContinueButtonClickedEvent += StartRound;
+        SkillManager.OnContinueButtonClickedEvent += StartRound;
+    }
+
+    protected override void UnsubscribeEvents()
+    {
+        MenuUI.OnContinueButtonClickedEvent -= StartRound;
+        SkillManager.OnContinueButtonClickedEvent -= StartRound;
     }
 
     private void Update()
@@ -46,37 +55,27 @@ public class RoundManager : MonoBehaviour
         }
     }
 
-    public void StartRound()
+    private void StartRound()
     {
         if (IsRoundActive)
             return;
 
         IsRoundActive = true;
-
-        RoundStartedEvent?.Invoke();
-
-        //roundCoroutine = StartCoroutine(RoundTimerCoroutine());
+        EventManager.RoundStartedEvent?.Invoke();
     }
 
-    public void EndRound()
+    private void EndRound()
     {
         if (!IsRoundActive)
             return;
 
-       /* if (roundCoroutine != null)
-        {
-            StopCoroutine(roundCoroutine);
-            roundCoroutine = null;
-        }*/
-
         IsRoundActive = false;
         currentTime = 0;
-        RoundEndedEvent?.Invoke();
+        EventManager.RoundEndedEvent?.Invoke();
     }
 
-    private IEnumerator RoundTimerCoroutine()
+    private void OnDestroy()
     {
-        yield return new WaitForSeconds(currentRoundTimer.Value);
-        EndRound();
+        UnsubscribeEvents();
     }
 }

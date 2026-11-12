@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,23 +6,24 @@ public class MenuUI : BaseUIPopup
 {
     [SerializeField] Button ContinueButton;
 
+    public static event Action OnContinueButtonClickedEvent;
     private void Start()
     {
         ContinueButton.onClick.AddListener(OnContinueButtonClicked);
 
-        RoundManager.Instance.RoundEndedEvent += OpenPopup;
+        EventManager.RoundEndedEvent += OpenPopup;
     }
 
     private void OnDestroy()
     {
         ContinueButton.onClick.RemoveListener(OnContinueButtonClicked);
 
-        RoundManager.Instance.RoundEndedEvent -= OpenPopup;
+        EventManager.RoundEndedEvent -= OpenPopup;
     }
 
     public void OnContinueButtonClicked()
     {
-        RoundManager.Instance.StartRound();
+        OnContinueButtonClickedEvent?.Invoke();
         ClosePopup();
     }
 }

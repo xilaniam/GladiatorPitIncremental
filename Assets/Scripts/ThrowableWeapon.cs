@@ -4,6 +4,8 @@ using UnityEngine;
 public class ThrowableWeapon : MonoBehaviour
 {
     [SerializeField] FloatVariable damageAmount;
+    [SerializeField] FloatVariable critChance;
+    [SerializeField] FloatVariable critMultiplier;
 
     [Header("Settings")]
     [SerializeField] float defaultSpeed = 15f;
@@ -15,6 +17,7 @@ public class ThrowableWeapon : MonoBehaviour
 
     private Vector3 startPosition;
     private Vector3 targetPosition;
+    private Vector3 travelDirection;
 
     private float speed;
     private float travelTime;
@@ -50,6 +53,8 @@ public class ThrowableWeapon : MonoBehaviour
         travelTime = 0f;
         isLaunched = true;
 
+        travelDirection = targetPosition - startPosition;
+
         if (rotateTowardsTarget)
         {
             Vector3 direction = targetPosition - startPosition;
@@ -73,18 +78,19 @@ public class ThrowableWeapon : MonoBehaviour
 
         Vector3 position = GetPosition(t);
 
-        // Calculate next position for rotation
         float nextT = Mathf.Clamp01(
             (travelTime + Time.fixedDeltaTime) / duration
         );
 
         Vector3 nextPosition = GetPosition(nextT);
 
-        if (rotateTowardsTarget)
-        {
-            Vector3 direction = nextPosition - position;
+        Vector3 direction = nextPosition - position;
 
-            if (direction != Vector3.zero)
+        if (direction != Vector3.zero)
+        {
+            travelDirection = direction;
+
+            if (rotateTowardsTarget)
             {
                 rb.MoveRotation(
                     Quaternion.LookRotation(direction)
@@ -133,9 +139,19 @@ public class ThrowableWeapon : MonoBehaviour
         if (hitObject.TryGetComponent<IDamageable>(
             out var damageable))
         {
-            damageable.TakeDamage(damageAmount.Value);
+            float finalDamage = damageAmount.Value * CalculateCritMultiplier();
+            damageable.TakeDamage(finalDamage, travelDirection);
         }
 
         Destroy(gameObject);
+    }
+
+    private float CalculateCritMultiplier()
+    {
+        if (Random.value <= critChance.Value)
+        {
+            return critMultiplier.Value;
+        }
+        return 1f;
     }
 }

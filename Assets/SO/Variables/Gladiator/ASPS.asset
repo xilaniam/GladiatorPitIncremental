@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6d6fa970cfb5a641a0a52b81bcaf681, type: 3}
   m_Name: ASPS
   m_EditorClassIdentifier: 
-  DefaultValue: 2
+  DefaultValue: 0.25

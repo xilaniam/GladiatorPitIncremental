@@ -6,5 +6,5 @@ public abstract class SkillEffect : ScriptableObject
     public virtual string GetDescription() => "";
 }
 
-public enum StatOperation { Add, Multiply, Set }
+public enum StatOperation { Add, Multiply, Set , AddPercent}
 

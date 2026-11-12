@@ -14,6 +14,7 @@ public class ModifyIntStatEffect : SkillEffect
             case StatOperation.Add: targetStat.Value += amount; break;
             case StatOperation.Multiply: targetStat.Value *= amount; break;
             case StatOperation.Set: targetStat.Value = amount; break;
+            case StatOperation.AddPercent: targetStat.Value += Mathf.CeilToInt((targetStat.Value * (amount / 100f))); break;
         }
     }
 

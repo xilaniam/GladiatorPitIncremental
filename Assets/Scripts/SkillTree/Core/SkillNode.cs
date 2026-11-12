@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 [RequireComponent(typeof(Button))]
 public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -30,6 +32,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public int Cost => currentCost;
     public Action<SkillNode> OnNodeClickedAction;
+    public bool IsMaxLevel => currentLevel >= maxLevel;
     void Start()
     {
         button = GetComponent<Button>();
@@ -95,7 +98,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (currentLevel >= maxLevel) return;
 
         currentLevel++;
-        currentCost = Mathf.CeilToInt(initialCost * (1 + costIncreasePerLevel * currentLevel));
+        currentCost = Mathf.CeilToInt(initialCost * Mathf.Pow(1f + costIncreasePerLevel, currentLevel));
 
         fillMeter.fillAmount = (float)currentLevel / maxLevel;
         if (currentLevel == requiredLevelToExpand) ExpandSkillNodes();
@@ -162,7 +165,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         bool isFreshDuplicate = string.IsNullOrEmpty(nodeGuid)
             || allNodes.Any(n => n != this && n.nodeGuid == nodeGuid);
 
-        if (!isFreshDuplicate) return; // already a known, wired-up node — leave it alone
+        if (!isFreshDuplicate) return; // already a known, wired-up node - leave it alone
 
         Undo.RecordObject(this, "Reset Duplicated Skill Node");
         nodeGuid = Guid.NewGuid().ToString();

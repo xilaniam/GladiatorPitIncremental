@@ -1,36 +1,45 @@
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class TargetCircle : MonoBehaviour
+public class TargetCircle : GameEventListener
 {
     [Header("References")]
-    [SerializeField] private Transform ringCenter;   // the brown ring object (defines center & bounds)
-    [SerializeField] private Camera cam;               // main camera, auto-assigned if left empty
+    [SerializeField] private Transform ringCenter;
+    [SerializeField] private Camera cam;
 
     [Header("Settings")]
-    [SerializeField] private float radius = 1f;         // max distance handle can move from center
-    [SerializeField] private float followSpeed = 15f;  // 0 = instant snap to mouse 
+    [SerializeField] private FloatVariable circleRadius;
+    [SerializeField] private float boundaryRadius = 1f; 
+    [SerializeField] private float followSpeed = 15f;  
     [SerializeField] private FloatVariable attackSpeedPerSecond; //0.5f
+    [SerializeField] private float minAttackInterval = 0.05f;
     [SerializeField] private LayerMask enemyLayer;
-    [SerializeField] private LayerMask groundLayer;      // optional: layer for raycast plane
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Image image;
 
     private Plane movementPlane;
     private List<Transform> overlappedTargets = new();
+    private float attackTimer = 0f;
+    private bool isActive;
 
     private void Awake()
     {
         if (cam == null) cam = Camera.main;
-
         // Plane facing up (Y axis), positioned at the ring's height
         movementPlane = new Plane(Vector3.up, ringCenter.position);
     }
 
     private void Start()
     {
-        StartCoroutine(InvokeAttackEvent());
+        SubscribeEvents();
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
     }
 
     private void Update()
@@ -44,7 +53,7 @@ public class TargetCircle : MonoBehaviour
             // Clamp to radius around ring center (on the XZ plane)
             Vector3 offset = hitPoint - ringCenter.position;
             offset.y = 0f; // ignore vertical difference
-            Vector3 clampedOffset = Vector3.ClampMagnitude(offset, radius);
+            Vector3 clampedOffset = Vector3.ClampMagnitude(offset, boundaryRadius);
 
             Vector3 targetPosition = ringCenter.position + clampedOffset;
             targetPosition.y = transform.position.y; // keep handle's own height
@@ -59,6 +68,23 @@ public class TargetCircle : MonoBehaviour
             }
         }
         overlappedTargets.RemoveAll(target => target == null);
+
+        TriggerAttack();
+    }
+
+    void TriggerAttack()
+    {
+        if (!isActive) return;
+
+        float interval = Mathf.Max(minAttackInterval, attackSpeedPerSecond.Value);
+        attackTimer += Time.deltaTime;
+        if (attackTimer >= interval)
+        {
+            EventManager.InvokeCircleTick(overlappedTargets);
+            attackTimer = 0f;
+        }
+
+        image.fillAmount = attackTimer / interval;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -85,20 +111,34 @@ public class TargetCircle : MonoBehaviour
         overlappedTargets.Remove(target);
     }
 
-    IEnumerator InvokeAttackEvent()
-    {
-        while (true)
-        {
-            overlappedTargets.RemoveAll(target => target == null);
-            EventManager.InvokeCircleTick(overlappedTargets);
-            yield return new WaitForSeconds(attackSpeedPerSecond.Value);
-        }
-    }
-
     private void OnDrawGizmosSelected()
     {
         if (ringCenter == null) return;
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(ringCenter.position, radius);
+        Gizmos.DrawWireSphere(ringCenter.position, boundaryRadius);
+    }
+
+    void SetActive()
+    {
+        transform.localScale = Vector3.one * circleRadius.Value;
+        isActive = true;
+    }
+
+    void SetDeactive()
+    {
+        isActive = false;
+        attackTimer = 0f;
+    }
+
+    protected override void SubscribeEvents()
+    {
+        EventManager.RoundStartedEvent += SetActive;
+        EventManager.RoundEndedEvent += SetDeactive;
+    }
+
+    protected override void UnsubscribeEvents()
+    {
+        EventManager.RoundStartedEvent -= SetActive;
+        EventManager.RoundEndedEvent -= SetDeactive;
     }
 }

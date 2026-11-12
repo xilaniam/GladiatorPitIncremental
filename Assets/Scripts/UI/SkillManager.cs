@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,6 +7,8 @@ using UnityEngine.UI;
 public class SkillManager : BaseUIPopup
 {
     [SerializeField] AbilityManager abilityManager;
+    [SerializeField] EnemyManager enemyManager;
+
     [SerializeField] Button ContinueButton;
     [SerializeField] SkillNode rootSkillNode;
     [SerializeField] List<SkillNode> nodes = new List<SkillNode>();
@@ -13,13 +16,16 @@ public class SkillManager : BaseUIPopup
 
     private SkillContext context;
 
+    public static event Action OnContinueButtonClickedEvent;
     public SkillContext Context => context;
     private void Start()
     {
+        ClosePopup();
         context = new SkillContext(
         this,
         abilityManager,
-        EconomyManager.Instance
+        EconomyManager.Instance,
+        enemyManager
          );
 
         foreach (SkillNode node in nodes)
@@ -47,7 +53,7 @@ public class SkillManager : BaseUIPopup
 
     public void OnContinueButtonClicked()
     {
-        RoundManager.Instance.StartRound();
+        OnContinueButtonClickedEvent?.Invoke();
         ClosePopup();
     }
 
@@ -60,6 +66,7 @@ public class SkillManager : BaseUIPopup
     void TrySkillUpgrade(SkillNode skillNode)
     {
         Debug.Log("Trying to upgrade skill: " + skillNode.name);
+        if (skillNode.IsMaxLevel) return;
         int balance = EconomyManager.Instance.Balance;
 
         if (balance < skillNode.Cost)

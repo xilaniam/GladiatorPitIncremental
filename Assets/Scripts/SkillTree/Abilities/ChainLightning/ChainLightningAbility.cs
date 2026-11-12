@@ -55,7 +55,7 @@ public class ChainLightningAbility : IAbility,IModifiableAbility
         for( int i = 0; i< hitCount &&  chained < chainCount; i++ )
         {
             Enemy target = hitBuffer[i].GetComponent<Enemy>();
-            if (target == null || target == source || currentChaining.Contains(target)) continue;
+            if (target == null || target.IsDead || target == source || currentChaining.Contains(target)) continue;
             currentChaining.Add(target);
             target.TakeDamage(damage);
             currentChaining.Remove(target);

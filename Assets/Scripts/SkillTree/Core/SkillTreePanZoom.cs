@@ -6,6 +6,7 @@ public class SkillTreePanZoom : MonoBehaviour, IScrollHandler, IDragHandler, IBe
     [SerializeField] RectTransform content;      
     [SerializeField] RectTransform viewport;      
 
+
     [SerializeField] float zoomSpeed = 0.1f;
     [SerializeField] float minZoom = 0.5f;
     [SerializeField] float maxZoom = 2f;

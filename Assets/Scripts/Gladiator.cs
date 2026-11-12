@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Gladiator : MonoBehaviour
@@ -6,15 +5,22 @@ public class Gladiator : MonoBehaviour
     [Header("Throw Settings")]
     [SerializeField] private Transform throwPoint;       // where weapons spawn from (e.g. hand)
     [SerializeField] private float throwSpeed = 15f;
-    [SerializeField] private float delayBetweenThrows = 0.2f;
+
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
 
     private GameObject currentWeaponPrefab;
-    private Coroutine attackRoutine;
+    private Transform currentTarget;
+    private int remainingThrows;
+
+    public bool IsAttacking => remainingThrows > 0;
+
     public void SetupWeapon(GameObject weaponPrefab)
     {
         currentWeaponPrefab = weaponPrefab;
     }
-    public void Attack(int weaponThrowCount, Vector3 targetPosition)
+
+    public void Attack(int weaponThrowCount, Transform target)
     {
         if (currentWeaponPrefab == null)
         {
@@ -22,30 +28,31 @@ public class Gladiator : MonoBehaviour
             return;
         }
 
-        if (attackRoutine != null)
-        {
-            StopCoroutine(attackRoutine);
-        }
+        currentTarget = target;
+        if (IsAttacking) return;
 
-        attackRoutine = StartCoroutine(ThrowNWeapons(weaponThrowCount, targetPosition));
+        remainingThrows = weaponThrowCount;
+        animator.SetTrigger("Attack");
     }
 
-    private IEnumerator ThrowNWeapons(int weaponThrowCount, Vector3 targetPosition)
+    public void SpawnWeapon()
     {
-        for (int i = 0; i < weaponThrowCount; i++)
-        {
-            ThrowSingle(targetPosition);
+        if (remainingThrows <= 0) return;
 
-            if (i < weaponThrowCount - 1)
-            {
-                yield return new WaitForSeconds(delayBetweenThrows);
-            }
+        if (currentTarget == null)
+        {
+            remainingThrows = 0;
+            return;
         }
 
-        attackRoutine = null;
+        remainingThrows--;
+        ThrowAt(currentTarget.position);
+
+        if (remainingThrows > 0)
+            animator.SetTrigger("Attack");
     }
 
-    private void ThrowSingle(Vector3 targetPosition)
+    private void ThrowAt(Vector3 targetPosition)
     {
         Vector3 spawnPos = throwPoint != null ? throwPoint.position : transform.position;
 

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed0665004572dc4d9d7a1cf8ab0f61a, type: 3}
   m_Name: GladiatorCount
   m_EditorClassIdentifier: 
-  DefaultValue: 3
+  DefaultValue: 2

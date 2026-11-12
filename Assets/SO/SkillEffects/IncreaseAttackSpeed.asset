@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetStat: {fileID: 11400000, guid: 1b827488f26a1844e9a0ae2d75b032d7, type: 2}
   operation: 0
-  amount: -0.25
+  amount: -0.15

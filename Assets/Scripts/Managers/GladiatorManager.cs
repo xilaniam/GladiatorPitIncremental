@@ -1,9 +1,8 @@
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GladiatorManager : MonoBehaviour
+public class GladiatorManager : GameEventListener
 {
     [Header("References")]
     [SerializeField] GameObject gladiatorPrefab;
@@ -15,28 +14,44 @@ public class GladiatorManager : MonoBehaviour
     [SerializeField] IntVariable gladiatorCount;
     [SerializeField] IntVariable weaponThrowCount;
 
-    List<GameObject> spawnedGladiators = new List<GameObject>();
-    HashSet<Vector3> spawnPositions = new HashSet<Vector3>();
+    List<Gladiator> spawnedGladiators = new List<Gladiator>();
+    List<Vector3> freeSpawnSlots = new List<Vector3>();
 
+    #region-------Initialization And Subscription -------
     void Awake()
     {
-        GenerateSpawnPos();
+        ResetSpawnSlots();
     }
 
     private void Start()
     {
-        EventManager.OnCircleTickEvent += Attack;
+        SubscribeEvents();
     }
 
     private void OnDestroy()
     {
-        EventManager.OnCircleTickEvent -= Attack;
+        UnsubscribeEvents();
     }
+
+    protected override void SubscribeEvents()
+    {
+        EventManager.OnCircleTickEvent += Attack;
+        EventManager.RoundStartedEvent += SpawnGladiators;
+        EventManager.RoundEndedEvent += Cleanup;
+    }
+
+    protected override void UnsubscribeEvents()
+    {
+        EventManager.OnCircleTickEvent -= Attack;
+        EventManager.RoundStartedEvent -= SpawnGladiators;
+        EventManager.RoundEndedEvent -= Cleanup;
+    }
+    #endregion
 
     public void SpawnGladiators()
     {
-        if (gladiatorCount.Value > maxGladiators) return;
-        for (int i = 0; i < gladiatorCount.Value; i++)
+        int count = Mathf.Min(gladiatorCount.Value, maxGladiators);
+        for (int i = 0; i < count; i++)
         {
             SpawnGladiator();
         }
@@ -44,83 +59,76 @@ public class GladiatorManager : MonoBehaviour
 
     public void Cleanup()
     {
-        foreach (GameObject gladiator in spawnedGladiators)
+        StopAllCoroutines();
+        foreach (Gladiator gladiator in spawnedGladiators)
         {
             if (gladiator != null)
             {
-                Destroy(gladiator);
+                Destroy(gladiator.gameObject);
             }
         }
         spawnedGladiators.Clear();
+        ResetSpawnSlots();
     }
 
     private void SpawnGladiator()
     {
-        Vector3 spawnPos = GetRandomUniquePositions();
+        Vector3 spawnPos = TakeRandomSpawnSlot();
         Vector3 worldSpawnPos = transform.position + spawnPos;
 
         Vector3 directionToCenter = transform.position - worldSpawnPos;
         Quaternion rotation = Quaternion.LookRotation(directionToCenter);
 
-        GameObject gladiator = Instantiate(
+        GameObject gladiatorObject = Instantiate(
             gladiatorPrefab,
             worldSpawnPos,
             rotation,
             transform
         );
 
-        gladiator.GetComponent<Gladiator>().SetupWeapon(weaponPrefab.gameObject);
+        Gladiator gladiator = gladiatorObject.GetComponent<Gladiator>();
+        gladiator.SetupWeapon(weaponPrefab.gameObject);
 
         spawnedGladiators.Add(gladiator);
     }
 
     private void Attack(List<Transform> targets)
     {
-       StartCoroutine(ExecuteAttackCoroutine(targets));
+        if (targets.Count == 0) return;
+        StartCoroutine(ExecuteAttackCoroutine(new List<Transform>(targets)));
     }
 
     IEnumerator ExecuteAttackCoroutine(List<Transform> targets)
     {
-        if(targets.Count == 0)
-        {
-            yield break;
-        }
+        int targetIndex = 0;
 
-        int currentTarget = 0;
-            
-        foreach (GameObject gladiator in spawnedGladiators)
+        for (int i = 0; i < spawnedGladiators.Count; i++)
         {
-            float randomDuration = Random.Range(0.1f, 0.35f);
-            Gladiator gladiatorScript = gladiator.GetComponent<Gladiator>();
-            if (gladiatorScript != null)
-            {
-                gladiatorScript.Attack(weaponThrowCount.Value, targets[currentTarget].position);
-                yield return new WaitForSeconds(randomDuration);
-                if (targets.Count <= 0) yield break;
-                currentTarget = (currentTarget + 1) % targets.Count;
-            }
+            targets.RemoveAll(t => t == null);
+            if (targets.Count == 0) yield break;
+
+            Transform target = targets[targetIndex++ % targets.Count];
+            spawnedGladiators[i].Attack(weaponThrowCount.Value, target);
+            yield return new WaitForSeconds(Random.Range(0.1f, 0.35f));
         }
     }
 
-    void GenerateSpawnPos()
+    void ResetSpawnSlots()
     {
-        for(int i = 0; i<maxGladiators; i++)
+        freeSpawnSlots.Clear();
+        for (int i = 0; i < maxGladiators; i++)
         {
             float angle = i * Mathf.PI * 2 / maxGladiators;
             Vector3 pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * ringOuterRadius;
-            spawnPositions.Add(pos);
+            freeSpawnSlots.Add(pos);
         }
     }
 
-    Vector3 GetRandomUniquePositions()
+    Vector3 TakeRandomSpawnSlot()
     {
-        if (spawnPositions.Count == 0)
-        {
-            GenerateSpawnPos();
-        }
-        int index = Random.Range(0, spawnPositions.Count);
-        Vector3 pos = new List<Vector3>(spawnPositions)[index];
-        spawnPositions.Remove(pos);
+        int index = Random.Range(0, freeSpawnSlots.Count);
+        Vector3 pos = freeSpawnSlots[index];
+        freeSpawnSlots.RemoveAt(index);
         return pos;
     }
 

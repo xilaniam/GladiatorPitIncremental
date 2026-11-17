@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.1] - 2026-11-17
+
+### Changed
+- `GetState`, `CanPurchase`, requirement and condition checks, and modifier removal and expiry no longer allocate. A full tree view refresh allocates nothing.
+- Node views only rebuild their level text when the level changes.
+- The graph window only saves a node position when the node really moved, so opening a tree no longer marks it as changed.
+
+### Added
+- HTML documentation in `Documentation~/index.html`, with measured performance.
+
 ## [1.0.0] - 2026-11-17
 
 First release.

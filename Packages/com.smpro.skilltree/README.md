@@ -12,7 +12,7 @@ One asset holds the whole tree. Game code reads the results as stats. Adding or 
 2. Window ▸ Package Manager ▸ **+** ▸ **Add package from git URL** and paste:
 
    ```
-   https://github.com/xilaniam/GladiatorPitIncremental.git?path=/Packages/com.smpro.skilltree#v1.0.0
+   https://github.com/xilaniam/GladiatorPitIncremental.git?path=/Packages/com.smpro.skilltree#v1.0.1
    ```
 
    If the package later moves to its own repository, use that repository's URL and leave out `?path=...`.

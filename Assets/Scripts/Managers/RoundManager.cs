@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
+using SMPro.SkillTree;
 using UnityEngine;
 
 public class RoundManager : GameEventListener
 {
     public static RoundManager Instance { get; private set; }
 
-    [SerializeField] private FloatVariable currentRoundTimer; //15
+    [SerializeField] private StatRef roundDuration;
     [SerializeField] private RoundUI RoundUI;
 
     public bool IsRoundActive { get; private set; }
@@ -49,8 +50,8 @@ public class RoundManager : GameEventListener
         if (!IsRoundActive) return;
         //Start Round Timer
         currentTime += Time.deltaTime;
-        RoundUI.UpdateRoundTimerUI(currentTime, currentRoundTimer.Value);
-        if (currentTime >= currentRoundTimer.Value)
+        RoundUI.UpdateRoundTimerUI(currentTime, roundDuration.Value);
+        if (currentTime >= roundDuration.Value)
         {
             EndRound();
         }

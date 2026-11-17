@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using SMPro.SkillTree;
 using UnityEngine;
 
 public class EnemyManager : GameEventListener
@@ -10,17 +11,17 @@ public class EnemyManager : GameEventListener
     [Header("Spawn Weights")]
     [SerializeField, Tooltip("Spawn weight by how far an animal is below the newest unlocked one (first = newest). Animals further down use the last value.")]
     float[] tierWeights = { 50f, 25f, 12f, 6f, 4f, 3f };
-    [Header("Variables")]
-    [SerializeField] IntVariable enemyCount;
-    [SerializeField] IntVariable unlockedTiers;
-    [SerializeField] FloatVariable alphaChance;
-    [SerializeField] FloatVariable goldenChance;
+    [Header("Stats")]
+    [SerializeField] StatRef enemyCount;
+    [SerializeField] StatRef alphaChance;
+    [SerializeField] StatRef goldenChance;
 
     private List<Enemy> spawnedEnemy = new List<Enemy>();
     private HashSet<AnimalType> unlockedTypes = new HashSet<AnimalType>();
     private List<Enemy> availablePrefabs = new List<Enemy>();
 
     public IReadOnlyList<Enemy> AliveEnemies => spawnedEnemy;
+    public int UnlockedTiers => unlockedTypes.Count;
 
     private void Awake()
     {
@@ -70,8 +71,6 @@ public class EnemyManager : GameEventListener
             .Where(p => p != null && unlockedTypes.Contains(p.AnimalType))
             .OrderBy(p => p.AnimalType)
             .ToList();
-
-        unlockedTiers.Value = unlockedTypes.Count;
     }
 
     #endregion
@@ -80,7 +79,7 @@ public class EnemyManager : GameEventListener
 
     public void SpawnEnemies()
     {
-        int count = enemyCount.Value;
+        int count = enemyCount.IntValue;
         int guaranteed = Mathf.Min(availablePrefabs.Count, count);
         for (int i = 0; i < guaranteed; i++)
             SpawnEnemy(availablePrefabs[availablePrefabs.Count - 1 - i]);
@@ -91,7 +90,7 @@ public class EnemyManager : GameEventListener
 
     public bool TrySpawnExtra()
     {
-        if (spawnedEnemy.Count >= enemyCount.Value) return false;
+        if (spawnedEnemy.Count >= enemyCount.IntValue) return false;
 
         SpawnEnemy();
         return true;

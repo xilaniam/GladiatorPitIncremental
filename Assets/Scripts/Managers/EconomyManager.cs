@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
+using SMPro.SkillTree;
 using UnityEngine;
 
-public class EconomyManager : GameEventListener
+public class EconomyManager : GameEventListener, ICurrencyWallet
 {
     [SerializeField] int balance;
-    [SerializeField] FloatVariable coinMultiplier;
-    [SerializeField] FloatVariable coinBonusPerTier;
-    [SerializeField] IntVariable unlockedTiers;
-    [SerializeField] FloatVariable bonusPercentage;
+    [SerializeField] EnemyManager enemyManager;
+    [SerializeField] StatRef coinMultiplier;
+    [SerializeField] StatRef coinBonusPerTier;
+    [SerializeField] StatRef bonusPercentage;
 
     private readonly List<Func<float, float>> coinModifiers = new List<Func<float, float>>();
     private int roundCollection;
@@ -17,6 +18,8 @@ public class EconomyManager : GameEventListener
     public int Balance => balance;
     public int LastRoundBonus { get; private set; }
     public static EconomyManager Instance { get; private set; }
+
+    public event Action<string> BalanceChanged;
 
     #region ------Initialization And Subscription -------
     private void Awake()
@@ -52,7 +55,7 @@ public class EconomyManager : GameEventListener
 
     void CollectCoins(Enemy enemy)
     {
-        float coins = enemy.CoinValue * coinMultiplier.Value * (1f + coinBonusPerTier.Value * unlockedTiers.Value);
+        float coins = enemy.CoinValue * coinMultiplier.Value * (1f + coinBonusPerTier.Value * enemyManager.UnlockedTiers);
         foreach (var modifier in coinModifiers)
         {
             coins = modifier(coins);
@@ -65,19 +68,19 @@ public class EconomyManager : GameEventListener
         roundCollection += earned;
         balance += earned;
         EventManager.InvokeCoinsEarnedEvent(enemy, earned);
-        EventManager.InvokeBalanceUpdatedEvent(balance);
+        NotifyBalanceChanged();
     }
 
     public void DeductAmount(int amount)
     {
         balance -= amount;
-        EventManager.InvokeBalanceUpdatedEvent(balance);
+        NotifyBalanceChanged();
     }
 
     public void AddCoins(int amount)
     {
         balance += amount;
-        EventManager.InvokeBalanceUpdatedEvent(balance);
+        NotifyBalanceChanged();
     }
 
     void ResetRoundCollection()
@@ -90,7 +93,24 @@ public class EconomyManager : GameEventListener
         int additionalBonus = Mathf.CeilToInt((bonusPercentage.Value / 100) * roundCollection);
         LastRoundBonus = additionalBonus;
         balance += additionalBonus;
+        NotifyBalanceChanged();
+    }
+
+    public bool CanAfford(string currencyId, long amount) => balance >= amount;
+
+    public bool TrySpend(string currencyId, long amount)
+    {
+        if (amount < 0 || amount > balance) return false;
+        DeductAmount((int)amount);
+        return true;
+    }
+
+    public void Add(string currencyId, long amount) => AddCoins((int)Math.Min(amount, int.MaxValue - (long)balance));
+
+    void NotifyBalanceChanged()
+    {
         EventManager.InvokeBalanceUpdatedEvent(balance);
+        BalanceChanged?.Invoke(CurrencyIds.Default);
     }
 
     public void RegisterCoinModifier(Func<float, float> modifier) => coinModifiers.Add(modifier);

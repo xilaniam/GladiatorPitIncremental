@@ -154,6 +154,8 @@ Transform:
   - {fileID: 1592020922}
   - {fileID: 1518838568}
   - {fileID: 1779790541}
+  - {fileID: 1440439492}
+  - {fileID: 666490330}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &19712854
@@ -164,6 +166,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: flint_heads
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 100
@@ -305,6 +311,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: lucky_find
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 40
@@ -764,10 +774,15 @@ MonoBehaviour:
   - 6
   - 4
   - 3
-  enemyCount: {fileID: 11400000, guid: 55cc174b643d34647a4e34ee85af0101, type: 2}
-  unlockedTiers: {fileID: 11400000, guid: f3a71965241362f41b464b86e8d82e22, type: 2}
-  alphaChance: {fileID: 11400000, guid: 84a185008c6654a449094fdb44f3debf, type: 2}
-  goldenChance: {fileID: 11400000, guid: 6f8febf52189b7542abc66ca7e1747e0, type: 2}
+  enemyCount:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: enemies.count
+  alphaChance:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: enemies.alpha_chance
+  goldenChance:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: enemies.golden_chance
 --- !u!114 &79904494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,6 +826,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: rebound_force
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 40000
@@ -1232,6 +1251,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: extra_bounce
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 60000
       objectReference: {fileID: 0}
@@ -1368,6 +1391,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: herd_call
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 40
@@ -1749,6 +1776,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 225016163}
   m_CullTransparentMesh: 1
+--- !u!1 &239048177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 239048178}
+  - component: {fileID: 239048179}
+  m_Layer: 0
+  m_Name: DoubleCoins
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &239048178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239048177}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 666490330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &239048179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239048177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6e44b8dea3cba7489010c5f6ed0ecc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  featureId: double_coins
+  economy: {fileID: 1592020923}
+  chance:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: double_coins.chance
 --- !u!1001 &249747340
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1757,6 +1833,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: quick_hands
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 8
@@ -2100,6 +2180,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: blood_rush
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 30000
@@ -2673,6 +2757,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: obsidian_tips
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 900
       objectReference: {fileID: 0}
@@ -3117,6 +3205,67 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!1 &411701445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 411701446}
+  - component: {fileID: 411701447}
+  m_Layer: 0
+  m_Name: HuntersFrenzy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &411701446
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411701445}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 666490330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &411701447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411701445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da7a162612f16b8449041d433ed9288b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  featureId: hunters_frenzy
+  economy: {fileID: 1592020923}
+  killThreshold:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: hunters_frenzy.kill_threshold
+  coinBonus:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: hunters_frenzy.coin_bonus
+  attackInterval:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: gladiator.attack_interval
+  damageMultiplier:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: spear.damage_multiplier
+  duration: 5
+  attackSpeedFactor: 2
+  damageFactor: 1.5
 --- !u!1 &415211188
 GameObject:
   m_ObjectHideFlags: 0
@@ -3502,6 +3651,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: tribe_tax
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 30
@@ -4153,6 +4306,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: alpha_pack
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 3000
       objectReference: {fileID: 0}
@@ -4330,7 +4487,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a04133e6b862447862c2ee1cd5b3c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoundTimer: {fileID: 11400000, guid: fe7dc0432b9beaf409f2b9fefd6fa4a9, type: 2}
+  roundDuration:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: round.duration
   RoundUI: {fileID: 2129579722}
 --- !u!114 &617378483
 MonoBehaviour:
@@ -4493,6 +4652,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643834946}
   m_CullTransparentMesh: 1
+--- !u!1 &666490329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 666490330}
+  m_Layer: 0
+  m_Name: Features
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &666490330
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666490329}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1878912220}
+  - {fileID: 1965252354}
+  - {fileID: 239048178}
+  - {fileID: 411701446}
+  - {fileID: 1489523096}
+  - {fileID: 1145566236}
+  m_Father: {fileID: 19064904}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &680913193
 GameObject:
   m_ObjectHideFlags: 0
@@ -4611,6 +4807,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: war_party
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 1500
@@ -6089,6 +6289,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: alpha_spawn
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 2000
       objectReference: {fileID: 0}
@@ -6229,6 +6433,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: recruit_caveman
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 12
@@ -6704,6 +6912,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: hunters_frenzy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 12000
       objectReference: {fileID: 0}
@@ -6948,6 +7160,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: trophy_wall
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 400
@@ -7768,6 +7984,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: chain_lightning
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 6000
       objectReference: {fileID: 0}
@@ -8461,6 +8681,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: feast
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 80000
       objectReference: {fileID: 0}
@@ -8589,6 +8813,55 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+--- !u!1 &1145566235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1145566236}
+  - component: {fileID: 1145566237}
+  m_Layer: 0
+  m_Name: SpawnInterval
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1145566236
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145566235}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 666490330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1145566237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145566235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fa4d3fc850a4e945b3d780753ffd1d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  featureId: spawn_interval
+  enemyManager: {fileID: 79904493}
+  seconds:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: spawn_interval.seconds
 --- !u!1001 &1147165816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8597,6 +8870,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: horn_blowers
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 60
@@ -8907,6 +9184,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: gilded_herd
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 2500
@@ -9566,6 +9847,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: fertile_land
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 10
       objectReference: {fileID: 0}
@@ -9986,6 +10271,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: overcharge
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 15000
       objectReference: {fileID: 0}
@@ -10254,6 +10543,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1415279144}
   m_CullTransparentMesh: 1
+--- !u!1 &1440439490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1440439492}
+  - component: {fileID: 1440439491}
+  m_Layer: 0
+  m_Name: SkillTree
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1440439491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440439490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e47167983bdbae0498d4d88c1da2b3a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  definition: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+  wallet: {fileID: 1592020923}
+  saveProvider:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+--- !u!4 &1440439492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440439490}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 19064904}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1444662002
 GameObject:
   m_ObjectHideFlags: 0
@@ -10398,6 +10740,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: pelt_trade
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 4
@@ -10719,6 +11065,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1467794097}
   m_CullTransparentMesh: 1
+--- !u!1 &1489523095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1489523096}
+  - component: {fileID: 1489523097}
+  m_Layer: 0
+  m_Name: Ricochet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1489523096
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489523095}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 666490330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1489523097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489523095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9232036b23992241b1badbaa131265f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  featureId: ricochet
+  enemyManager: {fileID: 79904493}
+  bounces:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: ricochet.bounces
+  damagePercent:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: ricochet.damage_percent
+  splinterPercent:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: ricochet.splinter_percent
+  bounceProjectile: {fileID: 7056894154658952689, guid: 462fdb714e4f0a7448d9920e2d81c7df, type: 3}
+  shardProjectile: {fileID: 1817559782789613314, guid: be3ff2b94d1020b4a91c5e9804122c53, type: 3}
 --- !u!1001 &1509067239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11025,6 +11428,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: breeding_season
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 150
       objectReference: {fileID: 0}
@@ -11165,6 +11572,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: storm_arc
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 20000
@@ -11307,6 +11718,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: keen_eye
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 60
@@ -11717,6 +12132,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: brutal_crits
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 300
       objectReference: {fileID: 0}
@@ -11946,10 +12365,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   balance: 0
-  coinMultiplier: {fileID: 11400000, guid: 96157733dbfe65749b3d23d1bf5eb4d5, type: 2}
-  coinBonusPerTier: {fileID: 11400000, guid: e15fcb53614ed4e4a9bd27fea2c5cfa0, type: 2}
-  unlockedTiers: {fileID: 11400000, guid: f3a71965241362f41b464b86e8d82e22, type: 2}
-  bonusPercentage: {fileID: 11400000, guid: 15b67d2f77b616846a18dcdcafa38f95, type: 2}
+  enemyManager: {fileID: 79904493}
+  coinMultiplier:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: coins.multiplier
+  coinBonusPerTier:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: coins.bonus_per_tier
+  bonusPercentage:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: coins.round_end_bonus
 --- !u!1001 &1594165160
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11958,6 +12383,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: long_hunt
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 4
@@ -12295,6 +12724,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: war_drums
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 20000
@@ -12710,6 +13143,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: trade_routes
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 250
@@ -13288,6 +13725,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: ricochet_spears
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 25000
       objectReference: {fileID: 0}
@@ -13563,6 +14004,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: steady_aim
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 120
@@ -13937,8 +14382,12 @@ MonoBehaviour:
   weaponPrefab: {fileID: 1298331536295804021, guid: eb4ee9f8fe8253745bbd85bc8c9abb4b, type: 3}
   ringOuterRadius: 20
   maxGladiators: 12
-  gladiatorCount: {fileID: 11400000, guid: 2f78058eeb827ca49a36174d2fe9845e, type: 2}
-  weaponThrowCount: {fileID: 11400000, guid: e67f333e0fc496b4fb5f889c46da60a0, type: 2}
+  gladiatorCount:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: gladiator.count
+  weaponThrowCount:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: gladiator.throw_count
 --- !u!1001 &1825307550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14016,9 +14465,25 @@ PrefabInstance:
       value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 4496858970967809189, guid: 0d48fa1611dd6c344a8af1bac6657a06, type: 3}
+      propertyPath: circleRadius.tree
+      value: 
+      objectReference: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    - target: {fileID: 4496858970967809189, guid: 0d48fa1611dd6c344a8af1bac6657a06, type: 3}
+      propertyPath: attackInterval.tree
+      value: 
+      objectReference: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    - target: {fileID: 4496858970967809189, guid: 0d48fa1611dd6c344a8af1bac6657a06, type: 3}
+      propertyPath: circleRadius.statId
+      value: targeting.radius
+      objectReference: {fileID: 0}
+    - target: {fileID: 4496858970967809189, guid: 0d48fa1611dd6c344a8af1bac6657a06, type: 3}
       propertyPath: attackSpeedPerSecond
       value: 
       objectReference: {fileID: 11400000, guid: 1b827488f26a1844e9a0ae2d75b032d7, type: 2}
+    - target: {fileID: 4496858970967809189, guid: 0d48fa1611dd6c344a8af1bac6657a06, type: 3}
+      propertyPath: attackInterval.statId
+      value: gladiator.attack_interval
+      objectReference: {fileID: 0}
     - target: {fileID: 6696164171849586758, guid: 0d48fa1611dd6c344a8af1bac6657a06, type: 3}
       propertyPath: m_Radius
       value: 1.615
@@ -14052,6 +14517,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: endless_day
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 500
@@ -14379,6 +14848,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: wall_splinter
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 150000
       objectReference: {fileID: 0}
@@ -14635,6 +15108,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875049123}
   m_CullTransparentMesh: 1
+--- !u!1 &1878912219
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1878912220}
+  - component: {fileID: 1878912221}
+  m_Layer: 0
+  m_Name: BreedingSeason
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1878912220
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878912219}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 666490330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1878912221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878912219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 842ce7ad7ec4c2146bf909c34df3b222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  featureId: breeding_season
+  enemyManager: {fileID: 79904493}
+  chance:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: breeding_season.chance
 --- !u!114 &1879921738 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
@@ -14754,6 +15276,61 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &1965252353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1965252354}
+  - component: {fileID: 1965252355}
+  m_Layer: 0
+  m_Name: ChainLightning
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1965252354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965252353}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 666490330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1965252355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965252353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3900e882a66914049b91e2ec828200b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  featureId: chain_lightning
+  enemyManager: {fileID: 79904493}
+  chance:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: chain_lightning.chance
+  jumps:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: chain_lightning.jumps
+  damagePercent:
+    tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
+    statId: chain_lightning.damage_percent
 --- !u!1001 &2025612655
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14953,6 +15530,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: four_leaf
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 80
@@ -15262,6 +15843,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: conductivity
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 8000
       objectReference: {fileID: 0}
@@ -15402,6 +15987,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: wide_net
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 60
@@ -15595,6 +16184,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: big_litters
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 250
@@ -15812,7 +16405,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2113716443}
   - component: {fileID: 2113716444}
-  - component: {fileID: 2113716445}
   m_Layer: 7
   m_Name: SkillTree
   m_TagString: Untagged
@@ -15855,23 +16447,10 @@ MonoBehaviour:
   canvasGroup: {fileID: 1848390680}
   panel: {fileID: 1848390678}
   useInactive: 1
-  abilityManager: {fileID: 2113716445}
-  enemyManager: {fileID: 79904493}
+  controller: {fileID: 1440439491}
   ContinueButton: {fileID: 225016165}
   balance: {fileID: 1582324603}
   tooltip: {fileID: 1870901153}
---- !u!114 &2113716445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113716442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dd456ab77fbbf84b9b312418bcfddf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2117863430 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
@@ -16023,6 +16602,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: golden_hide
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 1500
       objectReference: {fileID: 0}
@@ -16163,6 +16746,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048890791}
     m_Modifications:
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: wild_plains
+      objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: baseCost
       value: 700
@@ -16608,6 +17195,10 @@ PrefabInstance:
     - target: {fileID: 761647302519743423, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Color.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
+      propertyPath: nodeId
+      value: sharpened_spears
       objectReference: {fileID: 0}
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: maxLevel

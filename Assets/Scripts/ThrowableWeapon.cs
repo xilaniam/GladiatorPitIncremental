@@ -1,13 +1,15 @@
+using SMPro.SkillTree;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class ThrowableWeapon : MonoBehaviour
 {
-    [SerializeField] FloatVariable damageAmount;
-    [SerializeField] FloatVariable damageMultiplier;
-    [SerializeField] FloatVariable bonusDamage;
-    [SerializeField] FloatVariable critChance;
-    [SerializeField] FloatVariable critMultiplier;
+    [Header("Stats")]
+    [SerializeField] StatRef damageAmount;
+    [SerializeField] StatRef damageMultiplier;
+    [SerializeField] StatRef bonusDamage;
+    [SerializeField] StatRef critChance;
+    [SerializeField] StatRef critMultiplier;
 
     [Header("Settings")]
     [SerializeField] float defaultSpeed = 15f;

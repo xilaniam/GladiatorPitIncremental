@@ -3,76 +3,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PrimeTween;
+using SMPro.SkillTree;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
-[Serializable]
-public class SkillRequirement
-{
-    public SkillNode node;
-    public int level = 1;
-
-    public bool IsMet => node == null || node.Level >= level;
-}
 
 [RequireComponent(typeof(Button))]
 public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] string displayName;
-    [SerializeField, TextArea] string effectDescription;
-    [SerializeField] List<SkillEffect> effects = new();
-    [SerializeField] List<SkillRequirement> requirements = new();
+    [SerializeField] string nodeId;
     [Header("References")]
     [SerializeField] RectTransform rectTransform;
     [SerializeField] Image fillMeter;
     [SerializeField] LineRenderer connectorLinePrefab;
-    [Header("Settings")]
-    [SerializeField] int maxLevel = 3;
-    [FormerlySerializedAs("initialCost")]
-    [SerializeField] int baseCost = 2;
-    [FormerlySerializedAs("costIncreasePerLevel")]
-    [SerializeField] float costGrowth = 1.5f;
     [Header("Animation")]
     [SerializeField] float hoverScale = 1.2f;
     [SerializeField] float pressedScale = 0.8f;
     [SerializeField] float hoverDuration = 0.12f;
     [SerializeField] float pulseDuration = 0.3f;
     [Header("Mystery (keystones)")]
-    [SerializeField, Tooltip("Shown from the start as a '?' until all requirements are met")] bool isMystery;
     [SerializeField] Sprite mysteryIcon;
     [SerializeField] Image iconImage;
     [SerializeField] GameObject mysteryGlow;
     [SerializeField, TextArea] string mysteryDescription = "A special power lies down this path.\nKeep upgrading this branch to reveal it.";
 
-    int currentLevel;
+    SkillTreeController controller;
+    SkillNodeDefinition definition;
+    Func<string, SkillNode> findNode;
     Sprite revealedIcon;
-    bool wasHiddenMystery;
+    bool wasMystery;
     bool isHovered;
     Tween hoverTween;
     Sequence pulseSequence;
-    readonly HashSet<SkillNode> connectedFrom = new();
+    readonly HashSet<string> connectedFrom = new();
     Button button;
 
     public Action<SkillNode> OnNodeClickedAction;
     public Action<SkillNode> OnHoverStartAction;
     public Action<SkillNode> OnHoverEndAction;
 
+    public string NodeId => nodeId;
     public string TooltipText { get; private set; }
-    public string DisplayName => string.IsNullOrEmpty(displayName) ? name : displayName;
-    public int Level => currentLevel;
-    public int Cost => Mathf.CeilToInt(baseCost * Mathf.Pow(costGrowth, currentLevel));
-    public bool IsMaxLevel => currentLevel >= maxLevel;
-    public bool RequirementsMet => requirements.All(r => r.IsMet);
-    public bool CanUpgrade => !IsMaxLevel && RequirementsMet;
-
-    public bool IsRevealed => isMystery || requirements.Count == 0 || requirements.Any(r => r.node != null && r.node.Level > 0);
-
-    bool IsHiddenMystery => isMystery && currentLevel == 0 && !RequirementsMet;
+    public RectTransform RectTransform => rectTransform;
 
     float RestScale => isHovered ? hoverScale : 1f;
 
@@ -90,57 +62,51 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         Button.onClick.AddListener(OnButtonClicked);
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
         Button.onClick.RemoveListener(OnButtonClicked);
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         StopScaleAnimation();
         isHovered = false;
         transform.localScale = Vector3.one;
     }
 
+    public bool Bind(SkillTreeController treeController, Func<string, SkillNode> nodeLookup)
+    {
+        controller = treeController;
+        findNode = nodeLookup;
+        if (controller.Definition.TryGetNode(nodeId, out definition)) return true;
+
+        Debug.LogError($"{name}: node id '{nodeId}' is not in {controller.Definition.name}.", this);
+        return false;
+    }
+
     public void Refresh()
     {
-        bool revealed = IsRevealed;
-        gameObject.SetActive(revealed);
-        if (!revealed) return;
+        if (definition == null) return;
+
+        NodeState state = controller.GetState(nodeId);
+        gameObject.SetActive(state != NodeState.Hidden);
+        if (state == NodeState.Hidden) return;
 
         DrawConnections();
 
-        Button.interactable = RequirementsMet || IsHiddenMystery;
-        fillMeter.fillAmount = (float)currentLevel / maxLevel;
-        RefreshMystery();
-        BuildTooltipText();
+        Button.interactable = state == NodeState.Available || state == NodeState.Mystery;
+        fillMeter.fillAmount = (float)controller.GetLevel(nodeId) / definition.maxLevel;
+        RefreshMystery(state);
+        BuildTooltipText(state);
     }
 
-    void RefreshMystery()
+    public void PlayPurchasePulse()
     {
-        if (!isMystery) return;
-
-        if (revealedIcon == null && iconImage != null) revealedIcon = iconImage.sprite;
-
-        bool hidden = IsHiddenMystery;
-        if (iconImage != null) iconImage.sprite = hidden ? mysteryIcon : revealedIcon;
-        if (mysteryGlow != null) mysteryGlow.SetActive(currentLevel == 0);
-
-        if (wasHiddenMystery && !hidden) PlayPurchasePulse();
-        wasHiddenMystery = hidden;
-    }
-
-    public void ApplyUpgrade(SkillContext context)
-    {
-        if (!CanUpgrade) return;
-
-        currentLevel++;
-        foreach (SkillEffect effect in effects)
-        {
-            if (effect == null) continue;
-            effect.Apply(context);
-        }
-        PlayPurchasePulse();
+        if (!isActiveAndEnabled) return;
+        StopScaleAnimation();
+        pulseSequence = Sequence.Create(useUnscaledTime: true)
+            .Chain(Tween.Scale(transform, pressedScale, pulseDuration * 0.3f, Ease.OutQuad))
+            .Chain(Tween.Scale(transform, RestScale, pulseDuration * 0.7f, Ease.OutBack));
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -157,18 +123,24 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         OnHoverEndAction?.Invoke(this);
     }
 
+    void RefreshMystery(NodeState state)
+    {
+        if (definition.reveal != RevealRule.MysteryUntilAvailable) return;
+
+        if (revealedIcon == null && iconImage != null) revealedIcon = iconImage.sprite;
+
+        bool mystery = state == NodeState.Mystery;
+        if (iconImage != null) iconImage.sprite = mystery ? mysteryIcon : revealedIcon;
+        if (mysteryGlow != null) mysteryGlow.SetActive(controller.GetLevel(nodeId) == 0);
+
+        if (wasMystery && !mystery) PlayPurchasePulse();
+        wasMystery = mystery;
+    }
+
     void AnimateScale(float target)
     {
         StopScaleAnimation();
         hoverTween = Tween.Scale(transform, target, hoverDuration, Ease.OutQuad, useUnscaledTime: true);
-    }
-
-    void PlayPurchasePulse()
-    {
-        StopScaleAnimation();
-        pulseSequence = Sequence.Create(useUnscaledTime: true)
-            .Chain(Tween.Scale(transform, pressedScale, pulseDuration * 0.3f, Ease.OutQuad))
-            .Chain(Tween.Scale(transform, RestScale, pulseDuration * 0.7f, Ease.OutBack));
     }
 
     void StopScaleAnimation()
@@ -182,184 +154,67 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         OnNodeClickedAction?.Invoke(this);
     }
 
-    void BuildTooltipText()
+    void BuildTooltipText(NodeState state)
     {
-        if (IsHiddenMystery)
+        if (state == NodeState.Mystery)
         {
             TooltipText = "???\n" + mysteryDescription;
             return;
         }
 
-        StringBuilder text = new StringBuilder();
-        text.AppendLine(DisplayName);
+        int level = controller.GetLevel(nodeId);
+        var text = new StringBuilder();
+        text.AppendLine(definition.DisplayName);
 
-        if (!string.IsNullOrEmpty(effectDescription))
+        if (!string.IsNullOrEmpty(definition.flavourText))
         {
-            text.AppendLine(effectDescription);
+            text.AppendLine(definition.flavourText);
         }
         else
         {
-            foreach (SkillEffect effect in effects)
+            foreach (ISkillEffect effect in definition.effects)
             {
-                if (effect != null) text.AppendLine(effect.GetDescription());
+                string line = effect?.Describe(controller.Definition, Mathf.Max(level, 1));
+                if (!string.IsNullOrEmpty(line)) text.AppendLine(line);
             }
         }
 
-        text.AppendLine(IsMaxLevel ? "MAX" : $"Cost: {Cost}");
-        text.Append($"Level {currentLevel}/{maxLevel}");
+        text.AppendLine(state == NodeState.Maxed ? "MAX" : $"Cost: {controller.GetCost(nodeId)}");
+        text.Append($"Level {level}/{definition.maxLevel}");
 
-        var unmet = requirements.Where(r => !r.IsMet).Select(r => $"{r.node.DisplayName} Lv{r.level}").ToList();
-        if (unmet.Count > 0)
-            text.Append("\nRequires: ").Append(string.Join(", ", unmet));
+        List<string> unmet = definition.requirements
+            .Where(r => controller.GetLevel(r.nodeId) < r.level)
+            .Select(r => $"{NodeName(r.nodeId)} Lv{r.level}")
+            .ToList();
+        if (unmet.Count > 0) text.Append("\nRequires: ").Append(string.Join(", ", unmet));
 
         TooltipText = text.ToString();
     }
 
+    string NodeName(string id) => controller.Definition.TryGetNode(id, out SkillNodeDefinition node) ? node.DisplayName : id;
+
     void DrawConnections()
     {
-        foreach (SkillRequirement requirement in requirements)
+        foreach (NodeRequirement requirement in definition.requirements)
         {
-            SkillNode parent = requirement.node;
-            if (parent == null || !parent.IsRevealed) continue;
-            if (connectedFrom.Add(parent)) CreateConnectionFrom(parent);
+            if (connectedFrom.Contains(requirement.nodeId)) continue;
+            if (controller.GetState(requirement.nodeId) == NodeState.Hidden) continue;
+
+            SkillNode parent = findNode(requirement.nodeId);
+            if (parent == null) continue;
+
+            connectedFrom.Add(requirement.nodeId);
+            LineRenderer line = Instantiate(connectorLinePrefab, transform.parent);
+            line.positionCount = 2;
+            line.SetPosition(0, parent.RectTransform.anchoredPosition);
+            line.SetPosition(1, rectTransform.anchoredPosition);
         }
     }
 
-    void CreateConnectionFrom(SkillNode node)
-    {
-        LineRenderer lr = Instantiate(connectorLinePrefab, transform.parent);
-        lr.positionCount = 2;
-        lr.SetPosition(0, node.rectTransform.anchoredPosition);
-        lr.SetPosition(1, rectTransform.anchoredPosition);
-    }
-
-    #region EditorHepler
 #if UNITY_EDITOR
-    [SerializeField, HideInInspector] string nodeGuid = "";
-    private float autoConnectRadius = 260f;
     void OnValidate()
     {
-        if (Application.isPlaying) return;
         if (rectTransform == null) rectTransform = GetComponent<RectTransform>();
-
-        RenameToDisplayName();
-
-        EditorApplication.delayCall += HandleEditorValidate;
-    }
-
-    void RenameToDisplayName()
-    {
-        string desiredName = displayName;
-        if (string.IsNullOrEmpty(desiredName) && effects.Count > 0 && effects[0] != null)
-            desiredName = effects[0].name;
-
-        if (!string.IsNullOrEmpty(desiredName) && gameObject.name != desiredName)
-        {
-            gameObject.name = desiredName;
-        }
-    }
-
-    void HandleEditorValidate()
-    {
-        if (this == null) return; // destroyed before delayCall fired
-
-        SkillNode[] allNodes = transform.parent != null
-            ? transform.parent.GetComponentsInChildren<SkillNode>(true)
-            : FindObjectsByType<SkillNode>(FindObjectsSortMode.None);
-
-        bool isFreshDuplicate = string.IsNullOrEmpty(nodeGuid)
-            || allNodes.Any(n => n != this && n.nodeGuid == nodeGuid);
-
-        if (!isFreshDuplicate) return; // already a known, wired-up node - leave it alone
-
-        Undo.RecordObject(this, "Reset Duplicated Skill Node");
-        nodeGuid = Guid.NewGuid().ToString();
-        requirements.Clear();
-        EditorUtility.SetDirty(this);
-
-        TryAutoConnectToNearestParent(allNodes);
-    }
-
-    void TryAutoConnectToNearestParent(SkillNode[] allNodes)
-    {
-        SkillNode nearestParent = null;
-        float nearestDist = float.MaxValue;
-
-        foreach (var other in allNodes)
-        {
-            if (other == this) continue;
-            float dist = Vector2.Distance(
-                rectTransform.anchoredPosition,
-                other.rectTransform.anchoredPosition);
-
-            if (dist < nearestDist && dist <= autoConnectRadius)
-            {
-                nearestDist = dist;
-                nearestParent = other;
-            }
-        }
-
-        if (nearestParent != null)
-        {
-            Undo.RecordObject(this, "Auto Connect Skill Node");
-            requirements.Add(new SkillRequirement { node = nearestParent, level = 1 });
-            EditorUtility.SetDirty(this);
-        }
-    }
-
-    static bool hierarchyHookRegistered = false;
-
-    void OnEnable()
-    {
-        if (Application.isPlaying) return;
-        if (!hierarchyHookRegistered)
-        {
-            EditorApplication.hierarchyChanged += CleanupAllNullReferences;
-            hierarchyHookRegistered = true;
-        }
-    }
-
-    static void CleanupAllNullReferences()
-    {
-        SkillNode[] allNodes = FindObjectsByType<SkillNode>(FindObjectsSortMode.None);
-        foreach (var node in allNodes)
-        {
-            if (node == null) continue;
-
-            int removed = node.requirements.RemoveAll(r => r.node == null);
-            if (removed > 0)
-            {
-                Undo.RecordObject(node, "Clean Null Skill Node References");
-                EditorUtility.SetDirty(node);
-            }
-        }
-    }
-
-    void OnDrawGizmos()
-    {
-        if (requirements == null || requirements.Count == 0) return;
-
-        Gizmos.color = Color.cyan;
-        foreach (var requirement in requirements)
-        {
-            if (requirement.node == null) continue; // in case cleanup hasn't run yet
-            Gizmos.DrawLine(requirement.node.transform.position, transform.position);
-        }
-    }
-    void OnDrawGizmosSelected()
-    {
-        // Highlight this node and the nodes it requires
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, 0.5f);
-
-        if (requirements == null) return;
-        foreach (var requirement in requirements)
-        {
-            if (requirement.node == null) continue;
-            Gizmos.DrawLine(requirement.node.transform.position, transform.position);
-            Gizmos.DrawWireSphere(requirement.node.transform.position, 0.5f);
-        }
     }
 #endif
-    #endregion
 }

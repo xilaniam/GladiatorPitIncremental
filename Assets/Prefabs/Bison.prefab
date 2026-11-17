@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3800
-  coinValue: {fileID: 11400000, guid: 441c785efbdac3447be8548cf3780dc8, type: 2}
+  coinValue: 550
   animalType: 5
   displayName: Bison
   portrait: {fileID: 21300000, guid: d9656824d0dbd6941a5b9ec77fad1ee9, type: 3}

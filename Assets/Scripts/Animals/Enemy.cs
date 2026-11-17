@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] protected float health = 7f;
-    [SerializeField] protected IntVariable coinValue;
+    [SerializeField, Min(0)] protected int coinValue = 1;
     [SerializeField] protected AnimalType animalType;
     [Header("Display")]
     [SerializeField] protected string displayName;
@@ -65,7 +65,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public float Health => health;
     public bool IsDead => isDead;
     public bool IsGolden => isGolden;
-    public int CoinValue => coinValue.Value * (isGolden ? goldenCoinMultiplier : 1);
+    public int CoinValue => coinValue * (isGolden ? goldenCoinMultiplier : 1);
     public AnimalType AnimalType => animalType;
     public string DisplayName => string.IsNullOrEmpty(displayName) ? animalType.ToString() : displayName;
     public Sprite Portrait => portrait;

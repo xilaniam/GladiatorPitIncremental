@@ -1,51 +1,55 @@
 using System;
+using System.Collections.Generic;
+using SMPro.SkillTree;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SkillManager : BaseUIPopup
 {
-    [SerializeField] AbilityManager abilityManager;
-    [SerializeField] EnemyManager enemyManager;
-
+    [SerializeField] SkillTreeController controller;
     [SerializeField] Button ContinueButton;
     [SerializeField] TMP_Text balance;
     [SerializeField] SkillTooltip tooltip;
 
-    private SkillContext context;
-    private SkillNode[] nodes;
+    readonly Dictionary<string, SkillNode> nodesById = new();
+    SkillNode[] nodes;
+    bool isOpen;
 
     public static event Action OnContinueButtonClickedEvent;
-    public SkillContext Context => context;
-    private void Start()
+
+    void Start()
     {
         ClosePopup();
-        context = new SkillContext(
-        this,
-        abilityManager,
-        EconomyManager.Instance,
-        enemyManager
-         );
 
         nodes = GetComponentsInChildren<SkillNode>(true);
         foreach (SkillNode node in nodes)
         {
-            node.OnNodeClickedAction += TrySkillUpgrade;
+            if (!node.Bind(controller, FindNode)) continue;
+            nodesById[node.NodeId] = node;
+            node.OnNodeClickedAction += TryPurchase;
             node.OnHoverStartAction += tooltip.Show;
             node.OnHoverEndAction += tooltip.Hide;
         }
 
+        controller.TreeChanged += RefreshSkillNodes;
+        if (controller.Wallet != null) controller.Wallet.BalanceChanged += OnBalanceChanged;
         ContinueButton.onClick.AddListener(OnContinueButtonClicked);
         RefreshSkillNodes();
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
         ContinueButton.onClick.RemoveListener(OnContinueButtonClicked);
+        if (controller != null)
+        {
+            controller.TreeChanged -= RefreshSkillNodes;
+            if (controller.Wallet != null) controller.Wallet.BalanceChanged -= OnBalanceChanged;
+        }
         if (nodes == null) return;
         foreach (SkillNode node in nodes)
         {
-            node.OnNodeClickedAction -= TrySkillUpgrade;
+            node.OnNodeClickedAction -= TryPurchase;
             node.OnHoverStartAction -= tooltip.Show;
             node.OnHoverEndAction -= tooltip.Hide;
         }
@@ -60,21 +64,26 @@ public class SkillManager : BaseUIPopup
     public override void OpenPopup()
     {
         base.OpenPopup();
+        isOpen = true;
         RefreshSkillNodes();
     }
 
-    void TrySkillUpgrade(SkillNode skillNode)
+    public override void ClosePopup()
     {
-        if (!skillNode.CanUpgrade) return;
+        base.ClosePopup();
+        isOpen = false;
+    }
 
-        int cost = skillNode.Cost;
-        if (EconomyManager.Instance.Balance < cost)
-            return;
+    SkillNode FindNode(string nodeId) => nodesById.TryGetValue(nodeId, out SkillNode node) ? node : null;
 
-        EconomyManager.Instance.DeductAmount(cost);
+    void TryPurchase(SkillNode node)
+    {
+        if (controller.TryPurchase(node.NodeId)) node.PlayPurchasePulse();
+    }
 
-        skillNode.ApplyUpgrade(context);
-        RefreshSkillNodes();
+    void OnBalanceChanged(string currencyId)
+    {
+        if (isOpen) RefreshSkillNodes();
     }
 
     void RefreshSkillNodes()
@@ -82,10 +91,7 @@ public class SkillManager : BaseUIPopup
         if (nodes == null) return;
 
         balance.text = EconomyManager.Instance.Balance.ToString();
-        foreach (SkillNode node in nodes)
-        {
-            node.Refresh();
-        }
+        foreach (SkillNode node in nodes) node.Refresh();
         tooltip.RefreshText();
     }
 }

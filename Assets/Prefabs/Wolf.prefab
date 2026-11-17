@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1200
-  coinValue: {fileID: 11400000, guid: 407d3444da9b7894b8975a7e56c7de83, type: 2}
+  coinValue: 170
   animalType: 4
   displayName: Wolf
   portrait: {fileID: 21300000, guid: 63df5acda68f5004780fd788bca34a20, type: 3}

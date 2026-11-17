@@ -28,7 +28,7 @@ namespace SMPro.SkillTree
     public class SkillTreeController : MonoBehaviour
     {
         [SerializeField] SkillTreeDefinition definition;
-        [SerializeField] WalletProvider wallet;
+        [SerializeField, Tooltip("Any component that implements ICurrencyWallet")] MonoBehaviour wallet;
         [SerializeReference, TypePicker] ISaveProvider saveProvider;
 
         readonly Dictionary<string, int> levels = new();
@@ -46,7 +46,16 @@ namespace SMPro.SkillTree
 
         void Awake()
         {
-            if (!initialized && definition != null) Initialize(definition, wallet);
+            if (!initialized && definition != null) Initialize(definition, wallet as ICurrencyWallet);
+        }
+
+        void OnValidate()
+        {
+            if (wallet != null && wallet is not ICurrencyWallet)
+            {
+                Debug.LogWarning($"{wallet.GetType().Name} does not implement ICurrencyWallet.", this);
+                wallet = null;
+            }
         }
 
         void Start()

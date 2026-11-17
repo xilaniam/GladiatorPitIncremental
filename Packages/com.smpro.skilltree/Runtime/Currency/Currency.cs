@@ -17,15 +17,7 @@ namespace SMPro.SkillTree
         event Action<string> BalanceChanged;
     }
 
-    public abstract class WalletProvider : MonoBehaviour, ICurrencyWallet
-    {
-        public abstract bool CanAfford(string currencyId, long amount);
-        public abstract bool TrySpend(string currencyId, long amount);
-        public abstract void Add(string currencyId, long amount);
-        public abstract event Action<string> BalanceChanged;
-    }
-
-    public class SimpleWallet : WalletProvider
+    public class SimpleWallet : MonoBehaviour, ICurrencyWallet
     {
         [Serializable]
         public struct CurrencyAmount
@@ -38,20 +30,20 @@ namespace SMPro.SkillTree
 
         Dictionary<string, long> balances;
 
-        public override event Action<string> BalanceChanged;
+        public event Action<string> BalanceChanged;
 
         public long GetBalance(string currencyId) => Balances.TryGetValue(currencyId, out long amount) ? amount : 0;
 
-        public override bool CanAfford(string currencyId, long amount) => GetBalance(currencyId) >= amount;
+        public bool CanAfford(string currencyId, long amount) => GetBalance(currencyId) >= amount;
 
-        public override bool TrySpend(string currencyId, long amount)
+        public bool TrySpend(string currencyId, long amount)
         {
             if (amount < 0 || !CanAfford(currencyId, amount)) return false;
             Set(currencyId, GetBalance(currencyId) - amount);
             return true;
         }
 
-        public override void Add(string currencyId, long amount) => Set(currencyId, GetBalance(currencyId) + amount);
+        public void Add(string currencyId, long amount) => Set(currencyId, GetBalance(currencyId) + amount);
 
         void Set(string currencyId, long amount)
         {

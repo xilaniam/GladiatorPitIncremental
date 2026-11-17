@@ -23,21 +23,21 @@ namespace SMPro.Inspector.EditorTools
         readonly List<InspectorProperty> built = new();
         readonly List<Collapsible> collapsibles = new();
         readonly List<IRefreshable> extras = new();
-        readonly List<(SerializedProperty array, int size)> arrays = new();
+        readonly List<StructureKey> structure = new();
         readonly Action requestRebuild;
 
         InspectorBuilder(Action requestRebuild) => this.requestRebuild = requestRebuild;
 
         internal readonly struct Result
         {
-            public Result(InspectorRefresher refresher, List<(SerializedProperty array, int size)> arrays)
+            public Result(InspectorRefresher refresher, List<StructureKey> structure)
             {
                 Refresher = refresher;
-                Arrays = arrays;
+                Structure = structure;
             }
 
             public InspectorRefresher Refresher { get; }
-            public List<(SerializedProperty array, int size)> Arrays { get; }
+            public List<StructureKey> Structure { get; }
         }
 
         public static VisualElement Build(SerializedObject serializedObject)
@@ -71,7 +71,7 @@ namespace SMPro.Inspector.EditorTools
             builder.Arrange(root, model.Type, properties);
             var validation = new InspectorValidation(serializedObject, builder.built, topSlot);
             var refresher = new InspectorRefresher(serializedObject, builder.built, builder.collapsibles, builder.extras, validation);
-            return new Result(refresher, builder.arrays);
+            return new Result(refresher, builder.structure);
         }
 
         static VisualElement ValidationSlot(string path)
@@ -147,6 +147,7 @@ namespace SMPro.Inspector.EditorTools
 
         InspectorProperty Finish(InspectorProperty property)
         {
+            property.RequestRebuild = requestRebuild;
             IFieldHandler fieldHandler = CreateHandlers(property);
             VisualElement field = CreateField(property, fieldHandler);
             NotifyFieldCreated(property, field);
@@ -174,6 +175,7 @@ namespace SMPro.Inspector.EditorTools
         static bool NeedsValidationSlot(InspectorProperty property)
         {
             if (property.SerializedProperty == null) return false;
+            if (property.ExtraValidators.Count > 0) return true;
             foreach (AttributeHandler handler in property.Handlers)
                 if (handler is IValidatorHandler) return true;
             return typeof(ISelfValidator).IsAssignableFrom(property.OwnerType) || typeof(ISelfValidator).IsAssignableFrom(property.Member?.ValueType);
@@ -221,6 +223,9 @@ namespace SMPro.Inspector.EditorTools
             }
 
             if (property.SerializedProperty == null) return Fallback(property);
+            if (property.SerializedProperty.propertyType == SerializedPropertyType.ManagedReference) structure.Add(StructureKey.Of(property.SerializedProperty));
+            Type dictionaryType = TakenOverDictionaryType(property);
+            if (dictionaryType != null) return BuildDictionary(property);
             Type elementType = TakenOverElementType(property);
             if (elementType != null) return BuildList(property, elementType);
             Type nestedType = TakenOverNestedType(property);
@@ -243,6 +248,61 @@ namespace SMPro.Inspector.EditorTools
                 : null;
         }
 
+        static Type TakenOverDictionaryType(InspectorProperty property)
+        {
+            MemberModel member = property.Member;
+            if (member == null || property.SerializedProperty.propertyType != SerializedPropertyType.Generic) return null;
+            if (PropertyDrawerLookup.HasDrawerFor(member.ValueType)) return null;
+            for (Type current = member.ValueType; current != null; current = current.BaseType)
+                if (current.IsGenericType && current.GetGenericTypeDefinition() == typeof(SerializableDictionary<,>)) return current;
+            return null;
+        }
+
+        VisualElement BuildDictionary(InspectorProperty property)
+        {
+            SerializedProperty entries = property.SerializedProperty.FindPropertyRelative("entries");
+            TypeModel dictionaryModel = TypeModel.For(property.Member.ValueType);
+            MemberModel entriesMember = dictionaryModel.Find("entries");
+            if (entries == null || entriesMember == null) return DefaultField(property);
+            structure.Add(StructureKey.Of(entries));
+
+            var list = new InspectorProperty(entries, entriesMember, dictionaryModel.Type, property, property.Targets) { Label = property.Label };
+            TypeModel entryModel = TypeModel.For(ElementTypeOf(entriesMember.ValueType));
+            var rows = new List<IReadOnlyList<VisualElement>>(entries.arraySize);
+            for (int i = 0; i < entries.arraySize; i++)
+            {
+                var element = new InspectorProperty(entries.GetArrayElementAtIndex(i), null, null, list, property.Targets)
+                {
+                    ElementIndex = i,
+                    Label = "Entry " + i,
+                    Element = new VisualElement()
+                };
+                built.Add(element);
+                rows.Add(new[]
+                {
+                    BuildProperty(element.SerializedProperty.FindPropertyRelative("key"), entryModel, element, element.Targets, string.Empty).Element,
+                    BuildProperty(element.SerializedProperty.FindPropertyRelative("value"), entryModel, element, element.Targets, string.Empty).Element
+                });
+            }
+            property.ExtraValidators.Add(new DictionaryValidator(property));
+            return new TableDrawer("sm-dictionary:" + property.Path, property.Label, entries, false, true, new[] { "Key", "Value" }, rows, requestRebuild).Element;
+        }
+
+        sealed class DictionaryValidator : IValidatorHandler
+        {
+            readonly InspectorProperty property;
+
+            public DictionaryValidator(InspectorProperty property) => this.property = property;
+
+            public void Validate(ValidationReport report)
+            {
+                if (property.GetValue() is not ISerializableDictionary dictionary) return;
+                foreach (int index in dictionary.FindMissingKeys()) report.Error($"Entry {index} has no key");
+                foreach ((int first, int duplicate) in dictionary.FindDuplicateKeys())
+                    report.Error($"Duplicate key '{dictionary.KeyAt(duplicate)}' in entries {first} and {duplicate}; only the first is used");
+            }
+        }
+
         static Type ElementTypeOf(Type type)
         {
             if (type.IsArray) return type.GetElementType();
@@ -256,7 +316,7 @@ namespace SMPro.Inspector.EditorTools
         VisualElement BuildList(InspectorProperty property, Type elementType)
         {
             SerializedProperty array = property.SerializedProperty;
-            arrays.Add((array.Copy(), array.arraySize));
+            structure.Add(StructureKey.Of(array));
             TypeModel elementModel = TypeModel.For(elementType);
             MemberModel member = property.Member;
             bool complex = IsComplex(elementType) && !member.Info.IsDefined(typeof(SerializeReference), true);
@@ -326,7 +386,7 @@ namespace SMPro.Inspector.EditorTools
                 rows.Add(cells);
                 element.Element = new VisualElement();
             }
-            return new TableDrawer(property, table, titles, rows, requestRebuild).Element;
+            return new TableDrawer("sm-table:" + property.Path, property.Label, property.SerializedProperty, table.ShowIndex, !table.IsReadOnly, titles, rows, requestRebuild).Element;
         }
 
         sealed class ElementLabel : IRefreshable
@@ -439,7 +499,13 @@ namespace SMPro.Inspector.EditorTools
         {
             SerializedProperty serializedProperty = property.SerializedProperty;
             MemberModel member = property.Member;
-            if (member == null || serializedProperty.propertyType != SerializedPropertyType.Generic || serializedProperty.isArray) return null;
+            if (member == null) return null;
+            if (serializedProperty.propertyType == SerializedPropertyType.ManagedReference)
+            {
+                Type current = serializedProperty.managedReferenceValue?.GetType();
+                return current != null && TypeModel.For(current).UsesInspectorAttributes && !PropertyDrawerLookup.HasDrawerFor(current) ? current : null;
+            }
+            if (serializedProperty.propertyType != SerializedPropertyType.Generic || serializedProperty.isArray) return null;
             Type type = member.ValueType;
             if (!TypeModel.For(type).UsesInspectorAttributes || PropertyDrawerLookup.HasDrawerFor(type)) return null;
             foreach (PropertyAttribute attribute in member.Info.GetCustomAttributes<PropertyAttribute>(true))

@@ -40,6 +40,8 @@ namespace SMPro.Inspector.EditorTools
 
         internal IReadOnlyList<AttributeHandler> Handlers => handlers;
         internal List<string> BuilderProblems { get; } = new();
+        internal List<IValidatorHandler> ExtraValidators { get; } = new();
+        internal Action RequestRebuild { get; set; }
 
         internal void AddBuilderProblem(string problem) => BuilderProblems.Add(problem);
 

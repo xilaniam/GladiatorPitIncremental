@@ -33,6 +33,7 @@ namespace SMPro.Inspector.EditorTools
                 var validators = new List<IValidatorHandler>();
                 foreach (AttributeHandler handler in property.Handlers)
                     if (handler is IValidatorHandler validator) validators.Add(validator);
+                validators.AddRange(property.ExtraValidators);
                 if (validators.Count > 0) entries.Add(new Entry { Property = property, Validators = validators.ToArray() });
                 if (property.SerializedProperty != null && typeof(ISelfValidator).IsAssignableFrom(property.Member?.ValueType)) selfValidating.Add(property);
                 if (property.ValidationSlot != null) slots[property.Path] = new ValidationSlot(property.ValidationSlot);

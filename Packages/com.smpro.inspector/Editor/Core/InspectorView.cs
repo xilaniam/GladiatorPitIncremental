@@ -12,7 +12,7 @@ namespace SMPro.Inspector.EditorTools
         readonly SerializedObject serializedObject;
         readonly Undo.UndoRedoCallback undoAction;
         readonly Action<PlayModeStateChange> playModeAction;
-        List<(SerializedProperty array, int size)> arrays = new();
+        List<StructureKey> structure = new();
         bool rebuildPending;
 
         InspectorView(SerializedObject serializedObject)
@@ -39,7 +39,7 @@ namespace SMPro.Inspector.EditorTools
             root.Clear();
             InspectorBuilder.Result result = InspectorBuilder.BuildContent(root, serializedObject, RequestRebuild);
             Refresher = result.Refresher;
-            arrays = result.Arrays;
+            structure = result.Structure;
             Refresher.Refresh();
         }
 
@@ -53,8 +53,8 @@ namespace SMPro.Inspector.EditorTools
 
         bool StructureChanged()
         {
-            foreach ((SerializedProperty array, int size) in arrays)
-                if (array.arraySize != size) return true;
+            foreach (StructureKey key in structure)
+                if (key.Changed) return true;
             return false;
         }
 

@@ -38,6 +38,8 @@ namespace SMPro.Inspector.EditorTools
 
         protected void ReportProblem(string message) => problems.Add(message);
 
+        protected void RequestRebuild() => Property?.RequestRebuild?.Invoke();
+
         protected BoundGetter<T> ResolveValue<T>(string path) => BoundGetter<T>.Value(Property, path);
 
         protected BoundGetter<bool> ResolveCondition(string path, object[] values) => BoundGetter<bool>.Condition(Property, path, values);

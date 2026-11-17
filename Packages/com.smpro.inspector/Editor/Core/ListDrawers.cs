@@ -110,13 +110,12 @@ namespace SMPro.Inspector.EditorTools
 
     internal sealed class TableDrawer
     {
-        public TableDrawer(InspectorProperty property, TableListAttribute settings, IReadOnlyList<string> columns, IReadOnlyList<IReadOnlyList<VisualElement>> rows, Action rebuild)
+        public TableDrawer(string name, string label, SerializedProperty array, bool showIndex, bool editable,
+            IReadOnlyList<string> columns, IReadOnlyList<IReadOnlyList<VisualElement>> rows, Action rebuild)
         {
-            Editor = new ArrayEditor(property.SerializedProperty, rebuild);
-            bool editable = !settings.IsReadOnly;
-            SerializedProperty array = property.SerializedProperty;
+            Editor = new ArrayEditor(array, rebuild);
 
-            var foldout = new Foldout { text = $"{property.Label} ({rows.Count})", value = array.isExpanded, name = "sm-table:" + property.Path };
+            var foldout = new Foldout { text = $"{label} ({rows.Count})", value = array.isExpanded, name = name };
             foldout.RegisterValueChangedCallback(change =>
             {
                 if (change.target == foldout) array.isExpanded = change.newValue;
@@ -125,7 +124,7 @@ namespace SMPro.Inspector.EditorTools
             foldout.userData = this;
 
             var header = Row("sm-table__header");
-            if (settings.ShowIndex) header.Add(IndexCell(string.Empty));
+            if (showIndex) header.Add(IndexCell(string.Empty));
             foreach (string column in columns)
             {
                 var title = new Label(column);
@@ -140,7 +139,7 @@ namespace SMPro.Inspector.EditorTools
             {
                 var row = Row("sm-table__row");
                 row.name = "sm-table-row:" + i;
-                if (settings.ShowIndex) row.Add(IndexCell(i.ToString()));
+                if (showIndex) row.Add(IndexCell(i.ToString()));
                 foreach (VisualElement content in rows[i])
                 {
                     var cell = new VisualElement();
@@ -160,7 +159,7 @@ namespace SMPro.Inspector.EditorTools
 
             if (editable)
             {
-                var add = new Button(Editor.Add) { text = "+ Add", name = "sm-table-add:" + property.Path };
+                var add = new Button(Editor.Add) { text = "+ Add", name = "sm-table-add" };
                 add.AddToClassList("sm-table__add");
                 foldout.Add(add);
             }

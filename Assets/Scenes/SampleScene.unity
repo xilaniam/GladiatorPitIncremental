@@ -170,46 +170,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: flint_heads
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: cc5250a6-abd7-4e93-8951-02acda94bf6c
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Flint Heads
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +3 spear damage per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: b656e1dae7d6cbd4a86b8a61b936c54b, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 901536280}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Flint Heads
@@ -315,82 +275,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: lucky_find
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: c788d4fd-af9d-4ff4-887c-7fd34c6250c6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Lucky Find
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: 'Unlock: 8% chance a kill pays double coins.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 8a77bc95ac981954aa24304c5db9d02c, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2049801765}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1452165072}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Lucky Find
@@ -489,17 +373,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 20300052}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &20300054 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 20300052}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &56723079
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,46 +702,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: rebound_force
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 40000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: e8e46c77-b339-4ae7-be93-9715d3a01681
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 2.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Rebound Force
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +10% bounce damage per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 745f71f2c44808548adc6cb50167f1ac, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1750398084}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -1254,42 +1087,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: extra_bounce
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 60000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 75dfc312-946e-488b-bcc6-16a693cb844f
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 2.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Extra Bounce
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +1 bounce per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 18c685f77a7e1954898f3abda8937150, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1750398084}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Extra Bounce
@@ -1395,83 +1192,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: herd_call
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 7b8a7832-d2c3-4352-badd-068c18ef4abb
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Herd Call
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: 'Unlock: while the field has fewer animals than at round start, a new
-        one walks in every 6 s.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 394d49d308320f34d99ace561d1ba642, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1147165818}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 1846210927}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 1452165072}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1313387558}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Herd Call
@@ -1570,17 +1290,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 167087778}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &167087780 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 167087778}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &191597219
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1837,82 +1546,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: quick_hands
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 23b5d5c2-9e36-44a1-8fc1-354ddb303495
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Quick Hands
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: -0.15 s between volleys per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 6af1ae896756cce428f42b1ef2278a63, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 901536280}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 1577435746}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 7967389189122070926}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Quick Hands
@@ -2011,17 +1644,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 249747340}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &249747342 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 249747340}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &250837692
 GameObject:
   m_ObjectHideFlags: 0
@@ -2183,46 +1805,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: blood_rush
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 30000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: d7134ebe-858d-4593-a033-96d788bbb87c
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 2.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Blood Rush
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +25% spear damage per level, always active.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 9f9e407d9cb20a948868dc58a945658a, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1114095075}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -2759,46 +2341,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: obsidian_tips
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 900
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 39ef3e64-b87a-4bc4-9911-56686015a8e6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Obsidian Tips
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: x1.2 spear damage per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 4e0c26e25ee979e47a8b025fd1996346, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1879921738}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -3655,82 +3197,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: tribe_tax
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 6168c510-f5fd-4c8d-aad9-ded67a8bf498
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Tribe Tax
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +8% of the round's earnings as an end-of-round bonus per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: ce2b3f87023a45947aeefaf63347974e, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 976828242}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1452165072}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Tribe Tax
@@ -3829,17 +3295,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 485984510}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &485984512 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 485984510}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &526105300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4281,17 +3736,6 @@ RectTransform:
   m_AnchoredPosition: {x: 240, y: -152}
   m_SizeDelta: {x: 200, y: 58.8}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &607591766 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 1539197096}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &607591768 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
@@ -4308,46 +3752,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: alpha_pack
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 3000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: adcd7691-d17f-46a5-95fa-9f594d0a538f
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Alpha Pack
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +4% alpha chance per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: d2400bbdc34c2564b8909eb301effbb7, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 2117863430}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -4810,46 +4214,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: war_party
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 1500
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: e2689e90-b9f8-4674-b03e-d1cf9d359daf
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: War Party
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +1 caveman per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 3bc18d3ea1a5b8b469a56d727681f3ad, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 901536280}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -6292,46 +5656,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: alpha_spawn
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 2000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 1c2b0254-b597-46d5-9dbf-3dcf5136b166
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Alpha Spawn
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: 'Unlock: 6% chance an older animal spawns one tier higher.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: ae6f27f2cd77d3c4288910bcf1899111, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 2076983827}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Alpha Spawn
@@ -6437,82 +5761,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: recruit_caveman
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 4f78a3e6-e279-4fe4-b706-9a062cfaafa3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Recruit Caveman
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +1 caveman per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 3bc18d3ea1a5b8b469a56d727681f3ad, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Recruit Caveman
@@ -6611,17 +5859,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 901536278}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &901536280 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 901536278}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &927997422
 GameObject:
   m_ObjectHideFlags: 0
@@ -6915,59 +6152,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: hunters_frenzy
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 12000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 82a3c862-82ba-4a55-b964-f0920d67f936
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: isMystery
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Hunter's Frenzy
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: 'Every 25th kill in a round starts a 5 s Frenzy: 2x attack speed, +50%
-        damage, +50% coins.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: b7a8742a9bdd3a9499e695956cac5a69, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 485984512}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[1].node
-      value: 
-      objectReference: {fileID: 2049801765}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[1].level
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Hunter's Frenzy
@@ -7136,17 +6320,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 959303522}
   m_CullTransparentMesh: 1
---- !u!114 &970763823 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 360684037}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &970763825 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
@@ -7163,82 +6336,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: trophy_wall
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 400
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: d69f5409-cc5c-4647-87cc-a41cd44d047f
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Trophy Wall
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +3% coins per unlocked animal type, per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 4191cde17c04e354fad669d4b94b8760, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 20300054}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1735200556}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -7338,17 +6435,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 976828240}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &976828242 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 976828240}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &996861167 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
@@ -7987,59 +7073,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: chain_lightning
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 6000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: fb0c485f-7666-4de5-a589-75b8fb2ae176
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: isMystery
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Chain Lightning
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: On spear hit, 10% chance to arc to the 2 nearest animals for 40% of
-        the spear's damage.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 809fbf4dbfaddef44977f2e94f27454e, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1781106731}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[1].node
-      value: 
-      objectReference: {fileID: 901536280}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[1].level
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Chain Lightning
@@ -8520,17 +7553,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1114095075 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 957011632}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1114095077 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
@@ -8683,42 +7705,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: feast
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 80000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 8109c894-93ad-47dd-ab56-30b5587fe951
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 2.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Feast
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +25% Frenzy coin bonus per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 8a4907aaef5f90c4da2146197bcebc4b, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1738059977}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -8874,82 +7860,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: horn_blowers
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 2466edbe-c5e2-48fb-a514-c0572ce8e25b
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Horn Blowers
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: -0.8 s Herd Call timer per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 4064f0318a0a1d04e9955a3beb108790, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1313387558}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 1846210927}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 1452165072}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 167087780}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Horn Blowers
@@ -9048,17 +7958,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 1147165816}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1147165818 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 1147165816}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1151048878
 GameObject:
   m_ObjectHideFlags: 0
@@ -9187,46 +8086,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: gilded_herd
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 2500
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 6dc9f686-7c63-4e69-ae1d-fc51fcbbd402
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Gilded Herd
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +1.5% golden chance per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 524b2869caf17414bb9644ce306e14bf, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1537524776}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -9822,17 +8681,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271200442}
   m_CullTransparentMesh: 1
---- !u!114 &1301249753 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 140705847}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1301249755 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
@@ -9849,82 +8697,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: fertile_land
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 9aa762eb-b685-421e-b989-f33ae5dfab1c
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Fertile Land
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +1 animal at round start per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 8906bcfa35bfdf348bd7140b8925527f, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2143249507}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 1452165072}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1594165162}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -10024,17 +8796,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 1313387556}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1313387558 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 1313387556}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1329759487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10273,46 +9034,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: overcharge
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 15000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 2ef735a7-746c-4245-a9c5-15856d0f2a02
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 2.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Overcharge
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +15% lightning jump damage per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 7345f026ce6e00f4cb581e7b1e19dcae, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 2049902079}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -10744,82 +9465,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: pelt_trade
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 42c65967-6110-4725-8d1b-bc21109ddb76
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Pelt Trade
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +20% coins from all animals per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 3c8c31065cc06814283b030ba0468c7a, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 20300054}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 1735200556}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 7967389189122070926}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Pelt Trade
@@ -10918,17 +9563,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 1452165070}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1452165072 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 1452165070}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1467794097
 GameObject:
   m_ObjectHideFlags: 0
@@ -11403,17 +10037,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1537524776 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 2132835592}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1537524778 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
@@ -11430,46 +10053,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: breeding_season
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: ac998d9e-196c-4e56-ae5e-064b43a5a5b0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Breeding Season
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: 'Unlock: each kill has a 15% chance to bring in a new animal.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: ce3595307aabc3545b03e5e45dc3c8fa, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1313387558}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -11575,42 +10158,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: storm_arc
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 20000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: a5d97546-f9f7-43ab-85be-ddedf8971c68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Storm Arc
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +1 lightning jump per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 81050b4d07c48d148a0892b44be54d99, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1600279764}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -11722,82 +10269,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: keen_eye
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 29f46a86-cc06-4477-9388-561472185ed9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Keen Eye
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: 'Unlock crits: 8% chance for a spear to deal 2x damage.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 12d527dce3d1f3e4990027b86620cd79, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1781106731}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 1590408317}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Keen Eye
@@ -11896,17 +10367,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 1577435744}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1577435746 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 1577435744}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1578097346
 GameObject:
   m_ObjectHideFlags: 0
@@ -12135,82 +10595,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: brutal_crits
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 9e62b82b-c55c-46e2-9119-9fff11d6700e
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Brutal Crits
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +0.5x crit damage per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 31036550e10cc1f41af6c4b4ea0003d5, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1781106731}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1577435746}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Brutal Crits
@@ -12309,17 +10693,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 1590408315}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1590408317 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 1590408315}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1592020921
 GameObject:
   m_ObjectHideFlags: 0
@@ -12386,82 +10759,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: long_hunt
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: c2a232dc-d1fd-477f-8a58-01f393a4f93d
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Long Hunt
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +3 s round duration per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 6add47a23e0c5df4cbf6f7cf92fde1ff, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1313387558}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 1846210927}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 2076983827}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 1452165072}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 7967389189122070926}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -12561,28 +10858,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 1594165160}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1594165162 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 1594165160}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1600279764 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 1084661240}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1600279766 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
@@ -12727,46 +11002,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: war_drums
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 20000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: d3c677e2-1c44-452b-8562-2db409068c8f
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: War Drums
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: -3 kills needed to trigger Frenzy per level (min 10).
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 17eff13a08d2bb34ab0cec3fb3abc272, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1114095075}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -13147,82 +11382,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: trade_routes
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 9fd3eaae-735e-4abe-a57b-f3a751b57feb
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Trade Routes
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +20% coins from all animals per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 1.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 3c8c31065cc06814283b030ba0468c7a, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 976828242}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 485984512}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1452165072}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Trade Routes
@@ -13321,17 +11480,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 1735200554}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1735200556 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 1735200554}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1737982795
 GameObject:
   m_ObjectHideFlags: 0
@@ -13468,17 +11616,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1737982795}
   m_CullTransparentMesh: 1
---- !u!114 &1738059977 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 1638602450}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1738059979 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
@@ -13575,17 +11712,6 @@ RectTransform:
   m_AnchoredPosition: {x: 20, y: 0}
   m_SizeDelta: {x: 900, y: 900}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1750398084 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 1766555039}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1750398086 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
@@ -13727,59 +11853,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: ricochet_spears
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 25000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: ffda1313-f518-416a-a87c-43b55df9b9d4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: isMystery
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Ricochet Spears
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: Every spear hit bounces to a random animal for 40% of its damage, even
-        outside the circle.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 2fb797d4fc89b0445962e68ca37a00ff, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 2076983827}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[1].node
-      value: 
-      objectReference: {fileID: 970763823}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[1].level
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -14008,82 +12081,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: steady_aim
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: c48215aa-616f-4fa8-accb-14bcc93ea4c9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Steady Aim
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +5% crit chance per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 7d29e639906de0e4a973662b398afb69, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 901536280}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1577435746}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Steady Aim
@@ -14182,17 +12179,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 1781106729}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1781106731 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 1781106729}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1790662061 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
@@ -14449,17 +12435,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 361078684}
     - target: {fileID: 4496858970967809189, guid: 0d48fa1611dd6c344a8af1bac6657a06, type: 3}
-      propertyPath: radius
-      value: 17.97
-      objectReference: {fileID: 0}
-    - target: {fileID: 4496858970967809189, guid: 0d48fa1611dd6c344a8af1bac6657a06, type: 3}
       propertyPath: ringCenter
       value: 
       objectReference: {fileID: 1518838568}
-    - target: {fileID: 4496858970967809189, guid: 0d48fa1611dd6c344a8af1bac6657a06, type: 3}
-      propertyPath: circleRadius
-      value: 
-      objectReference: {fileID: 11400000, guid: 0260aa41896db7d4da24ed3f10531e27, type: 2}
     - target: {fileID: 4496858970967809189, guid: 0d48fa1611dd6c344a8af1bac6657a06, type: 3}
       propertyPath: boundaryRadius
       value: 17
@@ -14476,10 +12454,6 @@ PrefabInstance:
       propertyPath: circleRadius.statId
       value: targeting.radius
       objectReference: {fileID: 0}
-    - target: {fileID: 4496858970967809189, guid: 0d48fa1611dd6c344a8af1bac6657a06, type: 3}
-      propertyPath: attackSpeedPerSecond
-      value: 
-      objectReference: {fileID: 11400000, guid: 1b827488f26a1844e9a0ae2d75b032d7, type: 2}
     - target: {fileID: 4496858970967809189, guid: 0d48fa1611dd6c344a8af1bac6657a06, type: 3}
       propertyPath: attackInterval.statId
       value: gladiator.attack_interval
@@ -14520,82 +12494,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: endless_day
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 845aeb51-002c-4d71-b98b-8b2866a8e13c
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Endless Day
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +3 s round duration per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 6add47a23e0c5df4cbf6f7cf92fde1ff, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1313387558}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 1452165072}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1594165162}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -14695,17 +12593,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 1846210925}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1846210927 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 1846210925}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1848390678
 GameObject:
   m_ObjectHideFlags: 0
@@ -14850,42 +12737,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: wall_splinter
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 150000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 2f5b6057-01a0-4577-beba-1577cd3cc2d7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 2.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Wall Splinter
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: A shard hits a random animal for +30% of the spear's damage per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 37175b2f85dca0a4c93c14808e4f890e, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1301249753}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -15157,17 +13008,6 @@ MonoBehaviour:
   chance:
     tree: {fileID: 11400000, guid: 818a0a6bf8935b348a4785be00df8cfd, type: 2}
     statId: breeding_season.chance
---- !u!114 &1879921738 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 19712854}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1879921740 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
@@ -15534,82 +13374,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: four_leaf
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: cad54adb-0af0-4b57-9e67-e26063c16358
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Four-Leaf
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +6% double-coin chance per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: c1f513219bdae264dab9c4b43239c896, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 20300054}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Four-Leaf
@@ -15708,28 +13472,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 2049801763}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2049801765 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 2049801763}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2049902079 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 2069524678}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &2049902081 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
@@ -15846,46 +13588,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: conductivity
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 8000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 9697d298-f4e9-4de6-be3c-8664001b31ea
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Conductivity
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +4% Chain Lightning chance per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 0949a582715a2ff4e83c2df38d9cef4c, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1600279764}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Conductivity
@@ -15991,82 +13693,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: wide_net
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 1340e790-3fc8-4a49-a2da-fea176ea6d3c
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Wide Net
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +12% circle radius per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 4a5c6c8148dd9a74bb80c36e35cc3910, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 167087780}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 1846210927}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 1452165072}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1594165162}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Wide Net
@@ -16165,17 +13791,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 2076983825}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2076983827 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 2076983825}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2102288884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16187,46 +13802,6 @@ PrefabInstance:
     - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: nodeId
       value: big_litters
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 8a910a4a-baea-4d09-bbe4-efb4f94003a8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Big Litters
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +7% spawn-on-kill chance per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 2f99019a3be4bde4f9b5347a90467a47, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 607591766}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
@@ -16451,17 +14026,6 @@ MonoBehaviour:
   ContinueButton: {fileID: 225016165}
   balance: {fileID: 1582324603}
   tooltip: {fileID: 1870901153}
---- !u!114 &2117863430 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 874593923}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &2117863432 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
@@ -16605,46 +14169,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: golden_hide
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 1500
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 1cfb21b2-e04e-4df8-b097-a012ae4a9f1c
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Golden Hide
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: 'Unlock: 2% of animals spawn golden and pay 10x coins.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: c238d7cb8ff2c734daba173d9e0655fd, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 976828242}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Golden Hide
@@ -16750,82 +14274,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: wild_plains
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: baseCost
-      value: 700
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: b33c29de-7235-4a53-9c2d-0bbf7291a9a9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Wild Plains
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 700
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +2 animals at round start per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 9376112813219f34498dd8493937eaf5, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 1452165072}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].node
-      value: 
-      objectReference: {fileID: 1313387558}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: requirements.Array.data[0].level
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Wild Plains
@@ -16924,17 +14372,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747470919789807652, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
   m_PrefabInstance: {fileID: 2143249505}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2143249507 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 2143249505}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &543450651679818300
 Transform:
   m_ObjectHideFlags: 0
@@ -17200,66 +14637,6 @@ PrefabInstance:
       propertyPath: nodeId
       value: sharpened_spears
       objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: nodeGuid
-      value: 3b11642c-1fbb-404e-8206-4a62c9e35eea
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costGrowth
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: displayName
-      value: Sharpened Spears
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: initialCost
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: effectDescription
-      value: +1 spear damage per level.
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: costIncreasePerLevel
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'effects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 847b8dbf291c2e449b039611a109a3f8, type: 2}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: connectedNodes.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 1452165072}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 1594165162}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 249747342}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 1452165072}
-    - target: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-      propertyPath: 'connectedNodes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 1594165162}
     - target: {fileID: 5499170244541202639, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
       propertyPath: m_Name
       value: Sharpened Spears
@@ -17373,17 +14750,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
---- !u!114 &7967389189122070926 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3323939433351531525, guid: f8d5b947e0e54db4ab5b50eaf33527c0, type: 3}
-  m_PrefabInstance: {fileID: 7967389189122070925}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8164078558799646418
 GameObject:
   m_ObjectHideFlags: 0

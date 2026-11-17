@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 5938972827159136875}
   - component: {fileID: 3323939433351531525}
   m_Layer: 7
-  m_Name: IncreaseRoundDuration
+  m_Name: SkillNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -416,22 +416,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dd1e3e2b7dd42144a227fcd6e8c140e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: 
-  effectDescription: 
-  effects:
-  - {fileID: 11400000, guid: 6add47a23e0c5df4cbf6f7cf92fde1ff, type: 2}
-  requirements: []
+  nodeId: 
   rectTransform: {fileID: 8747470919789807652}
   fillMeter: {fileID: 7857839932785618873}
   connectorLinePrefab: {fileID: 606885978166509702, guid: ebd8f72b51166ae4e8036115274242d0, type: 3}
-  maxLevel: 3
-  baseCost: 2
-  costGrowth: 1.5
   hoverScale: 1.2
   pressedScale: 0.8
   hoverDuration: 0.12
   pulseDuration: 0.3
-  isMystery: 0
   mysteryIcon: {fileID: 21300000, guid: 6402be106864a9c4fa0f0500e092c4a6, type: 3}
   iconImage: {fileID: 7497759834409918666}
   mysteryGlow: {fileID: 4179557087022361015}
@@ -439,4 +431,3 @@ MonoBehaviour:
 
     Keep upgrading this
     branch to reveal it.'
-  nodeGuid: d03119a7-1d66-4d19-b370-fd0c42c0d4c9

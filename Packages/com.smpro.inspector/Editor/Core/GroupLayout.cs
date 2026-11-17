@@ -12,11 +12,18 @@ namespace SMPro.Inspector.EditorTools
             readonly IGroupHandler handler;
             readonly VisualElement content;
 
-            public Node(IGroupHandler handler, VisualElement content)
+            public Node(IGroupHandler handler, VisualElement content, Node parent, VisualElement element, VisualElement slot)
             {
                 this.handler = handler;
                 this.content = content;
+                Parent = parent;
+                Element = element;
+                Slot = slot;
             }
+
+            public Node Parent { get; }
+            public VisualElement Element { get; }
+            public VisualElement Slot { get; }
 
             public VisualElement Place(GroupAttribute child) => handler != null ? handler.ContentFor(child) : content;
         }
@@ -24,23 +31,27 @@ namespace SMPro.Inspector.EditorTools
         static readonly HashSet<string> reportedConflicts = new();
 
         readonly Type ownerType;
+        readonly VisualElement container;
         readonly Node root;
         readonly Dictionary<string, GroupAttribute> definitions = new(StringComparer.Ordinal);
         readonly Dictionary<string, TabGroupAttribute> pages = new(StringComparer.Ordinal);
         readonly Dictionary<string, Node> nodes = new(StringComparer.Ordinal);
+        readonly Dictionary<VisualElement, Collapsible> collapsibles = new();
 
         GroupLayout(VisualElement container, Type ownerType)
         {
-            root = new Node(null, container);
+            this.container = container;
+            root = new Node(null, container, null, null, null);
             this.ownerType = ownerType;
         }
 
-        public static void Arrange(VisualElement container, Type ownerType, List<InspectorProperty> properties)
+        public static IReadOnlyCollection<Collapsible> Arrange(VisualElement container, Type ownerType, List<InspectorProperty> properties)
         {
             List<InspectorProperty> ordered = Sorted(properties);
             var layout = new GroupLayout(container, ownerType);
             foreach (InspectorProperty property in ordered) layout.Collect(property);
             foreach (InspectorProperty property in ordered) layout.Place(property);
+            return layout.collapsibles.Values;
         }
 
         internal static void ClearReported() => reportedConflicts.Clear();
@@ -75,7 +86,26 @@ namespace SMPro.Inspector.EditorTools
         {
             GroupAttribute target = DeepestGroup(property);
             Node node = target == null ? root : NodeFor(TargetPath(target), property);
-            node.Place(target).Add(property.Element);
+            VisualElement slot = node.Place(target);
+            slot.Add(property.Element);
+
+            Track(slot, property);
+            for (Node current = node; current != null; current = current.Parent)
+            {
+                Track(current.Element, property);
+                Track(current.Slot, property);
+            }
+        }
+
+        void Track(VisualElement element, InspectorProperty property)
+        {
+            if (element == null || element == container) return;
+            if (!collapsibles.TryGetValue(element, out Collapsible collapsible))
+            {
+                collapsible = new Collapsible(element);
+                collapsibles.Add(element, collapsible);
+            }
+            collapsible.Add(property);
         }
 
         static GroupAttribute DeepestGroup(InspectorProperty property)
@@ -101,15 +131,18 @@ namespace SMPro.Inspector.EditorTools
 
             if (pages.TryGetValue(path, out TabGroupAttribute tab))
             {
-                node = new Node(null, NodeFor(tab.Path, firstMember).Place(tab));
+                Node tabs = NodeFor(tab.Path, firstMember);
+                VisualElement page = tabs.Place(tab);
+                node = new Node(null, page, tabs, null, page);
             }
             else
             {
                 GroupAttribute definition = definitions.TryGetValue(path, out GroupAttribute declared) ? declared : new VerticalGroupAttribute(path);
                 Node parent = NodeFor(definition.ParentPath, firstMember);
                 VisualElement element = CreateGroupElement(definition, firstMember, out IGroupHandler handler);
-                parent.Place(definition).Add(element);
-                node = new Node(handler, element);
+                VisualElement slot = parent.Place(definition);
+                slot.Add(element);
+                node = new Node(handler, element, parent, element, slot);
             }
             nodes[path] = node;
             return node;

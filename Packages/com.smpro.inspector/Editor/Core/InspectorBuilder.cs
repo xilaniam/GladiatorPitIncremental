@@ -10,18 +10,27 @@ using Object = UnityEngine.Object;
 
 namespace SMPro.Inspector.EditorTools
 {
-    internal static class InspectorBuilder
+    internal sealed class InspectorBuilder
     {
         const string ScriptPath = "m_Script";
         const string StylePath = "Packages/com.smpro.inspector/Editor/Styles/SMInspector.uss";
 
         static readonly HashSet<string> reportedErrors = new();
+        static readonly HashSet<string> reportedProblems = new();
         static StyleSheet styles;
+
+        readonly List<InspectorProperty> built = new();
+        readonly List<Collapsible> collapsibles = new();
+
+        InspectorBuilder()
+        {
+        }
 
         public static VisualElement Build(SerializedObject serializedObject)
         {
             var root = new VisualElement { name = "SMInspectorPro" };
             AddStyles(root);
+            var builder = new InspectorBuilder();
             TypeModel model = TypeModel.For(serializedObject.targetObject.GetType());
             Object[] targets = serializedObject.targetObjects;
             var properties = new List<InspectorProperty>();
@@ -31,11 +40,14 @@ namespace SMPro.Inspector.EditorTools
             {
                 SerializedProperty property = iterator.Copy();
                 if (property.propertyPath == ScriptPath) root.Add(ScriptField(property));
-                else properties.Add(BuildProperty(property, model, null, targets));
+                else properties.Add(builder.BuildProperty(property, model, null, targets));
             }
-            GroupLayout.Arrange(root, model.Type, properties);
+            builder.Arrange(root, model.Type, properties);
+            root.userData = InspectorRefresher.Attach(root, serializedObject, builder.built, builder.collapsibles);
             return root;
         }
+
+        internal static InspectorRefresher RefresherOf(VisualElement root) => root?.userData as InspectorRefresher;
 
         static void AddStyles(VisualElement root)
         {
@@ -50,7 +62,10 @@ namespace SMPro.Inspector.EditorTools
             return field;
         }
 
-        static InspectorProperty BuildProperty(SerializedProperty serializedProperty, TypeModel ownerModel, InspectorProperty parent, Object[] targets)
+        void Arrange(VisualElement container, Type ownerType, List<InspectorProperty> properties) =>
+            collapsibles.AddRange(GroupLayout.Arrange(container, ownerType, properties));
+
+        InspectorProperty BuildProperty(SerializedProperty serializedProperty, TypeModel ownerModel, InspectorProperty parent, Object[] targets)
         {
             MemberModel member = ownerModel?.Find(serializedProperty.name);
             var property = new InspectorProperty(serializedProperty, member, ownerModel?.Type, parent, targets)
@@ -58,7 +73,9 @@ namespace SMPro.Inspector.EditorTools
                 Label = LabelFor(serializedProperty, member)
             };
             IFieldHandler field = CreateHandlers(property);
-            property.Element = Decorate(property, CreateField(property, field));
+            VisualElement element = Decorate(property, CreateField(property, field));
+            property.Element = WithProblems(property, element);
+            built.Add(property);
             return property;
         }
 
@@ -73,7 +90,7 @@ namespace SMPro.Inspector.EditorTools
             return serializedProperty.displayName;
         }
 
-        static VisualElement CreateField(InspectorProperty property, IFieldHandler field)
+        VisualElement CreateField(InspectorProperty property, IFieldHandler field)
         {
             if (field != null)
             {
@@ -114,8 +131,28 @@ namespace SMPro.Inspector.EditorTools
                     element = container;
                 }
             }
-            if (element != field) element.name = "sm-property:" + property.SerializedProperty.propertyPath;
+            if (element != field) element.name = PropertyName(property);
             return element;
+        }
+
+        static VisualElement WithProblems(InspectorProperty property, VisualElement element)
+        {
+            List<string> problems = null;
+            foreach (AttributeHandler handler in property.Handlers)
+                foreach (string problem in handler.Problems)
+                    (problems ??= new List<string>()).Add(problem);
+            if (problems == null) return element;
+
+            var container = new VisualElement { name = PropertyName(property) };
+            if (element.name == container.name) element.name = null;
+            container.Add(element);
+            foreach (string problem in problems)
+            {
+                container.Add(new HelpBox(problem, HelpBoxMessageType.Error));
+                string key = $"{property.OwnerType?.FullName}.{property.Name}: {problem}";
+                if (reportedProblems.Add(key)) Debug.LogWarning($"SMInspectorPro: {property.OwnerType?.Name}.{property.Name}: {problem}");
+            }
+            return container;
         }
 
         static IFieldHandler CreateHandlers(InspectorProperty property)
@@ -154,7 +191,7 @@ namespace SMPro.Inspector.EditorTools
             return type;
         }
 
-        static VisualElement NestedFoldout(InspectorProperty property, TypeModel nestedModel)
+        VisualElement NestedFoldout(InspectorProperty property, TypeModel nestedModel)
         {
             SerializedProperty serializedProperty = property.SerializedProperty;
             var container = new VisualElement { name = FieldName(serializedProperty) };
@@ -183,7 +220,7 @@ namespace SMPro.Inspector.EditorTools
             SerializedProperty end = serializedProperty.GetEndProperty();
             for (bool enterChildren = true; child.NextVisible(enterChildren) && !SerializedProperty.EqualContents(child, end); enterChildren = false)
                 children.Add(BuildProperty(child.Copy(), nestedModel, property, property.Targets));
-            GroupLayout.Arrange(content, nestedModel.Type, children);
+            Arrange(content, nestedModel.Type, children);
             return container;
         }
 
@@ -227,9 +264,12 @@ namespace SMPro.Inspector.EditorTools
 
         static string FieldName(SerializedProperty serializedProperty) => "PropertyField:" + serializedProperty.propertyPath;
 
+        static string PropertyName(InspectorProperty property) => "sm-property:" + property.SerializedProperty.propertyPath;
+
         internal static void ClearReportedErrors()
         {
             reportedErrors.Clear();
+            reportedProblems.Clear();
             GroupLayout.ClearReported();
         }
     }

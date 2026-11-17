@@ -33,6 +33,23 @@ namespace SMPro.SkillTree.Tests
         }
 
         [Test]
+        public void ExponentialCost_IgnoresFloatRepresentationError()
+        {
+            var cost = new ExponentialCost { baseCost = 15000, growth = 2.2f };
+
+            Assert.AreEqual(33000, cost.GetCost(1));
+            Assert.AreEqual(72600, cost.GetCost(2));
+        }
+
+        [Test]
+        public void ExponentialCost_SaturatesInsteadOfOverflowing()
+        {
+            var cost = new ExponentialCost { baseCost = 1000, growth = 10f };
+
+            Assert.AreEqual(long.MaxValue, cost.GetCost(40));
+        }
+
+        [Test]
         public void TableCost_ClampsToLastEntry()
         {
             var cost = new TableCost { costs = new long[] { 1, 4, 9 } };

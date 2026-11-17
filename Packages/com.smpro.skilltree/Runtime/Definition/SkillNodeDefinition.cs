@@ -43,7 +43,12 @@ namespace SMPro.SkillTree
         public long GetTotalCost(int level)
         {
             long total = 0;
-            for (int i = 0; i < level; i++) total += GetCost(i);
+            for (int i = 0; i < level; i++)
+            {
+                long cost = GetCost(i);
+                if (total > long.MaxValue - cost) return long.MaxValue;
+                total += cost;
+            }
             return total;
         }
 

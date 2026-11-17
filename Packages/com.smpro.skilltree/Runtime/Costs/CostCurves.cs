@@ -32,7 +32,20 @@ namespace SMPro.SkillTree
         public long baseCost = 1;
         [Min(1f)] public float growth = 1.5f;
 
-        public override long GetCost(int currentLevel) => (long)Math.Ceiling(baseCost * Math.Pow(growth, currentLevel));
+        public override long GetCost(int currentLevel)
+        {
+            try
+            {
+                decimal factor = (decimal)growth;
+                decimal cost = baseCost;
+                for (int i = 0; i < currentLevel; i++) cost *= factor;
+                return (long)Math.Ceiling(cost);
+            }
+            catch (OverflowException)
+            {
+                return long.MaxValue;
+            }
+        }
     }
 
     [Serializable]

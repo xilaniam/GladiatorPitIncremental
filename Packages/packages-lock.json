@@ -23,6 +23,12 @@
       "source": "local-tarball",
       "dependencies": {}
     },
+    "com.smpro.inspector": {
+      "version": "file:com.smpro.inspector",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.smpro.skilltree": {
       "version": "file:com.smpro.skilltree",
       "depth": 0,

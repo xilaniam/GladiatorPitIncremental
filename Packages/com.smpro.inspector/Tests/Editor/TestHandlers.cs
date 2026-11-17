@@ -31,6 +31,11 @@ namespace SMPro.Inspector.Tests
         public override VisualElement Decorate(VisualElement field) => throw new InvalidOperationException("decorator boom");
     }
 
+    [CustomEditor(typeof(DerivedEditorTestComponent))]
+    public sealed class DerivedEditorTestComponentEditor : SMInspectorEditor
+    {
+    }
+
     [CustomEditor(typeof(CustomEditorTestComponent))]
     public sealed class CustomEditorTestComponentEditor : Editor
     {

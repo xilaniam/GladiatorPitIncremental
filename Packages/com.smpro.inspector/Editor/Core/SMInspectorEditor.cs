@@ -10,22 +10,25 @@ namespace SMPro.Inspector.EditorTools
     {
         public override VisualElement CreateInspectorGUI()
         {
-            if (target != null && TypeModel.For(target.GetType()).UsesInspectorAttributes)
-                return InspectorBuilder.Build(serializedObject);
+            if (ShouldBuild()) return InspectorBuilder.Build(serializedObject);
 
             var root = new VisualElement();
             InspectorElement.FillDefaultInspector(root, serializedObject, this);
             return root;
         }
+
+        protected virtual bool ShouldBuild() => target != null && TypeModel.For(target.GetType()).UsesInspectorAttributes;
     }
 
     [CustomEditor(typeof(MonoBehaviour), true, isFallback = true), CanEditMultipleObjects]
     internal sealed class SMBehaviourEditor : SMInspectorEditor
     {
+        protected override bool ShouldBuild() => target != null && SMInspectorSettings.instance.AllowsFallbackFor(target.GetType()) && base.ShouldBuild();
     }
 
     [CustomEditor(typeof(ScriptableObject), true, isFallback = true), CanEditMultipleObjects]
     internal sealed class SMScriptableObjectEditor : SMInspectorEditor
     {
+        protected override bool ShouldBuild() => target != null && SMInspectorSettings.instance.AllowsFallbackFor(target.GetType()) && base.ShouldBuild();
     }
 }

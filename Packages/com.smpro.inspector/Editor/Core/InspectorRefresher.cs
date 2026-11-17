@@ -8,8 +8,6 @@ namespace SMPro.Inspector.EditorTools
 {
     internal sealed class InspectorRefresher
     {
-        public const long PollInterval = 100;
-
         sealed class Entry
         {
             public InspectorProperty Property;
@@ -74,8 +72,9 @@ namespace SMPro.Inspector.EditorTools
         public void Start(VisualElement root)
         {
             if (!Polls) return;
-            if (poll == null) poll = root.schedule.Execute(pollAction).Every(PollInterval);
-            else poll.Resume();
+            long interval = SMInspectorSettings.instance.PollInterval;
+            if (poll == null) poll = root.schedule.Execute(pollAction).Every(interval);
+            else poll.Every(interval).Resume();
         }
 
         public void Stop() => poll?.Pause();

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Gladiator : MonoBehaviour
@@ -6,14 +7,25 @@ public class Gladiator : MonoBehaviour
     [SerializeField] private Transform throwPoint;       // where weapons spawn from (e.g. hand)
     [SerializeField] private float throwSpeed = 15f;
 
+    [Header("Held Spear")]
+    [SerializeField] private GameObject heldSpear;
+    [SerializeField, Tooltip("Seconds after a throw before the held spear reappears")] private float regripDelay = 0.25f;
+
     [Header("Animation")]
     [SerializeField] private Animator animator;
 
     private GameObject currentWeaponPrefab;
     private Transform currentTarget;
     private int remainingThrows;
+    private Coroutine regripRoutine;
 
     public bool IsAttacking => remainingThrows > 0;
+
+    private void OnDisable()
+    {
+        regripRoutine = null;
+        if (heldSpear != null) heldSpear.SetActive(true);
+    }
 
     public void SetupWeapon(GameObject weaponPrefab)
     {
@@ -57,6 +69,7 @@ public class Gladiator : MonoBehaviour
         Vector3 spawnPos = throwPoint != null ? throwPoint.position : transform.position;
 
         GameObject weaponInstance = Instantiate(currentWeaponPrefab, spawnPos, Quaternion.identity);
+        HideHeldSpear();
 
         ThrowableWeapon throwable = weaponInstance.GetComponent<ThrowableWeapon>();
         if (throwable != null)
@@ -67,5 +80,21 @@ public class Gladiator : MonoBehaviour
         {
             Debug.LogWarning($"{currentWeaponPrefab.name} has no ThrowableWeapon component.");
         }
+    }
+
+    private void HideHeldSpear()
+    {
+        if (heldSpear == null) return;
+
+        heldSpear.SetActive(false);
+        if (regripRoutine != null) StopCoroutine(regripRoutine);
+        regripRoutine = StartCoroutine(RegripAfterDelay());
+    }
+
+    private IEnumerator RegripAfterDelay()
+    {
+        yield return new WaitForSeconds(regripDelay);
+        heldSpear.SetActive(true);
+        regripRoutine = null;
     }
 }

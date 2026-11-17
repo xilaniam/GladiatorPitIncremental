@@ -1,0 +1,262 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 088f995797bf7de45893f969059ac221, type: 3}
+  m_Name: StarterTree
+  m_EditorClassIdentifier: 
+  treeId: starter_tree
+  stats:
+  - id: player.damage
+    displayName: Damage
+    baseValue: 10
+    min: 0
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 0
+  - id: player.max_health
+    displayName: Max Health
+    baseValue: 100
+    min: 1
+    max: 3.4028235e+38
+    isInteger: 1
+    format: 0
+  - id: player.crit_chance
+    displayName: Crit Chance
+    baseValue: 0.05
+    min: 0
+    max: 1
+    isInteger: 0
+    format: 1
+  - id: player.gold_find
+    displayName: Gold Find
+    baseValue: 1
+    min: 0
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 1
+  nodes:
+  - id: sharpen
+    displayName: Sharpen
+    flavourText: 
+    icon: {fileID: 21300000, guid: 4594a2813610a104d9eb975a364eef23, type: 3}
+    position: {x: 0, y: 0}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213975
+    requirements: []
+    conditions: []
+    effects:
+    - rid: 8318600806399213976
+    reveal: 0
+    tags: []
+  - id: toughness
+    displayName: Toughness
+    flavourText: 
+    icon: {fileID: 21300000, guid: 69744d1aee7d47b40b7fd3fa2581261d, type: 3}
+    position: {x: -220, y: -200}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213977
+    requirements:
+    - nodeId: sharpen
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213978
+    reveal: 1
+    tags: []
+  - id: keen_eye
+    displayName: Keen Eye
+    flavourText: 
+    icon: {fileID: 21300000, guid: fa12a1e9cd8dbc042adfcce1f06ee8ac, type: 3}
+    position: {x: 220, y: -200}
+    maxLevel: 3
+    currencyId: default
+    cost:
+      rid: 8318600806399213979
+    requirements:
+    - nodeId: sharpen
+      level: 3
+    conditions: []
+    effects:
+    - rid: 8318600806399213980
+    reveal: 1
+    tags: []
+  - id: fortune
+    displayName: Fortune
+    flavourText: 
+    icon: {fileID: 21300000, guid: 01603923b3dad0044b5306e02ffa0e8c, type: 3}
+    position: {x: -440, y: -400}
+    maxLevel: 4
+    currencyId: default
+    cost:
+      rid: 8318600806399213981
+    requirements:
+    - nodeId: toughness
+      level: 2
+    conditions: []
+    effects:
+    - rid: 8318600806399213982
+    reveal: 1
+    tags: []
+  - id: berserk
+    displayName: Berserk
+    flavourText: Every 6 seconds, deal x1.5 damage for 2 seconds.
+    icon: {fileID: 21300000, guid: bfe2f94e4d43ba34c92ef34727709465, type: 3}
+    position: {x: 0, y: -400}
+    maxLevel: 1
+    currencyId: default
+    cost:
+      rid: 8318600806399213983
+    requirements:
+    - nodeId: keen_eye
+      level: 3
+    - nodeId: toughness
+      level: 3
+    conditions: []
+    effects:
+    - rid: 8318600806399213984
+    - rid: 8318600806399213985
+    reveal: 3
+    tags:
+    - keystone
+  - id: giant_slayer
+    displayName: Giant Slayer
+    flavourText: 
+    icon: {fileID: 21300000, guid: 9f799a05a847ebd4282526e1097702ec, type: 3}
+    position: {x: 220, y: -600}
+    maxLevel: 2
+    currencyId: default
+    cost:
+      rid: 8318600806399213986
+    requirements:
+    - nodeId: berserk
+      level: 1
+    conditions:
+    - rid: 8318600806399213987
+    effects:
+    - rid: 8318600806399213988
+    reveal: 1
+    tags: []
+  - id: second_wind
+    displayName: Second Wind
+    flavourText: 
+    icon: {fileID: 21300000, guid: d5ca7c54f241fc543bad17b203e45977, type: 3}
+    position: {x: -220, y: -600}
+    maxLevel: 1
+    currencyId: default
+    cost:
+      rid: 8318600806399213989
+    requirements:
+    - nodeId: berserk
+      level: 1
+    conditions:
+    - rid: 8318600806399213990
+    effects:
+    - rid: 8318600806399213991
+    reveal: 2
+    tags: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 8318600806399213975
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 10
+        growth: 1.5
+    - rid: 8318600806399213976
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: player.damage
+        kind: 0
+        valuePerLevel: 2
+        valueByLevel: []
+    - rid: 8318600806399213977
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 15
+        growth: 1.4
+    - rid: 8318600806399213978
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: player.max_health
+        kind: 0
+        valuePerLevel: 20
+        valueByLevel: []
+    - rid: 8318600806399213979
+      type: {class: LinearCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 40
+        step: 30
+    - rid: 8318600806399213980
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: player.crit_chance
+        kind: 0
+        valuePerLevel: 0.03
+        valueByLevel: []
+    - rid: 8318600806399213981
+      type: {class: TableCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        costs: 1e000000000000003c000000000000007800000000000000f000000000000000
+    - rid: 8318600806399213982
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: player.gold_find
+        kind: 0
+        valuePerLevel: 0.1
+        valueByLevel: []
+    - rid: 8318600806399213983
+      type: {class: FlatCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        amount: 300
+    - rid: 8318600806399213984
+      type: {class: UnlockFeatureEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        featureId: berserk
+        label: Berserk (x1.5 damage every few seconds)
+    - rid: 8318600806399213985
+      type: {class: GrantTagEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        tag: rage
+    - rid: 8318600806399213986
+      type: {class: FlatCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        amount: 250
+    - rid: 8318600806399213987
+      type: {class: TotalPointsSpentCondition, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        points: 12
+    - rid: 8318600806399213988
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: player.damage
+        kind: 2
+        valuePerLevel: 1.25
+        valueByLevel: []
+    - rid: 8318600806399213989
+      type: {class: FlatCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        amount: 200
+    - rid: 8318600806399213990
+      type: {class: StatAtLeastCondition, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: player.max_health
+        value: 160
+    - rid: 8318600806399213991
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: player.max_health
+        kind: 1
+        valuePerLevel: 0.25
+        valueByLevel: []

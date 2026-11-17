@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using SMPro.SkillTree;
 using UnityEngine;
 
 public class EnemyManager : GameEventListener
@@ -7,11 +8,20 @@ public class EnemyManager : GameEventListener
     [SerializeField] List<Enemy> enemyPrefabs = new List<Enemy>();
     [SerializeField] List<AnimalType> startingEnemies = new List<AnimalType> { AnimalType.Bunny };
     [SerializeField] float ringRadius;
-    [SerializeField] IntVariable enemyCount;
+    [Header("Spawn Weights")]
+    [SerializeField, Tooltip("Spawn weight by how far an animal is below the newest unlocked one (first = newest). Animals further down use the last value.")]
+    float[] tierWeights = { 50f, 25f, 12f, 6f, 4f, 3f };
+    [Header("Stats")]
+    [SerializeField] StatRef enemyCount;
+    [SerializeField] StatRef alphaChance;
+    [SerializeField] StatRef goldenChance;
 
     private List<Enemy> spawnedEnemy = new List<Enemy>();
     private HashSet<AnimalType> unlockedTypes = new HashSet<AnimalType>();
     private List<Enemy> availablePrefabs = new List<Enemy>();
+
+    public IReadOnlyList<Enemy> AliveEnemies => spawnedEnemy;
+    public int UnlockedTiers => unlockedTypes.Count;
 
     private void Awake()
     {
@@ -47,6 +57,8 @@ public class EnemyManager : GameEventListener
 
     public bool IsUnlocked(AnimalType type) => unlockedTypes.Contains(type);
 
+    public Enemy GetPrefab(AnimalType type) => enemyPrefabs.FirstOrDefault(p => p != null && p.AnimalType == type);
+
     public void UnlockEnemy(AnimalType type)
     {
         if (unlockedTypes.Add(type))
@@ -57,6 +69,7 @@ public class EnemyManager : GameEventListener
     {
         availablePrefabs = enemyPrefabs
             .Where(p => p != null && unlockedTypes.Contains(p.AnimalType))
+            .OrderBy(p => p.AnimalType)
             .ToList();
     }
 
@@ -66,27 +79,40 @@ public class EnemyManager : GameEventListener
 
     public void SpawnEnemies()
     {
-        for (int i = 0; i < enemyCount.Value; i++)
-        {
+        int count = enemyCount.IntValue;
+        int guaranteed = Mathf.Min(availablePrefabs.Count, count);
+        for (int i = 0; i < guaranteed; i++)
+            SpawnEnemy(availablePrefabs[availablePrefabs.Count - 1 - i]);
+
+        for (int i = guaranteed; i < count; i++)
             SpawnEnemy();
-        }
     }
 
-    public void SpawnEnemy()
+    public bool TrySpawnExtra()
     {
-        Enemy randomEnemyPrefab = GetRandomEnemy();
-        if (randomEnemyPrefab == null) return;
+        if (spawnedEnemy.Count >= enemyCount.IntValue) return false;
+
+        SpawnEnemy();
+        return true;
+    }
+
+    public void SpawnEnemy() => SpawnEnemy(PickEnemyPrefab());
+
+    void SpawnEnemy(Enemy enemyPrefab)
+    {
+        if (enemyPrefab == null) return;
 
         Vector3 spawnPosition = GetRandomPositionInsideCircle();
-        Enemy enemy = Instantiate(randomEnemyPrefab, spawnPosition, Quaternion.identity, transform);
+        Enemy enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity, transform);
         enemy.Setup(transform.position, ringRadius);
+        if (Random.value < goldenChance.Value) enemy.MakeGolden();
         spawnedEnemy.Add(enemy);
 
         enemy.OnEnemyDeadAction += ClearDeadEnemy;
         enemy.OnDamageTakenAction += OnDamageTaken;
     }
 
-    Enemy GetRandomEnemy()
+    Enemy PickEnemyPrefab()
     {
         if (availablePrefabs.Count == 0)
         {
@@ -94,7 +120,33 @@ public class EnemyManager : GameEventListener
             return null;
         }
 
-        return availablePrefabs[Random.Range(0, availablePrefabs.Count)];
+        int index = PickWeightedTier(availablePrefabs.Count);
+        bool isNewestTier = index == availablePrefabs.Count - 1;
+        if (!isNewestTier && Random.value < alphaChance.Value) index++;
+
+        return availablePrefabs[index];
+    }
+
+    int PickWeightedTier(int tierCount)
+    {
+        int newest = tierCount - 1;
+        float total = 0f;
+        for (int tier = 0; tier < tierCount; tier++)
+            total += TierWeight(newest - tier);
+
+        float roll = Random.value * total;
+        for (int tier = newest; tier > 0; tier--)
+        {
+            roll -= TierWeight(newest - tier);
+            if (roll < 0f) return tier;
+        }
+        return 0;
+    }
+
+    float TierWeight(int stepsBelowNewest)
+    {
+        if (tierWeights == null || tierWeights.Length == 0) return 1f;
+        return tierWeights[Mathf.Min(stepsBelowNewest, tierWeights.Length - 1)];
     }
 
     public void Cleanup()
@@ -113,17 +165,15 @@ public class EnemyManager : GameEventListener
 
     void ClearDeadEnemy(Enemy deadEnemy)
     {
-        EventManager.InvokeCoinDroppedEvent(deadEnemy.CoinValue);
-        EventManager.InvokeEnemyDeadEvent(deadEnemy);
-
         deadEnemy.OnEnemyDeadAction -= ClearDeadEnemy;
         deadEnemy.OnDamageTakenAction -= OnDamageTaken;
-
         spawnedEnemy.RemoveAll(enemy => enemy == null || enemy.IsDead);
+
+        EventManager.InvokeEnemyDeadEvent(deadEnemy);
+
         if (spawnedEnemy.Count == 0)
         {
             SpawnEnemy();
-            //EventManager.InvokeAllEnemyClearedEvent();
         }
     }
 

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4346301c376f1e459a7ec474661df7a, type: 3}
+  m_Name: StarterNodeStyle
+  m_EditorClassIdentifier: 
+  mysteryIcon: {fileID: 21300000, guid: 89dc8a367e2658846ad8aac850c40284, type: 3}
+  mysteryTitle: ???
+  mysteryText: 'A special power lies down this path.
+
+    Keep upgrading this branch
+    to reveal it.'
+  mysteryTint: {r: 0.28, g: 0.24, b: 0.36, a: 1}
+  lockedTint: {r: 0.17, g: 0.18, b: 0.21, a: 1}
+  availableTint: {r: 0.33, g: 0.38, b: 0.48, a: 1}
+  maxedTint: {r: 0.8, g: 0.62, b: 0.25, a: 1}
+  connectorInactive: {r: 1, g: 1, b: 1, a: 0.2}
+  connectorActive: {r: 1, g: 1, b: 1, a: 1}
+  highlightTag: keystone

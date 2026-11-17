@@ -1,18 +1,25 @@
+using System;
 using System.Collections.Generic;
+using SMPro.SkillTree;
 using UnityEngine;
-using UnityEngine.Timeline;
 
-public class EconomyManager : GameEventListener
+public class EconomyManager : GameEventListener, ICurrencyWallet
 {
     [SerializeField] int balance;
-    [SerializeField] IntVariable additiveMultiplier;
-    [SerializeField] FloatVariable bonusPercentage;
+    [SerializeField] EnemyManager enemyManager;
+    [SerializeField] StatRef coinMultiplier;
+    [SerializeField] StatRef coinBonusPerTier;
+    [SerializeField] StatRef bonusPercentage;
 
-    private readonly List<System.Func<int,int>> coinModifiers = new List<System.Func<int, int>>();
+    private readonly List<Func<float, float>> coinModifiers = new List<Func<float, float>>();
     private int roundCollection;
+    private float coinRemainder;
 
     public int Balance => balance;
+    public int LastRoundBonus { get; private set; }
     public static EconomyManager Instance { get; private set; }
+
+    public event Action<string> BalanceChanged;
 
     #region ------Initialization And Subscription -------
     private void Awake()
@@ -36,33 +43,44 @@ public class EconomyManager : GameEventListener
     {
         EventManager.RoundStartedEvent += ResetRoundCollection;
         EventManager.RoundEndedEvent += HandleRoundEndBalance;
-        EventManager.OnCoinDroppedEvent += CollectCoin;
+        EventManager.OnEnemyDeadEvent += CollectCoins;
     }
     protected override void UnsubscribeEvents()
     {
         EventManager.RoundStartedEvent -= ResetRoundCollection;
         EventManager.RoundEndedEvent -= HandleRoundEndBalance;
-        EventManager.OnCoinDroppedEvent -= CollectCoin;
+        EventManager.OnEnemyDeadEvent -= CollectCoins;
     }
     #endregion
 
-    void CollectCoin(int value)
+    void CollectCoins(Enemy enemy)
     {
-        int finalValue = value;
+        float coins = enemy.CoinValue * coinMultiplier.Value * (1f + coinBonusPerTier.Value * enemyManager.UnlockedTiers);
         foreach (var modifier in coinModifiers)
         {
-            finalValue = modifier(finalValue);
+            coins = modifier(coins);
         }
-        finalValue += additiveMultiplier.Value;
-        roundCollection += finalValue;
-        balance += finalValue;
-        EventManager.InvokeBalanceUpdatedEvent(balance);
+
+        coinRemainder += coins;
+        int earned = Mathf.FloorToInt(coinRemainder);
+        coinRemainder -= earned;
+
+        roundCollection += earned;
+        balance += earned;
+        EventManager.InvokeCoinsEarnedEvent(enemy, earned);
+        NotifyBalanceChanged();
     }
 
     public void DeductAmount(int amount)
     {
         balance -= amount;
-        EventManager.InvokeBalanceUpdatedEvent(balance);
+        NotifyBalanceChanged();
+    }
+
+    public void AddCoins(int amount)
+    {
+        balance += amount;
+        NotifyBalanceChanged();
     }
 
     void ResetRoundCollection()
@@ -73,10 +91,28 @@ public class EconomyManager : GameEventListener
     void HandleRoundEndBalance()
     {
         int additionalBonus = Mathf.CeilToInt((bonusPercentage.Value / 100) * roundCollection);
+        LastRoundBonus = additionalBonus;
         balance += additionalBonus;
-        EventManager.InvokeBalanceUpdatedEvent(balance);
+        NotifyBalanceChanged();
     }
 
-    public void RegisterCoinModifier(System.Func<int, int> modifier) => coinModifiers.Add(modifier);
-    public void UnregisterCoinModifier(System.Func<int, int> modifier) => coinModifiers.Remove(modifier);
+    public bool CanAfford(string currencyId, long amount) => balance >= amount;
+
+    public bool TrySpend(string currencyId, long amount)
+    {
+        if (amount < 0 || amount > balance) return false;
+        DeductAmount((int)amount);
+        return true;
+    }
+
+    public void Add(string currencyId, long amount) => AddCoins((int)Math.Min(amount, int.MaxValue - (long)balance));
+
+    void NotifyBalanceChanged()
+    {
+        EventManager.InvokeBalanceUpdatedEvent(balance);
+        BalanceChanged?.Invoke(CurrencyIds.Default);
+    }
+
+    public void RegisterCoinModifier(Func<float, float> modifier) => coinModifiers.Add(modifier);
+    public void UnregisterCoinModifier(Func<float, float> modifier) => coinModifiers.Remove(modifier);
 }

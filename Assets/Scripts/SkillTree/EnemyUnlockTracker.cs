@@ -8,7 +8,9 @@ public class EnemyUnlockTracker : GameEventListener
     [SerializeField] List<EnemyUnlockRule> rules = new List<EnemyUnlockRule>();
 
     private readonly Dictionary<AnimalType, int> kills = new Dictionary<AnimalType, int>();
+    private readonly List<AnimalType> unlockedThisRound = new List<AnimalType>();
 
+    public IReadOnlyList<AnimalType> UnlockedThisRound => unlockedThisRound;
     public int GetKills(AnimalType type) => kills.TryGetValue(type, out int count) ? count : 0;
 
     private void Start()
@@ -24,38 +26,53 @@ public class EnemyUnlockTracker : GameEventListener
     protected override void SubscribeEvents()
     {
         EventManager.OnEnemyDeadEvent += OnEnemyDead;
+        EventManager.RoundEndedEvent += ApplyUnlocks;
     }
 
     protected override void UnsubscribeEvents()
     {
         EventManager.OnEnemyDeadEvent -= OnEnemyDead;
+        EventManager.RoundEndedEvent -= ApplyUnlocks;
     }
 
     void OnEnemyDead(Enemy enemy)
     {
         kills[enemy.AnimalType] = GetKills(enemy.AnimalType) + 1;
-        CheckRules(enemy.AnimalType);
     }
 
-    void CheckRules(AnimalType killedType)
+    void ApplyUnlocks()
+    {
+        unlockedThisRound.Clear();
+        foreach (EnemyUnlockRule rule in rules)
+        {
+            if (enemyManager.IsUnlocked(rule.unlocks)) continue;
+            if (GetKills(rule.killType) < rule.killsRequired) continue;
+
+            enemyManager.UnlockEnemy(rule.unlocks);
+            unlockedThisRound.Add(rule.unlocks);
+        }
+    }
+
+    public bool TryGetNextUnlock(out EnemyUnlockRule nextRule)
     {
         foreach (EnemyUnlockRule rule in rules)
         {
-            if (rule.killType != killedType) continue;
             if (enemyManager.IsUnlocked(rule.unlocks)) continue;
+            if (!enemyManager.IsUnlocked(rule.killType)) continue;
 
-            if (GetKills(killedType) >= rule.killsRequired)
-            {
-                enemyManager.UnlockEnemy(rule.unlocks);
-            }
+            nextRule = rule;
+            return true;
         }
+
+        nextRule = null;
+        return false;
     }
 }
 
 [Serializable]
 public class EnemyUnlockRule
 {
-    public AnimalType killType; 
-    public int killsRequired = 10;   
-    public AnimalType unlocks;       
+    public AnimalType killType;
+    public int killsRequired = 10;
+    public AnimalType unlocks;
 }

@@ -1,0 +1,27 @@
+{
+    "name": "SMPro.SkillTree.UI",
+    "rootNamespace": "SMPro.SkillTree.UI",
+    "references": [
+        "SMPro.SkillTree.Runtime",
+        "PrimeTween.Runtime",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "SMPRO_PRIMETWEEN"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.kyrylokuzyk.primetween",
+            "expression": "",
+            "define": "SMPRO_PRIMETWEEN"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using SMPro.SkillTree;
 using UnityEngine;
 
 public class GladiatorManager : GameEventListener
@@ -10,9 +11,9 @@ public class GladiatorManager : GameEventListener
     [Header("DataSetup")]
     [SerializeField] float ringOuterRadius = 5f;
     [SerializeField] int maxGladiators = 10;
-    [Header("Variables")]
-    [SerializeField] IntVariable gladiatorCount;
-    [SerializeField] IntVariable weaponThrowCount;
+    [Header("Stats")]
+    [SerializeField] StatRef gladiatorCount;
+    [SerializeField] StatRef weaponThrowCount;
 
     List<Gladiator> spawnedGladiators = new List<Gladiator>();
     List<Vector3> freeSpawnSlots = new List<Vector3>();
@@ -50,7 +51,7 @@ public class GladiatorManager : GameEventListener
 
     public void SpawnGladiators()
     {
-        int count = Mathf.Min(gladiatorCount.Value, maxGladiators);
+        int count = Mathf.Min(gladiatorCount.IntValue, maxGladiators);
         for (int i = 0; i < count; i++)
         {
             SpawnGladiator();
@@ -108,7 +109,7 @@ public class GladiatorManager : GameEventListener
             if (targets.Count == 0) yield break;
 
             Transform target = targets[targetIndex++ % targets.Count];
-            spawnedGladiators[i].Attack(weaponThrowCount.Value, target);
+            spawnedGladiators[i].Attack(weaponThrowCount.IntValue, target);
             yield return new WaitForSeconds(Random.Range(0.1f, 0.35f));
         }
     }

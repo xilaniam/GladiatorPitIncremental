@@ -5,8 +5,11 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] protected float health = 7f;
-    [SerializeField] protected IntVariable coinValue;
+    [SerializeField, Min(0)] protected int coinValue = 1;
     [SerializeField] protected AnimalType animalType;
+    [Header("Display")]
+    [SerializeField] protected string displayName;
+    [SerializeField] protected Sprite portrait;
     [Header("Roaming Settings")]
     [SerializeField] protected float moveSpeed = 2f;
     [SerializeField] protected float rotationSpeed = 5f;
@@ -36,6 +39,11 @@ public class Enemy : MonoBehaviour, IDamageable
     [Header("Materials")]
     [SerializeField] protected List<MeshRenderer> meshRenderers = new List<MeshRenderer>();
 
+    [Header("Golden")]
+    [SerializeField] protected int goldenCoinMultiplier = 10;
+    [SerializeField, ColorUsage(false, true)] protected Color goldenColor = new Color(4f, 2.8f, 0.4f);
+    [SerializeField, Range(0f, 1f)] protected float goldenGlow = 0.35f;
+
     protected float roamRadius;
     protected Vector3 roamCenter;
     protected Vector3 targetPosition;
@@ -46,16 +54,21 @@ public class Enemy : MonoBehaviour, IDamageable
     protected float waitTimer;
     protected bool isWaiting;
     protected bool isDead;
+    protected bool isGolden;
 
     private float appliedWobbleAngle;
+    private float restingFlash;
 
     public System.Action<Enemy> OnEnemyDeadAction;
     public System.Action<Enemy> OnDamageTakenAction;
 
     public float Health => health;
     public bool IsDead => isDead;
-    public int CoinValue => coinValue.Value;
+    public bool IsGolden => isGolden;
+    public int CoinValue => coinValue * (isGolden ? goldenCoinMultiplier : 1);
     public AnimalType AnimalType => animalType;
+    public string DisplayName => string.IsNullOrEmpty(displayName) ? animalType.ToString() : displayName;
+    public Sprite Portrait => portrait;
 
     protected virtual void Awake()
     {
@@ -66,6 +79,17 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         roamCenter = center;
         roamRadius = radius;
+    }
+
+    public void MakeGolden()
+    {
+        isGolden = true;
+        restingFlash = goldenGlow;
+        foreach (MeshRenderer renderer in meshRenderers)
+        {
+            renderer.material.SetColor("_FlashColor", goldenColor);
+        }
+        SetFlashValue(0f);
     }
 
     protected virtual void Start()
@@ -356,7 +380,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         foreach (MeshRenderer renderer in meshRenderers)
         {
-            renderer.material.SetFloat("_FlashAmount", value);
+            renderer.material.SetFloat("_FlashAmount", Mathf.Max(value, restingFlash));
         }
     }
 }
@@ -366,5 +390,9 @@ public enum AnimalType
     Bunny,
     Fox,
     Boar,
-    Deer
+    Deer,
+    Wolf,
+    Bison,
+    Bear,
+    Mammoth
 }

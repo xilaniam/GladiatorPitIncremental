@@ -1,6 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using SMPro.SkillTree;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,10 +10,10 @@ public class TargetCircle : GameEventListener
     [SerializeField] private Camera cam;
 
     [Header("Settings")]
-    [SerializeField] private FloatVariable circleRadius;
+    [SerializeField] private StatRef circleRadius;
     [SerializeField] private float boundaryRadius = 1f; 
     [SerializeField] private float followSpeed = 15f;  
-    [SerializeField] private FloatVariable attackSpeedPerSecond; //0.5f
+    [SerializeField] private StatRef attackInterval;
     [SerializeField] private float minAttackInterval = 0.05f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask groundLayer;
@@ -76,7 +75,7 @@ public class TargetCircle : GameEventListener
     {
         if (!isActive) return;
 
-        float interval = Mathf.Max(minAttackInterval, attackSpeedPerSecond.Value);
+        float interval = Mathf.Max(minAttackInterval, attackInterval.Value);
         attackTimer += Time.deltaTime;
         if (attackTimer >= interval)
         {

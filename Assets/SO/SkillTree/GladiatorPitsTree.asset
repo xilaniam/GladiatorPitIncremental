@@ -1,0 +1,1369 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 088f995797bf7de45893f969059ac221, type: 3}
+  m_Name: GladiatorPitsTree
+  m_EditorClassIdentifier: 
+  treeId: gladiator_pits
+  stats:
+  - id: coins.multiplier
+    displayName: Coin Value
+    baseValue: 1
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 1
+  - id: coins.bonus_per_tier
+    displayName: Coins per Animal Type
+    baseValue: 0
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 1
+  - id: coins.round_end_bonus
+    displayName: Round-End Bonus (%)
+    baseValue: 0
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 0
+  - id: enemies.alpha_chance
+    displayName: Alpha Chance
+    baseValue: 0
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 1
+  - id: enemies.golden_chance
+    displayName: Golden Animal Chance
+    baseValue: 0
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 1
+  - id: enemies.count
+    displayName: Animals per Round
+    baseValue: 4
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 1
+    format: 0
+  - id: gladiator.attack_interval
+    displayName: Seconds per Attack
+    baseValue: 2
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 0
+  - id: gladiator.count
+    displayName: Cavemen
+    baseValue: 2
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 1
+    format: 0
+  - id: gladiator.throw_count
+    displayName: Spears per Attack
+    baseValue: 1
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 1
+    format: 0
+  - id: round.duration
+    displayName: Round Length (s)
+    baseValue: 15
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 0
+  - id: targeting.radius
+    displayName: Target Circle Size
+    baseValue: 1
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 0
+  - id: spear.damage
+    displayName: Spear Damage
+    baseValue: 2
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 0
+  - id: spear.bonus_damage
+    displayName: Bonus Damage
+    baseValue: 0
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 1
+  - id: spear.damage_multiplier
+    displayName: Damage Multiplier
+    baseValue: 1
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 0
+  - id: spear.crit_chance
+    displayName: Crit Chance
+    baseValue: 0
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 1
+  - id: spear.crit_multiplier
+    displayName: Crit Damage
+    baseValue: 2
+    min: -3.4028235e+38
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 0
+  - id: breeding_season.chance
+    displayName: Breeding Chance
+    baseValue: 0.15
+    min: 0
+    max: 1
+    isInteger: 0
+    format: 1
+  - id: chain_lightning.chance
+    displayName: Chain Lightning Chance
+    baseValue: 0.1
+    min: 0
+    max: 1
+    isInteger: 0
+    format: 1
+  - id: chain_lightning.jumps
+    displayName: Chain Lightning Jumps
+    baseValue: 2
+    min: 0
+    max: 3.4028235e+38
+    isInteger: 1
+    format: 0
+  - id: chain_lightning.damage_percent
+    displayName: Chain Lightning Damage
+    baseValue: 0.4
+    min: 0
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 1
+  - id: double_coins.chance
+    displayName: Double Coins Chance
+    baseValue: 0.08
+    min: 0
+    max: 1
+    isInteger: 0
+    format: 1
+  - id: hunters_frenzy.kill_threshold
+    displayName: Kills per Frenzy
+    baseValue: 25
+    min: 10
+    max: 3.4028235e+38
+    isInteger: 1
+    format: 0
+  - id: hunters_frenzy.coin_bonus
+    displayName: Frenzy Coin Bonus
+    baseValue: 0.5
+    min: 0
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 1
+  - id: ricochet.bounces
+    displayName: Ricochet Bounces
+    baseValue: 1
+    min: 0
+    max: 3.4028235e+38
+    isInteger: 1
+    format: 0
+  - id: ricochet.damage_percent
+    displayName: Ricochet Damage
+    baseValue: 0.4
+    min: 0
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 1
+  - id: ricochet.splinter_percent
+    displayName: Splinter Damage
+    baseValue: 0
+    min: 0
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 1
+  - id: spawn_interval.seconds
+    displayName: Seconds per Extra Animal
+    baseValue: 6
+    min: 0.1
+    max: 3.4028235e+38
+    isInteger: 0
+    format: 0
+  nodes:
+  - id: sharpened_spears
+    displayName: Sharpened Spears
+    flavourText: +1 spear damage per level.
+    icon: {fileID: 21300000, guid: c2f92d6e63467f648a331cb080773be7, type: 3}
+    position: {x: 0, y: 0}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213722
+    requirements: []
+    conditions: []
+    effects:
+    - rid: 8318600806399213723
+    reveal: 0
+    tags: []
+  - id: long_hunt
+    displayName: Long Hunt
+    flavourText: +3 s round duration per level.
+    icon: {fileID: 21300000, guid: 33082e8739c69cc438828d74543a8a75, type: 3}
+    position: {x: 0, y: 269.99997}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213724
+    requirements:
+    - nodeId: sharpened_spears
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213725
+    reveal: 1
+    tags: []
+  - id: wide_net
+    displayName: Wide Net
+    flavourText: +12% circle radius per level.
+    icon: {fileID: 21300000, guid: 6860ba682904390479ca965331c6935f, type: 3}
+    position: {x: -269.99997, y: 539.99994}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213726
+    requirements:
+    - nodeId: long_hunt
+      level: 2
+    conditions: []
+    effects:
+    - rid: 8318600806399213727
+    reveal: 1
+    tags: []
+  - id: herd_call
+    displayName: Herd Call
+    flavourText: 'Unlock: while the field has fewer animals than at round start,
+      a new one walks in every 6 s.'
+    icon: {fileID: 21300000, guid: 77edfcc38f092424c803adce803c3285, type: 3}
+    position: {x: -270, y: 810}
+    maxLevel: 1
+    currencyId: default
+    cost:
+      rid: 8318600806399213728
+    requirements:
+    - nodeId: fertile_land
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213729
+    reveal: 1
+    tags: []
+  - id: horn_blowers
+    displayName: Horn Blowers
+    flavourText: -0.8 s Herd Call timer per level.
+    icon: {fileID: 21300000, guid: 0a99122ff5c642f498a90d63eb54d9a4, type: 3}
+    position: {x: -270, y: 1080}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213730
+    requirements:
+    - nodeId: herd_call
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213731
+    reveal: 1
+    tags: []
+  - id: endless_day
+    displayName: Endless Day
+    flavourText: +3 s round duration per level.
+    icon: {fileID: 21300000, guid: 71aa82b96761b294193385af95bba4a0, type: 3}
+    position: {x: 269.99997, y: 539.99994}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213732
+    requirements:
+    - nodeId: long_hunt
+      level: 5
+    conditions: []
+    effects:
+    - rid: 8318600806399213733
+    reveal: 1
+    tags: []
+  - id: fertile_land
+    displayName: Fertile Land
+    flavourText: +1 animal at round start per level.
+    icon: {fileID: 21300000, guid: ed9c6496686a01e4cb08c7887b5e37a0, type: 3}
+    position: {x: 0, y: 539.99994}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213734
+    requirements:
+    - nodeId: long_hunt
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213735
+    reveal: 1
+    tags: []
+  - id: wild_plains
+    displayName: Wild Plains
+    flavourText: +2 animals at round start per level.
+    icon: {fileID: 21300000, guid: 9188f28d78d343b4fbefa947a43afcee, type: 3}
+    position: {x: 0, y: 1079.9999}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213736
+    requirements:
+    - nodeId: fertile_land
+      level: 5
+    conditions: []
+    effects:
+    - rid: 8318600806399213737
+    reveal: 1
+    tags: []
+  - id: pelt_trade
+    displayName: Pelt Trade
+    flavourText: +20% coins from all animals per level.
+    icon: {fileID: 21300000, guid: 6673974a7807f3b46a68d61e0257e9e0, type: 3}
+    position: {x: 269.99997, y: 0}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213738
+    requirements:
+    - nodeId: sharpened_spears
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213739
+    reveal: 1
+    tags: []
+  - id: trade_routes
+    displayName: Trade Routes
+    flavourText: +20% coins from all animals per level.
+    icon: {fileID: 21300000, guid: a20d50a1e2606d840b7d8baeeff99c56, type: 3}
+    position: {x: 539.99994, y: 0}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213740
+    requirements:
+    - nodeId: pelt_trade
+      level: 5
+    conditions: []
+    effects:
+    - rid: 8318600806399213741
+    reveal: 1
+    tags: []
+  - id: tribe_tax
+    displayName: Tribe Tax
+    flavourText: +8% of the round's earnings as an end-of-round bonus per level.
+    icon: {fileID: 21300000, guid: 558e58cbf33e1784b8c13ae9fa13d7d9, type: 3}
+    position: {x: 809.9999, y: -269.99997}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213742
+    requirements:
+    - nodeId: pelt_trade
+      level: 3
+    conditions: []
+    effects:
+    - rid: 8318600806399213743
+    reveal: 1
+    tags: []
+  - id: trophy_wall
+    displayName: Trophy Wall
+    flavourText: +3% coins per unlocked animal type, per level.
+    icon: {fileID: 21300000, guid: 16e3728dd9657f745be2739b4ee05e2c, type: 3}
+    position: {x: 809.9999, y: 0}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213744
+    requirements:
+    - nodeId: trade_routes
+      level: 2
+    conditions: []
+    effects:
+    - rid: 8318600806399213745
+    reveal: 1
+    tags: []
+  - id: lucky_find
+    displayName: Lucky Find
+    flavourText: 'Unlock: 8% chance a kill pays double coins.'
+    icon: {fileID: 21300000, guid: dbf7fe1e09e5ae14ab653e7a7ab63b4c, type: 3}
+    position: {x: 539.99994, y: 269.99997}
+    maxLevel: 1
+    currencyId: default
+    cost:
+      rid: 8318600806399213746
+    requirements:
+    - nodeId: pelt_trade
+      level: 2
+    conditions: []
+    effects:
+    - rid: 8318600806399213747
+    reveal: 1
+    tags: []
+  - id: four_leaf
+    displayName: Four-Leaf
+    flavourText: +6% double-coin chance per level.
+    icon: {fileID: 21300000, guid: d13c1c0bc4d4d544b91d0012dec91897, type: 3}
+    position: {x: 809.9999, y: 269.99997}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213748
+    requirements:
+    - nodeId: lucky_find
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213749
+    reveal: 1
+    tags: []
+  - id: quick_hands
+    displayName: Quick Hands
+    flavourText: -0.15 s between volleys per level.
+    icon: {fileID: 21300000, guid: a7671897030160b4381946ba64d19fd9, type: 3}
+    position: {x: -269.99997, y: 0}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213750
+    requirements:
+    - nodeId: sharpened_spears
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213751
+    reveal: 1
+    tags: []
+  - id: keen_eye
+    displayName: Keen Eye
+    flavourText: 'Unlock crits: 8% chance for a spear to deal 2x damage.'
+    icon: {fileID: 21300000, guid: d81508161290e50439d6ec59ef59160d, type: 3}
+    position: {x: -269.99997, y: -269.99997}
+    maxLevel: 1
+    currencyId: default
+    cost:
+      rid: 8318600806399213752
+    requirements:
+    - nodeId: quick_hands
+      level: 2
+    conditions: []
+    effects:
+    - rid: 8318600806399213753
+    reveal: 1
+    tags: []
+  - id: brutal_crits
+    displayName: Brutal Crits
+    flavourText: +0.5x crit damage per level.
+    icon: {fileID: 21300000, guid: a6d5707a47f8a2040a0759e7a8ff3a2e, type: 3}
+    position: {x: -269.99997, y: -539.99994}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213754
+    requirements:
+    - nodeId: keen_eye
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213755
+    reveal: 1
+    tags: []
+  - id: steady_aim
+    displayName: Steady Aim
+    flavourText: +5% crit chance per level.
+    icon: {fileID: 21300000, guid: 7adbba1315468ad41845051a4e51c6ba, type: 3}
+    position: {x: -539.99994, y: -269.99997}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213756
+    requirements:
+    - nodeId: keen_eye
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213757
+    reveal: 1
+    tags: []
+  - id: recruit_caveman
+    displayName: Recruit Caveman
+    flavourText: +1 caveman per level.
+    icon: {fileID: 21300000, guid: ea738efa33cc8984481d87ae66beb916, type: 3}
+    position: {x: -539.99994, y: 0}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213758
+    requirements:
+    - nodeId: quick_hands
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213759
+    reveal: 1
+    tags: []
+  - id: flint_heads
+    displayName: Flint Heads
+    flavourText: +3 spear damage per level.
+    icon: {fileID: 21300000, guid: ebe2a9974d6a08d4ab8a58666629961e, type: 3}
+    position: {x: -810, y: 0}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213760
+    requirements:
+    - nodeId: recruit_caveman
+      level: 2
+    conditions: []
+    effects:
+    - rid: 8318600806399213761
+    reveal: 1
+    tags: []
+  - id: obsidian_tips
+    displayName: Obsidian Tips
+    flavourText: x1.2 spear damage per level.
+    icon: {fileID: 21300000, guid: 42d6d74cf0a9f6242b7325edac5d69ac, type: 3}
+    position: {x: -1080, y: 0}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213762
+    requirements:
+    - nodeId: flint_heads
+      level: 3
+    conditions: []
+    effects:
+    - rid: 8318600806399213763
+    reveal: 1
+    tags: []
+  - id: war_party
+    displayName: War Party
+    flavourText: +1 caveman per level.
+    icon: {fileID: 21300000, guid: abd8253e0170f544fa349d15b9be2e6c, type: 3}
+    position: {x: -810, y: 270}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213764
+    requirements:
+    - nodeId: recruit_caveman
+      level: 5
+    conditions: []
+    effects:
+    - rid: 8318600806399213765
+    reveal: 1
+    tags: []
+  - id: chain_lightning
+    displayName: Chain Lightning
+    flavourText: On spear hit, 10% chance to arc to the 2 nearest animals for 40%
+      of the spear's damage.
+    icon: {fileID: 21300000, guid: e0a6ef7fa5013724b8efdbf2e1bd1639, type: 3}
+    position: {x: -810, y: -270}
+    maxLevel: 1
+    currencyId: default
+    cost:
+      rid: 8318600806399213766
+    requirements:
+    - nodeId: steady_aim
+      level: 3
+    - nodeId: recruit_caveman
+      level: 4
+    conditions: []
+    effects:
+    - rid: 8318600806399213767
+    reveal: 3
+    tags:
+    - keystone
+  - id: conductivity
+    displayName: Conductivity
+    flavourText: +4% Chain Lightning chance per level.
+    icon: {fileID: 21300000, guid: d3793cb443b7ad14081947e0f9e26bc2, type: 3}
+    position: {x: -1080, y: -270}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213768
+    requirements:
+    - nodeId: chain_lightning
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213769
+    reveal: 1
+    tags: []
+  - id: storm_arc
+    displayName: Storm Arc
+    flavourText: +1 lightning jump per level.
+    icon: {fileID: 21300000, guid: 6029f4f6f0ea89c4fbd7bb20683d0a58, type: 3}
+    position: {x: -810, y: -540}
+    maxLevel: 3
+    currencyId: default
+    cost:
+      rid: 8318600806399213770
+    requirements:
+    - nodeId: chain_lightning
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213771
+    reveal: 1
+    tags: []
+  - id: overcharge
+    displayName: Overcharge
+    flavourText: +15% lightning jump damage per level.
+    icon: {fileID: 21300000, guid: b75db98a2ab01db438a069647aa941f5, type: 3}
+    position: {x: -1350, y: -270}
+    maxLevel: 4
+    currencyId: default
+    cost:
+      rid: 8318600806399213772
+    requirements:
+    - nodeId: conductivity
+      level: 2
+    conditions: []
+    effects:
+    - rid: 8318600806399213773
+    reveal: 1
+    tags: []
+  - id: breeding_season
+    displayName: Breeding Season
+    flavourText: 'Unlock: each kill has a 15% chance to bring in a new animal.'
+    icon: {fileID: 21300000, guid: e6c3ef95cd8737449a44b5d54699ba5a, type: 3}
+    position: {x: 270, y: 810}
+    maxLevel: 1
+    currencyId: default
+    cost:
+      rid: 8318600806399213774
+    requirements:
+    - nodeId: fertile_land
+      level: 2
+    conditions: []
+    effects:
+    - rid: 8318600806399213775
+    reveal: 1
+    tags: []
+  - id: big_litters
+    displayName: Big Litters
+    flavourText: +7% spawn-on-kill chance per level.
+    icon: {fileID: 21300000, guid: b69063625a615e4458750d030202fb7e, type: 3}
+    position: {x: 270, y: 1080}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213776
+    requirements:
+    - nodeId: breeding_season
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213777
+    reveal: 1
+    tags: []
+  - id: alpha_spawn
+    displayName: Alpha Spawn
+    flavourText: 'Unlock: 6% chance an older animal spawns one tier higher.'
+    icon: {fileID: 21300000, guid: 5c5dd9a19a59ae54986e7a3ff6941aed, type: 3}
+    position: {x: -540, y: 540}
+    maxLevel: 1
+    currencyId: default
+    cost:
+      rid: 8318600806399213778
+    requirements:
+    - nodeId: wide_net
+      level: 3
+    conditions: []
+    effects:
+    - rid: 8318600806399213779
+    reveal: 1
+    tags: []
+  - id: alpha_pack
+    displayName: Alpha Pack
+    flavourText: +4% alpha chance per level.
+    icon: {fileID: 21300000, guid: 36797c8568d72ec4080510ee450c40cc, type: 3}
+    position: {x: -540, y: 810}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213780
+    requirements:
+    - nodeId: alpha_spawn
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213781
+    reveal: 1
+    tags: []
+  - id: ricochet_spears
+    displayName: Ricochet Spears
+    flavourText: Every spear hit bounces to a random animal for 40% of its damage,
+      even outside the circle.
+    icon: {fileID: 21300000, guid: 7f65414ae7f4ab24fa8b56ec2ea9ce86, type: 3}
+    position: {x: -810, y: 810}
+    maxLevel: 1
+    currencyId: default
+    cost:
+      rid: 8318600806399213782
+    requirements:
+    - nodeId: wide_net
+      level: 4
+    - nodeId: obsidian_tips
+      level: 2
+    conditions: []
+    effects:
+    - rid: 8318600806399213783
+    reveal: 3
+    tags:
+    - keystone
+  - id: extra_bounce
+    displayName: Extra Bounce
+    flavourText: +1 bounce per level.
+    icon: {fileID: 21300000, guid: cdde7be52a6b8e24392816d35d2e29bb, type: 3}
+    position: {x: -1080, y: 810}
+    maxLevel: 3
+    currencyId: default
+    cost:
+      rid: 8318600806399213784
+    requirements:
+    - nodeId: ricochet_spears
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213785
+    reveal: 1
+    tags: []
+  - id: rebound_force
+    displayName: Rebound Force
+    flavourText: +10% bounce damage per level.
+    icon: {fileID: 21300000, guid: e3d0edb62607d544a9c76115073f5c6c, type: 3}
+    position: {x: -810, y: 1080}
+    maxLevel: 4
+    currencyId: default
+    cost:
+      rid: 8318600806399213786
+    requirements:
+    - nodeId: ricochet_spears
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213787
+    reveal: 1
+    tags: []
+  - id: wall_splinter
+    displayName: Wall Splinter
+    flavourText: A shard hits a random animal for +30% of the spear's damage per
+      level.
+    icon: {fileID: 21300000, guid: f2250aa76313a1847889cdeb10f797cf, type: 3}
+    position: {x: -1350, y: 810}
+    maxLevel: 3
+    currencyId: default
+    cost:
+      rid: 8318600806399213788
+    requirements:
+    - nodeId: extra_bounce
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213789
+    reveal: 1
+    tags: []
+  - id: golden_hide
+    displayName: Golden Hide
+    flavourText: 'Unlock: 2% of animals spawn golden and pay 10x coins.'
+    icon: {fileID: 21300000, guid: 12ebeeab4f668024da5a8e99b274c845, type: 3}
+    position: {x: 1080, y: 0}
+    maxLevel: 1
+    currencyId: default
+    cost:
+      rid: 8318600806399213790
+    requirements:
+    - nodeId: trophy_wall
+      level: 2
+    conditions: []
+    effects:
+    - rid: 8318600806399213791
+    reveal: 1
+    tags: []
+  - id: gilded_herd
+    displayName: Gilded Herd
+    flavourText: +1.5% golden chance per level.
+    icon: {fileID: 21300000, guid: c6e8575195740d443809c7299975d101, type: 3}
+    position: {x: 1350, y: 0}
+    maxLevel: 5
+    currencyId: default
+    cost:
+      rid: 8318600806399213792
+    requirements:
+    - nodeId: golden_hide
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213793
+    reveal: 1
+    tags: []
+  - id: hunters_frenzy
+    displayName: Hunter's Frenzy
+    flavourText: 'Every 25th kill in a round starts a 5 s Frenzy: 2x attack speed,
+      +50% damage, +50% coins.'
+    icon: {fileID: 21300000, guid: af2e3d39658ff9348a482f3a7937d6d0, type: 3}
+    position: {x: 1080, y: -270}
+    maxLevel: 1
+    currencyId: default
+    cost:
+      rid: 8318600806399213794
+    requirements:
+    - nodeId: tribe_tax
+      level: 4
+    - nodeId: four_leaf
+      level: 3
+    conditions: []
+    effects:
+    - rid: 8318600806399213795
+    reveal: 3
+    tags:
+    - keystone
+  - id: war_drums
+    displayName: War Drums
+    flavourText: -3 kills needed to trigger Frenzy per level (min 10).
+    icon: {fileID: 21300000, guid: eeef2e7e2a9a90044b28a5e3b517fade, type: 3}
+    position: {x: 1350, y: -270}
+    maxLevel: 4
+    currencyId: default
+    cost:
+      rid: 8318600806399213796
+    requirements:
+    - nodeId: hunters_frenzy
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213797
+    reveal: 1
+    tags: []
+  - id: blood_rush
+    displayName: Blood Rush
+    flavourText: +25% spear damage per level, always active.
+    icon: {fileID: 21300000, guid: 0d03fa91374711f45b959bc49b35ec66, type: 3}
+    position: {x: 1080, y: -540}
+    maxLevel: 4
+    currencyId: default
+    cost:
+      rid: 8318600806399213798
+    requirements:
+    - nodeId: hunters_frenzy
+      level: 1
+    conditions: []
+    effects:
+    - rid: 8318600806399213799
+    reveal: 1
+    tags: []
+  - id: feast
+    displayName: Feast
+    flavourText: +25% Frenzy coin bonus per level.
+    icon: {fileID: 21300000, guid: b7ee9d8d9b575b0449322fbefaff750d, type: 3}
+    position: {x: 1350, y: -540}
+    maxLevel: 3
+    currencyId: default
+    cost:
+      rid: 8318600806399213800
+    requirements:
+    - nodeId: war_drums
+      level: 2
+    conditions: []
+    effects:
+    - rid: 8318600806399213801
+    reveal: 1
+    tags: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 8318600806399213722
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 2
+        growth: 1.8
+    - rid: 8318600806399213723
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: spear.damage
+        kind: 0
+        valuePerLevel: 1
+        valueByLevel: []
+    - rid: 8318600806399213724
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 4
+        growth: 1.8
+    - rid: 8318600806399213725
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: round.duration
+        kind: 0
+        valuePerLevel: 3
+        valueByLevel: []
+    - rid: 8318600806399213726
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 60
+        growth: 1.9
+    - rid: 8318600806399213727
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: targeting.radius
+        kind: 0
+        valuePerLevel: 0.12
+        valueByLevel: []
+    - rid: 8318600806399213728
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 40
+        growth: 1
+    - rid: 8318600806399213729
+      type: {class: UnlockFeatureEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        featureId: spawn_interval
+        label: 
+    - rid: 8318600806399213730
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 60
+        growth: 1.9
+    - rid: 8318600806399213731
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: spawn_interval.seconds
+        kind: 0
+        valuePerLevel: -0.8
+        valueByLevel: []
+    - rid: 8318600806399213732
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 500
+        growth: 2
+    - rid: 8318600806399213733
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: round.duration
+        kind: 0
+        valuePerLevel: 3
+        valueByLevel: []
+    - rid: 8318600806399213734
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 10
+        growth: 1.9
+    - rid: 8318600806399213735
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: enemies.count
+        kind: 0
+        valuePerLevel: 1
+        valueByLevel: []
+    - rid: 8318600806399213736
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 700
+        growth: 2
+    - rid: 8318600806399213737
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: enemies.count
+        kind: 0
+        valuePerLevel: 2
+        valueByLevel: []
+    - rid: 8318600806399213738
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 4
+        growth: 1.75
+    - rid: 8318600806399213739
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: coins.multiplier
+        kind: 0
+        valuePerLevel: 0.2
+        valueByLevel: []
+    - rid: 8318600806399213740
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 250
+        growth: 1.9
+    - rid: 8318600806399213741
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: coins.multiplier
+        kind: 0
+        valuePerLevel: 0.2
+        valueByLevel: []
+    - rid: 8318600806399213742
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 30
+        growth: 1.9
+    - rid: 8318600806399213743
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: coins.round_end_bonus
+        kind: 0
+        valuePerLevel: 8
+        valueByLevel: []
+    - rid: 8318600806399213744
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 400
+        growth: 1.9
+    - rid: 8318600806399213745
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: coins.bonus_per_tier
+        kind: 0
+        valuePerLevel: 0.03
+        valueByLevel: []
+    - rid: 8318600806399213746
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 40
+        growth: 1
+    - rid: 8318600806399213747
+      type: {class: UnlockFeatureEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        featureId: double_coins
+        label: 
+    - rid: 8318600806399213748
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 80
+        growth: 1.9
+    - rid: 8318600806399213749
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: double_coins.chance
+        kind: 0
+        valuePerLevel: 0.06
+        valueByLevel: []
+    - rid: 8318600806399213750
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 8
+        growth: 1.8
+    - rid: 8318600806399213751
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: gladiator.attack_interval
+        kind: 0
+        valuePerLevel: -0.15
+        valueByLevel: []
+    - rid: 8318600806399213752
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 60
+        growth: 1
+    - rid: 8318600806399213753
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: spear.crit_chance
+        kind: 0
+        valuePerLevel: 0.08
+        valueByLevel: []
+    - rid: 8318600806399213754
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 300
+        growth: 1.9
+    - rid: 8318600806399213755
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: spear.crit_multiplier
+        kind: 0
+        valuePerLevel: 0.5
+        valueByLevel: []
+    - rid: 8318600806399213756
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 120
+        growth: 1.9
+    - rid: 8318600806399213757
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: spear.crit_chance
+        kind: 0
+        valuePerLevel: 0.05
+        valueByLevel: []
+    - rid: 8318600806399213758
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 12
+        growth: 2.1
+    - rid: 8318600806399213759
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: gladiator.count
+        kind: 0
+        valuePerLevel: 1
+        valueByLevel: []
+    - rid: 8318600806399213760
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 100
+        growth: 1.8
+    - rid: 8318600806399213761
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: spear.damage
+        kind: 0
+        valuePerLevel: 3
+        valueByLevel: []
+    - rid: 8318600806399213762
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 900
+        growth: 2
+    - rid: 8318600806399213763
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: spear.damage_multiplier
+        kind: 2
+        valuePerLevel: 1.2
+        valueByLevel: []
+    - rid: 8318600806399213764
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 1500
+        growth: 2
+    - rid: 8318600806399213765
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: gladiator.count
+        kind: 0
+        valuePerLevel: 1
+        valueByLevel: []
+    - rid: 8318600806399213766
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 6000
+        growth: 1
+    - rid: 8318600806399213767
+      type: {class: UnlockFeatureEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        featureId: chain_lightning
+        label: 
+    - rid: 8318600806399213768
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 8000
+        growth: 1.9
+    - rid: 8318600806399213769
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: chain_lightning.chance
+        kind: 0
+        valuePerLevel: 0.04
+        valueByLevel: []
+    - rid: 8318600806399213770
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 20000
+        growth: 2.5
+    - rid: 8318600806399213771
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: chain_lightning.jumps
+        kind: 0
+        valuePerLevel: 1
+        valueByLevel: []
+    - rid: 8318600806399213772
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 15000
+        growth: 2.2
+    - rid: 8318600806399213773
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: chain_lightning.damage_percent
+        kind: 0
+        valuePerLevel: 0.15
+        valueByLevel: []
+    - rid: 8318600806399213774
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 150
+        growth: 1
+    - rid: 8318600806399213775
+      type: {class: UnlockFeatureEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        featureId: breeding_season
+        label: 
+    - rid: 8318600806399213776
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 250
+        growth: 1.9
+    - rid: 8318600806399213777
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: breeding_season.chance
+        kind: 0
+        valuePerLevel: 0.07
+        valueByLevel: []
+    - rid: 8318600806399213778
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 2000
+        growth: 1
+    - rid: 8318600806399213779
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: enemies.alpha_chance
+        kind: 0
+        valuePerLevel: 0.06
+        valueByLevel: []
+    - rid: 8318600806399213780
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 3000
+        growth: 2
+    - rid: 8318600806399213781
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: enemies.alpha_chance
+        kind: 0
+        valuePerLevel: 0.04
+        valueByLevel: []
+    - rid: 8318600806399213782
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 25000
+        growth: 1
+    - rid: 8318600806399213783
+      type: {class: UnlockFeatureEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        featureId: ricochet
+        label: 
+    - rid: 8318600806399213784
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 60000
+        growth: 2.6
+    - rid: 8318600806399213785
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: ricochet.bounces
+        kind: 0
+        valuePerLevel: 1
+        valueByLevel: []
+    - rid: 8318600806399213786
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 40000
+        growth: 2.2
+    - rid: 8318600806399213787
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: ricochet.damage_percent
+        kind: 0
+        valuePerLevel: 0.1
+        valueByLevel: []
+    - rid: 8318600806399213788
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 150000
+        growth: 2.4
+    - rid: 8318600806399213789
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: ricochet.splinter_percent
+        kind: 0
+        valuePerLevel: 0.3
+        valueByLevel: []
+    - rid: 8318600806399213790
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 1500
+        growth: 1
+    - rid: 8318600806399213791
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: enemies.golden_chance
+        kind: 0
+        valuePerLevel: 0.02
+        valueByLevel: []
+    - rid: 8318600806399213792
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 2500
+        growth: 2
+    - rid: 8318600806399213793
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: enemies.golden_chance
+        kind: 0
+        valuePerLevel: 0.015
+        valueByLevel: []
+    - rid: 8318600806399213794
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 12000
+        growth: 1
+    - rid: 8318600806399213795
+      type: {class: UnlockFeatureEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        featureId: hunters_frenzy
+        label: 
+    - rid: 8318600806399213796
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 20000
+        growth: 2.1
+    - rid: 8318600806399213797
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: hunters_frenzy.kill_threshold
+        kind: 0
+        valuePerLevel: -3
+        valueByLevel: []
+    - rid: 8318600806399213798
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 30000
+        growth: 2.2
+    - rid: 8318600806399213799
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: spear.bonus_damage
+        kind: 0
+        valuePerLevel: 0.25
+        valueByLevel: []
+    - rid: 8318600806399213800
+      type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        baseCost: 80000
+        growth: 2.4
+    - rid: 8318600806399213801
+      type: {class: ModifyStatEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
+      data:
+        statId: hunters_frenzy.coin_bonus
+        kind: 0
+        valuePerLevel: 0.25
+        valueByLevel: []

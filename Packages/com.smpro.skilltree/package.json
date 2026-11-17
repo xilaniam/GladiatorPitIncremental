@@ -1,0 +1,28 @@
+{
+  "name": "com.smpro.skilltree",
+  "version": "1.0.1",
+  "displayName": "SMPro Skill Tree",
+  "description": "Data-driven skill, talent and upgrade trees. One tree asset holds every node, cost, requirement and effect; stats are computed from node levels; effects, conditions, cost curves, currencies and save providers are pluggable. Includes a generated uGUI tree view (needs PrimeTween), a graph editor, a balance table, validation and a play-mode debugger.",
+  "unity": "6000.0",
+  "author": {
+    "name": "SMPro"
+  },
+  "keywords": [
+    "skill tree",
+    "talent tree",
+    "tech tree",
+    "upgrades",
+    "progression",
+    "incremental"
+  ],
+  "dependencies": {
+    "com.unity.ugui": "2.0.0"
+  },
+  "samples": [
+    {
+      "displayName": "Starter Tree",
+      "description": "A 7-node RPG tree in its own scene: stats panel, a SimpleWallet with gold buttons, a mystery keystone, conditions, and a feature that uses temporary stat modifiers.",
+      "path": "Samples~/StarterTree"
+    }
+  ]
+}

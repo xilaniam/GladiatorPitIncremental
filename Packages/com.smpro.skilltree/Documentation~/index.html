@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SMPro Skill Tree</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky contents rail on the left, one 74ch reading column; sections are anchored chapters. */
+:root {
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --sunken: #eceef3;
+  --fg: #1a1d26;
+  --muted: #5b6172;
+  --line: #d9dce5;
+  --accent: #2f5bd3;
+  --accent-soft: #e4ebfb;
+  --gold: #b07a12;
+  --gold-soft: #f6ecd4;
+  --good: #1f7a4d;
+  --code-bg: #f0f2f7;
+  --font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12141a; --surface: #191c24; --sunken: #20242e; --fg: #e6e8ee; --muted: #9aa1b2; --line: #2d323f;
+    --accent: #7d9ef2; --accent-soft: #1f2a47; --gold: #e0b452; --gold-soft: #3a2f17; --good: #5cc48f; --code-bg: #1d2029;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12141a; --surface: #191c24; --sunken: #20242e; --fg: #e6e8ee; --muted: #9aa1b2; --line: #2d323f;
+  --accent: #7d9ef2; --accent-soft: #1f2a47; --gold: #e0b452; --gold-soft: #3a2f17; --good: #5cc48f; --code-bg: #1d2029;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 48px;
+  padding-block: 40px 96px;
+}
+nav.toc {
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 24px);
+  align-self: start;
+  font-size: 14px;
+}
+nav.toc .brand { font-family: var(--font-display); font-weight: 600; font-size: 15px; margin-bottom: 14px; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+nav.toc a {
+  display: block; padding: 5px 10px; border-radius: 6px; color: var(--muted); text-decoration: none;
+  border-left: 2px solid transparent;
+}
+nav.toc a:hover { color: var(--fg); background: var(--sunken); }
+nav.toc a.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-soft); }
+main { min-width: 0; }
+.col { max-width: 78ch; }
+header.hero { padding-bottom: 28px; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.2; }
+h1 { font-size: clamp(34px, 5vw, 48px); margin: 10px 0 14px; letter-spacing: -0.02em; }
+h2 { font-size: 28px; margin: 0 0 14px; letter-spacing: -0.01em; }
+h3 { font-size: 19px; margin: 28px 0 8px; }
+p { margin: 0 0 14px; }
+.lede { font-size: 18px; color: var(--muted); max-width: 64ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.chip {
+  font-family: var(--font-mono); font-size: 12.5px; padding: 4px 10px; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--line); color: var(--muted); white-space: nowrap;
+}
+.chip b { color: var(--fg); font-weight: 500; }
+section { padding-top: 56px; scroll-margin-top: 16px; }
+a { color: var(--accent); }
+code { font-family: var(--font-mono); font-size: 0.88em; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+.code {
+  position: relative; background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px;
+  margin: 12px 0 18px; overflow-x: auto;
+}
+.code pre { margin: 0; padding: 16px 18px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.55; }
+.code .lang {
+  position: absolute; top: 8px; right: 10px; font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+  display: flex; gap: 8px; align-items: center;
+}
+.code button {
+  font: inherit; font-size: 11px; color: var(--muted); background: var(--surface); border: 1px solid var(--line);
+  border-radius: 5px; padding: 2px 8px; cursor: pointer;
+}
+.code button:hover { color: var(--fg); }
+.code button:focus-visible, nav.toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.c { color: var(--muted); }
+.k { color: var(--accent); }
+.s { color: var(--good); }
+.t { color: var(--gold); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; margin: 18px 0; }
+.feature { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+.feature h4 { font-family: var(--font-display); font-size: 16px; margin: 0 0 6px; }
+.feature p { margin: 0; font-size: 14.5px; color: var(--muted); }
+.table-wrap { overflow-x: auto; margin: 14px 0 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); background: var(--sunken); }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; font-family: var(--font-mono); font-size: 13.5px; }
+.zero { color: var(--good); font-weight: 500; }
+.note {
+  border-left: 3px solid var(--gold); background: var(--gold-soft); padding: 12px 16px; border-radius: 0 8px 8px 0;
+  margin: 16px 0; font-size: 15px;
+}
+ol.steps { padding-left: 22px; margin: 10px 0 18px; }
+ol.steps li { margin-bottom: 8px; padding-left: 4px; }
+.formula {
+  font-family: var(--font-mono); font-size: 15px; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 8px; padding: 14px 18px; margin: 12px 0 18px; overflow-x: auto; white-space: nowrap;
+}
+.diagram { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin: 16px 0 20px; overflow-x: auto; }
+.diagram svg { display: block; width: 100%; min-width: 640px; height: auto; }
+.diagram svg text { font-family: var(--font-body); }
+.states { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 16px; }
+.state { font-family: var(--font-mono); font-size: 13px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); }
+.state.hidden { color: var(--muted); border-style: dashed; }
+.state.mystery { color: var(--gold); border-color: var(--gold); }
+.state.available { color: var(--accent); border-color: var(--accent); }
+.state.maxed { background: var(--gold-soft); color: var(--gold); border-color: var(--gold); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+footer { margin-top: 72px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+@media (max-width: 900px) {
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 8px; padding-block: 24px 64px; }
+  nav.toc { position: static; border: 1px solid var(--line); border-radius: 10px; padding: 14px; background: var(--surface); }
+  nav.toc ol { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .two { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <nav class="toc" aria-label="Contents">
+    <div class="brand">SMPro Skill Tree</div>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how-it-works">How it works</a></li>
+      <li><a href="#data-model">Data model</a></li>
+      <li><a href="#modularity">Modularity</a></li>
+      <li><a href="#performance">Performance</a></li>
+      <li><a href="#install">Install</a></li>
+      <li><a href="#implement">Implement it</a></li>
+      <li><a href="#extend">Extend it</a></li>
+      <li><a href="#ui">UI module</a></li>
+      <li><a href="#editor">Editor tools</a></li>
+      <li><a href="#api">API reference</a></li>
+      <li><a href="#case-study">Case study</a></li>
+      <li><a href="#notes">Good to know</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="hero col" id="overview">
+      <div class="eyebrow">Unity package · com.smpro.skilltree · v1.0.1</div>
+      <h1>SMPro Skill Tree</h1>
+      <p class="lede">A data-driven skill, talent, upgrade and research tree system for Unity 6. One asset holds the whole tree, and game code reads the results as stats. Adding or changing a node needs no new script, asset or scene object.</p>
+      <div class="facts">
+        <span class="chip"><b>Unity</b> 6000.0+</span>
+        <span class="chip"><b>Runtime deps</b> none</span>
+        <span class="chip"><b>UI deps</b> PrimeTween, uGUI</span>
+        <span class="chip"><b>Tests</b> 37 edit-mode</span>
+        <span class="chip"><b>Per-frame GC</b> 0 allocations</span>
+      </div>
+    </header>
+
+    <div class="col">
+      <section id="features">
+        <h2>What it offers</h2>
+        <p>The package covers the whole loop: authoring a tree, buying nodes, turning levels into game numbers, showing the tree, saving it, and checking it for mistakes.</p>
+        <div class="grid">
+          <div class="feature"><h4>One tree asset</h4><p>Nodes, layout, costs, requirements and effects all live in one <code>SkillTreeDefinition</code>. There are no per-node assets or hand-placed scene objects.</p></div>
+          <div class="feature"><h4>Computed stats</h4><p>Every number a node changes is a stat, rebuilt from node levels. Purchase order never matters, and a save is just the levels.</p></div>
+          <div class="feature"><h4>Pluggable effects</h4><p>Modify Stat, Unlock Feature, Grant Tag, Unity Event and Composite are built in. A custom effect is one class.</p></div>
+          <div class="feature"><h4>Conditions and costs</h4><p>Gate nodes on points spent, tags or stat values. Price levels with Flat, Linear, Exponential or Table curves.</p></div>
+          <div class="feature"><h4>Features</h4><p>Behaviour such as an ability is a <code>SkillFeature</code> component that a node switches on. Upgrading it is an ordinary stat change.</p></div>
+          <div class="feature"><h4>Reveal rules</h4><p>Nodes can be always visible, appear when a parent starts, appear when ready, or show as a mystery "?" until they can be bought.</p></div>
+          <div class="feature"><h4>Any currency</h4><p>Any component that implements <code>ICurrencyWallet</code> is the wallet. Nodes can use different currencies.</p></div>
+          <div class="feature"><h4>Save and respec</h4><p>Saves are <code>{nodeId: level}</code> JSON, with optional PlayerPrefs or file saving. There are full and single-node refunds, at any refund percentage.</p></div>
+          <div class="feature"><h4>Generated UI</h4><p>A uGUI view builds every node and link from the asset, with a tooltip, pan and zoom, and a style asset.</p></div>
+          <div class="feature"><h4>Editor tools</h4><p>A graph editor, a balance table with CSV export, live validation, and a Play-mode debugger for stats and nodes.</p></div>
+        </div>
+      </section>
+
+      <section id="how-it-works">
+        <h2>How it works</h2>
+        <p>The definition never changes at runtime. The controller holds the only mutable state, the level of each node. Everything else is derived from those levels.</p>
+        <div class="diagram" role="img" aria-label="The controller owns node levels; effects write stat modifiers and unlock features; game code and the UI read from the controller and stats">
+          <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0L10 5L0 10z" fill="var(--muted)"/>
+              </marker>
+            </defs>
+            <g fill="none" stroke="var(--muted)" stroke-width="1.4">
+              <path d="M130 70 H246" marker-end="url(#arrow)"/>
+              <path d="M380 108 V158" marker-end="url(#arrow)"/>
+              <path d="M300 222 H210 V256" marker-end="url(#arrow)"/>
+              <path d="M380 222 V256" marker-end="url(#arrow)"/>
+              <path d="M460 222 H550 V256" marker-end="url(#arrow)"/>
+              <path d="M514 70 H630" marker-end="url(#arrow)"/>
+            </g>
+            <g>
+              <rect x="50" y="40" width="80" height="60" rx="8" fill="var(--sunken)" stroke="var(--line)"/>
+              <text x="90" y="66" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg)">Player</text>
+              <text x="90" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">clicks a node</text>
+
+              <rect x="250" y="32" width="264" height="76" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.6"/>
+              <text x="382" y="58" text-anchor="middle" font-size="14" font-weight="600" fill="var(--fg)">SkillTreeController</text>
+              <text x="382" y="78" text-anchor="middle" font-size="11.5" fill="var(--muted)">checks requirements, conditions, funds</text>
+              <text x="382" y="94" text-anchor="middle" font-size="11.5" fill="var(--muted)">owns levels · spends via the wallet</text>
+
+              <rect x="634" y="40" width="112" height="68" rx="8" fill="var(--sunken)" stroke="var(--line)"/>
+              <text x="690" y="66" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg)">UI view</text>
+              <text x="690" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">TreeChanged</text>
+              <text x="690" y="98" text-anchor="middle" font-size="11.5" fill="var(--muted)">→ Refresh</text>
+
+              <rect x="300" y="162" width="160" height="60" rx="8" fill="var(--surface)" stroke="var(--line)"/>
+              <text x="380" y="188" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg)">Node effects</text>
+              <text x="380" y="206" text-anchor="middle" font-size="11.5" fill="var(--muted)">Apply(ctx, newLevel)</text>
+
+              <rect x="110" y="260" width="200" height="60" rx="8" fill="var(--gold-soft)" stroke="var(--gold)"/>
+              <text x="210" y="286" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg)">Stats</text>
+              <text x="210" y="304" text-anchor="middle" font-size="11.5" fill="var(--muted)">modifiers → value, read by StatRef</text>
+
+              <rect x="320" y="260" width="120" height="60" rx="8" fill="var(--surface)" stroke="var(--line)"/>
+              <text x="380" y="286" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg)">Tags</text>
+              <text x="380" y="304" text-anchor="middle" font-size="11.5" fill="var(--muted)">for conditions</text>
+
+              <rect x="450" y="260" width="200" height="60" rx="8" fill="var(--surface)" stroke="var(--line)"/>
+              <text x="550" y="286" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg)">Features</text>
+              <text x="550" y="304" text-anchor="middle" font-size="11.5" fill="var(--muted)">OnUnlocked / OnLocked</text>
+            </g>
+          </svg>
+        </div>
+
+        <h3>A purchase, step by step</h3>
+        <ol class="steps">
+          <li><code>CanPurchase(id)</code> checks, in order: the node exists, it isn't maxed, its requirements are met, its conditions pass, and the wallet can pay. It returns the first thing that fails.</li>
+          <li>The wallet spends the cost of the next level, in the node's currency.</li>
+          <li>The level goes up by one, and every effect on the node gets <code>Apply(context, newLevel)</code>.</li>
+          <li>Modify Stat replaces its modifier with the one for the new level. The stat recalculates and raises <code>StatChanged</code> if its value changed.</li>
+          <li>The controller raises <code>NodeLevelChanged</code> and <code>TreeChanged</code>, and saves if a save provider is set.</li>
+        </ol>
+        <p>Auto-buyers, tests, console commands and the UI all use this same method. Nothing else changes levels.</p>
+
+        <h3>How a stat gets its value</h3>
+        <div class="formula">value = clamp( (base + Σ Flat) × (1 + Σ PercentAdd) × Π Multiply , min, max )</div>
+        <p>An Override modifier replaces the whole formula. Integer stats are rounded half away from zero. Modify Stat scales with level: Flat and PercentAdd use <code>value × level</code>, Multiply uses <code>value ^ level</code> (×1.2 per level compounds to 1.2, 1.44, 1.73), and Override uses the value as is. An optional per-level table replaces the formula.</p>
+        <p>Temporary buffs are modifiers with an expiry time. The controller's <code>Update</code> removes them when they run out.</p>
+
+        <h3>Node states</h3>
+        <p>Every node is in exactly one state, worked out from levels, requirements, conditions and its reveal rule. The UI only draws the state; it never decides it.</p>
+        <div class="states">
+          <span class="state hidden">Hidden</span>
+          <span class="state mystery">Mystery</span>
+          <span class="state">Locked</span>
+          <span class="state available">Available</span>
+          <span class="state maxed">Maxed</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Reveal rule</th><th>Before requirements are met</th><th>Typical use</th></tr></thead>
+            <tbody>
+              <tr><td><code>Always</code></td><td>Locked: visible with its real icon</td><td>Root nodes</td></tr>
+              <tr><td><code>WhenParentStarted</code></td><td>Hidden until any required node has a level, then Locked</td><td>Most nodes</td></tr>
+              <tr><td><code>WhenRequirementsMet</code></td><td>Hidden until it can be bought</td><td>Secret bonus nodes</td></tr>
+              <tr><td><code>MysteryUntilAvailable</code></td><td>Mystery: a "?" icon and teaser text</td><td>Keystones to aim for</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="data-model">
+        <h2>Data model</h2>
+        <p>A tree is one ScriptableObject. Effects, conditions and cost curves are stored inline with <code>[SerializeReference]</code>, so each node is complete inside the asset.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Node field</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td><code>id</code></td><td>Stable key for saves and requirements. Renaming a node never breaks a save.</td></tr>
+              <tr><td><code>displayName</code>, <code>flavourText</code>, <code>icon</code></td><td>What the player sees.</td></tr>
+              <tr><td><code>position</code></td><td>Layout in tree units; the UI places nodes from it.</td></tr>
+              <tr><td><code>maxLevel</code>, <code>cost</code>, <code>currencyId</code></td><td>How many times it can be bought, and the price of each level.</td></tr>
+              <tr><td><code>requirements</code></td><td>Other nodes and the level each must reach.</td></tr>
+              <tr><td><code>conditions</code></td><td>Extra gates: points spent, tag owned, stat at least a value, or your own.</td></tr>
+              <tr><td><code>effects</code></td><td>What buying a level does.</td></tr>
+              <tr><td><code>reveal</code>, <code>tags</code></td><td>When it becomes visible, and labels for styling or queries (<code>keystone</code> gets the highlight).</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Stats are defined on the tree with an id, display name, base value, min, max, integer flag and display format (number or percent).</p>
+      </section>
+
+      <section id="modularity">
+        <h2>How modular it is</h2>
+        <p>The package is split into assemblies that depend in one direction only. The runtime knows nothing about any game, and nothing about its own UI or editor.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Assembly</th><th>Needs</th><th>Contains</th></tr></thead>
+            <tbody>
+              <tr><td><code>SMPro.SkillTree.Runtime</code></td><td>Nothing</td><td>Definition, stats, effects, conditions, costs, wallet, features, controller, saves, validation</td></tr>
+              <tr><td><code>SMPro.SkillTree.UI</code></td><td>Runtime, uGUI, TextMesh Pro, PrimeTween</td><td>Tree view, node view, connectors, tooltip, pan and zoom, style asset. Only compiles when PrimeTween is installed.</td></tr>
+              <tr><td><code>SMPro.SkillTree.Editor</code></td><td>Runtime</td><td>Graph, table, inspectors, type pickers, Play-mode debugger</td></tr>
+              <tr><td><code>SMPro.SkillTree.Tests</code></td><td>Runtime, test framework</td><td>37 edit-mode tests; never in a build</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Extension points</h3>
+        <p>Every extension is one class. The editor finds it by type, so there is nothing to register and no enum or switch to edit.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>To add</th><th>Write</th><th>Appears in</th></tr></thead>
+            <tbody>
+              <tr><td>A new kind of effect</td><td><code>[Serializable] class : ISkillEffect</code></td><td>Every node's Add Effect menu</td></tr>
+              <tr><td>A new gate</td><td><code>[Serializable] class : ISkillCondition</code></td><td>Every node's conditions</td></tr>
+              <tr><td>A new price formula</td><td><code>[Serializable] class : CostCurve</code></td><td>Every node's cost</td></tr>
+              <tr><td>Game behaviour a node unlocks</td><td><code>class : SkillFeature</code></td><td>Unlock Feature by id</td></tr>
+              <tr><td>Your economy</td><td><code>ICurrencyWallet</code> on any component</td><td>The controller's wallet field</td></tr>
+              <tr><td>Your save system</td><td><code>[Serializable] class : ISaveProvider</code></td><td>The controller's save provider</td></tr>
+              <tr><td>A different look</td><td>A node prefab or a <code>NodeStateStyle</code> asset</td><td>The tree view</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note">Most game needs are covered without writing an effect at all. Use <b>Modify Stat</b> for numbers, and <b>Unlock Feature</b> plus a <code>SkillFeature</code> for behaviour.</div>
+      </section>
+
+      <section id="performance">
+        <h2>Performance</h2>
+        <p>Everything is event-driven. The only work done every frame is the controller's stat tick, which does nothing unless a temporary buff is active. Every path that runs often allocates no memory, so it causes no garbage-collection spikes.</p>
+        <p>Measured in Unity 6000.0.40f1 (Editor, Mono) on an AMD Ryzen 7 5800H. Times are averages over many calls; allocations were counted with Unity's GC.Alloc recorder. A built player with IL2CPP is usually faster than the editor.</p>
+
+        <h3>Gladiator Pits tree: 40 nodes, 27 stats</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Operation</th><th class="num">Time</th><th class="num">Allocations</th><th>When it runs</th></tr></thead>
+            <tbody>
+              <tr><td>Read a stat (<code>StatRef.Value</code>)</td><td class="num">0.008 µs</td><td class="num zero">0</td><td>Any time game code needs a number</td></tr>
+              <tr><td>Stat tick, no temporary buffs</td><td class="num">0.04 µs</td><td class="num zero">0</td><td>Every frame</td></tr>
+              <tr><td>Add and remove a modifier</td><td class="num">0.63 µs</td><td class="num zero">0</td><td>Buffs, purchases</td></tr>
+              <tr><td><code>GetState</code> for all 40 nodes</td><td class="num">5.7 µs</td><td class="num zero">0</td><td>UI refresh</td></tr>
+              <tr><td><code>CanPurchase</code> for all 40 nodes</td><td class="num">7.4 µs</td><td class="num zero">0</td><td>UI refresh</td></tr>
+              <tr><td>Tree view refresh (40 nodes, 42 links)</td><td class="num">30 µs</td><td class="num zero">0</td><td>Purchase or balance change while visible</td></tr>
+              <tr><td>Tree view build</td><td class="num">11.5 ms</td><td class="num">—</td><td>Once, the first time it opens</td></tr>
+              <tr><td>Reset, then buy all 152 levels</td><td class="num">0.30 ms</td><td class="num">210</td><td>Respec</td></tr>
+              <tr><td>Save to JSON (1,442 characters)</td><td class="num">20 µs</td><td class="num">8</td><td>After each change, if saving is on</td></tr>
+              <tr><td>Load from JSON and rebuild every stat</td><td class="num">71 µs</td><td class="num">124</td><td>Game start</td></tr>
+              <tr><td>Validate the whole tree</td><td class="num">41 µs</td><td class="num">76</td><td>Editor only</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Scaling: a generated 1,000-node tree</h3>
+        <p>1,000 nodes, 50 stats, 2,000 effects, 5 levels each, linked as a binary tree.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Operation</th><th class="num">Time</th><th class="num">Allocations</th></tr></thead>
+            <tbody>
+              <tr><td>Buy all 5,000 levels</td><td class="num">18.9 ms total</td><td class="num">3.8 µs per purchase</td></tr>
+              <tr><td><code>GetState</code> for all 1,000 nodes</td><td class="num">63 µs</td><td class="num zero">0</td></tr>
+              <tr><td><code>CanPurchase</code> for all 1,000 nodes</td><td class="num">63 µs</td><td class="num zero">0</td></tr>
+              <tr><td>Save to JSON (27,917 characters)</td><td class="num">0.42 ms</td><td class="num">12</td></tr>
+              <tr><td>Load and rebuild 5,000 levels</td><td class="num">5.1 ms</td><td class="num">3,017</td></tr>
+              <tr><td>Validate</td><td class="num">0.9 ms</td><td class="num">2,063</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Costs grow in a straight line with the number of nodes. Even at 1,000 nodes, a full state pass for the UI uses well under 1% of a 60 fps frame.</p>
+      </section>
+
+      <section id="install">
+        <h2>Install</h2>
+        <ol class="steps">
+          <li>If you want the ready-made UI, install <b>PrimeTween</b> first. The runtime and editor tools work without it.</li>
+          <li>Open Window ▸ Package Manager ▸ <b>+</b> ▸ <b>Add package from git URL</b> and paste the URL below.</li>
+          <li>Optional: open SMPro Skill Tree ▸ Samples ▸ <b>Starter Tree</b> ▸ Import. It uses TextMesh Pro, so import TMP Essentials if Unity asks.</li>
+        </ol>
+        <div class="code"><div class="lang">git URL <button type="button" data-copy>Copy</button></div><pre>https://github.com/xilaniam/GladiatorPitIncremental.git?path=/Packages/com.smpro.skilltree#v1.0.1</pre></div>
+      </section>
+
+      <section id="implement">
+        <h2>Implement it in your game</h2>
+        <h3>1. Create the tree</h3>
+        <p>Create ▸ SkillTree ▸ Skill Tree Definition. Add your stats in the Inspector, for example <code>player.damage</code> with a base of 10. Double-click the asset to open the graph. Right-click ▸ Add Skill Node, give it effects from the type menu, and drag from <b>Unlocks</b> to <b>Requires</b> to link nodes.</p>
+
+        <h3>2. Add the controller and a wallet</h3>
+        <p>Put a <code>SkillTreeController</code> on any GameObject and assign the tree. For the wallet, use <code>SimpleWallet</code> or your own economy class:</p>
+        <div class="code"><div class="lang">C# <button type="button" data-copy>Copy</button></div><pre><span class="k">public class</span> <span class="t">Economy</span> : MonoBehaviour, <span class="t">ICurrencyWallet</span>
+{
+    <span class="k">long</span> gold;
+    <span class="k">public event</span> Action&lt;<span class="k">string</span>&gt; BalanceChanged;
+
+    <span class="k">public bool</span> CanAfford(<span class="k">string</span> currency, <span class="k">long</span> amount) =&gt; gold &gt;= amount;
+    <span class="k">public bool</span> TrySpend(<span class="k">string</span> currency, <span class="k">long</span> amount)
+    {
+        <span class="k">if</span> (amount &gt; gold) <span class="k">return false</span>;
+        gold -= amount;
+        BalanceChanged?.Invoke(currency);
+        <span class="k">return true</span>;
+    }
+    <span class="k">public void</span> Add(<span class="k">string</span> currency, <span class="k">long</span> amount) { gold += amount; BalanceChanged?.Invoke(currency); }
+}</pre></div>
+
+        <h3>3. Read stats in game code</h3>
+        <p>Add a <code>StatRef</code> field, then pick the tree and stat in the Inspector. It works on prefabs too, and has a value even before the controller starts.</p>
+        <div class="code"><div class="lang">C# <button type="button" data-copy>Copy</button></div><pre><span class="k">using</span> SMPro.SkillTree;
+
+<span class="k">public class</span> <span class="t">Spear</span> : MonoBehaviour
+{
+    [SerializeField] <span class="t">StatRef</span> damage;
+    [SerializeField] <span class="t">StatRef</span> critChance;
+
+    <span class="k">float</span> RollDamage() =&gt; Random.value &lt; critChance.Value ? damage.Value * <span class="s">2f</span> : damage.Value;
+}</pre></div>
+
+        <h3>4. Turn behaviour on with a feature</h3>
+        <p>Give a node an <b>Unlock Feature</b> effect with an id, and put a component with the same id in the scene. A feature that spawns later still starts unlocked.</p>
+        <div class="code"><div class="lang">C# <button type="button" data-copy>Copy</button></div><pre><span class="k">public class</span> <span class="t">ChainLightning</span> : <span class="t">SkillFeature</span>
+{
+    [SerializeField] <span class="t">StatRef</span> chance, jumps, damagePercent;
+
+    <span class="k">protected override void</span> OnUnlocked() =&gt; GameEvents.SpearHit += OnSpearHit;
+    <span class="k">protected override void</span> OnLocked()   =&gt; GameEvents.SpearHit -= OnSpearHit;
+
+    <span class="k">void</span> OnSpearHit(Enemy target, <span class="k">float</span> damage)
+    {
+        <span class="k">if</span> (Random.value &lt; chance.Value) Arc(target, jumps.IntValue, damage * damagePercent.Value);
+    }
+}</pre></div>
+        <p>Upgrades to the feature are ordinary Modify Stat effects on <code>chain_lightning.jumps</code> and the other stats it reads. The feature itself needs no upgrade code.</p>
+
+        <h3>5. Temporary buffs</h3>
+        <div class="code"><div class="lang">C# <button type="button" data-copy>Copy</button></div><pre>attackInterval.AddTemporary(ModifierKind.Multiply, <span class="s">0.5f</span>, duration: <span class="s">5f</span>, source: <span class="k">this</span>);
+attackInterval.RemoveModifiers(<span class="k">this</span>);   <span class="c">// end it early</span></pre></div>
+
+        <h3>6. Save and load</h3>
+        <p>Set the controller's <b>Save Provider</b> to PlayerPrefs or File, and it loads on start and saves after every change. To fit your own save system, store the JSON yourself:</p>
+        <div class="code"><div class="lang">C# <button type="button" data-copy>Copy</button></div><pre><span class="k">string</span> json = controller.CaptureState().ToJson();           <span class="c">// {"treeId":"...","levels":[...]}</span>
+controller.RestoreState(SkillTreeState.FromJson(json));    <span class="c">// unknown ids ignored, levels clamped</span>
+controller.ResetTree(refundPercent: <span class="s">0.5f</span>);                    <span class="c">// respec with a 50% refund</span></pre></div>
+      </section>
+
+      <section id="extend">
+        <h2>Extend it</h2>
+        <p>Each extension is one class, and it shows up in the Inspector's type menu after compiling.</p>
+        <div class="code"><div class="lang">C# <button type="button" data-copy>Copy</button></div><pre>[Serializable, <span class="t">SkillEffectMenu</span>(<span class="s">"My Game/Extra Spawn Chance"</span>)]
+<span class="k">public class</span> <span class="t">ExtraSpawnChanceEffect</span> : <span class="t">ISkillEffect</span>
+{
+    <span class="k">public float</span> chancePerLevel = <span class="s">0.1f</span>;
+
+    <span class="k">public void</span> Apply(SkillEffectContext ctx, <span class="k">int</span> level) =&gt; ctx.Get&lt;EnemyManager&gt;().ExtraSpawnChance = chancePerLevel * level;
+    <span class="k">public void</span> Remove(SkillEffectContext ctx) =&gt; ctx.Get&lt;EnemyManager&gt;().ExtraSpawnChance = <span class="s">0f</span>;
+    <span class="k">public string</span> Describe(SkillTreeDefinition tree, <span class="k">int</span> level) =&gt; <span class="s">$"{chancePerLevel * level:P0} chance to spawn an extra enemy"</span>;
+}
+
+[Serializable]
+<span class="k">public class</span> <span class="t">PlayerLevelCondition</span> : <span class="t">ISkillCondition</span>
+{
+    <span class="k">public int</span> level = <span class="s">10</span>;
+    <span class="k">public bool</span> IsMet(SkillTreeController tree) =&gt; tree.GetService&lt;Player&gt;().Level &gt;= level;
+    <span class="k">public string</span> Describe(SkillTreeDefinition tree) =&gt; <span class="s">$"Requires player level {level}"</span>;
+}
+
+[Serializable]
+<span class="k">public class</span> <span class="t">DoublingCost</span> : <span class="t">CostCurve</span>
+{
+    <span class="k">public long</span> first = <span class="s">1</span>;
+    <span class="k">public override long</span> GetCost(<span class="k">int</span> currentLevel) =&gt; first &lt;&lt; currentLevel;
+}</pre></div>
+        <p><code>Apply</code> receives the node's new level and sets the result for that level, so it gives the same answer on purchase and on load. <code>ctx.Get&lt;T&gt;()</code> returns a service registered with <code>controller.RegisterService(x)</code>, or else the first scene object of that type. <code>Validate(tree)</code> is optional on effects and conditions; when present, its messages show in the editor.</p>
+      </section>
+
+      <section id="ui">
+        <h2>UI module</h2>
+        <p><code>SkillTreeView</code> builds the tree at runtime from the definition, placing each node at <code>position × spacing</code>. It refreshes when the tree or the wallet changes. If that happens while the view is hidden, it waits until it is shown again.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Part</th><th>Role</th></tr></thead>
+            <tbody>
+              <tr><td><code>SkillNodeView</code></td><td>Icon, level fill, level text, state tint, highlight, affordable indicator and button. Every part is optional. Animates hover and purchase.</td></tr>
+              <tr><td><code>ConnectorView</code></td><td>UI-image line between two nodes; shown once both ends are visible, and coloured once the requirement is met.</td></tr>
+              <tr><td><code>NodeStateStyle</code></td><td>Mystery icon and text, tint per state, connector colours, and the tag that gets a highlight.</td></tr>
+              <tr><td><code>SkillTooltip</code></td><td>One shared, constant-size tooltip that follows the hovered node and stays on screen.</td></tr>
+              <tr><td><code>PanZoomView</code></td><td>Smooth zoom toward the cursor, and drag with inertia.</td></tr>
+              <tr><td><code>PulseGlow</code></td><td>Looping highlight pulse.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>To restyle, swap the node prefab or the style asset. Tooltip text is generated from the name, flavour text, each effect's current → next level line, the cost, and anything still required, so it can't drift from the numbers. <code>NodeClicked</code> and <code>NodePurchased</code> events let a game add sounds or effects. Turn off <b>Purchase On Click</b> to handle clicks yourself.</p>
+      </section>
+
+      <section id="editor">
+        <h2>Editor tools</h2>
+        <div class="two">
+          <div class="feature"><h4>Graph window</h4><p>Double-click a tree asset. Add, duplicate, delete and link nodes, and edit the selected node in the side panel. Links that would create a cycle, and duplicate links, are refused. Nodes with problems get a red or yellow border. Undo works throughout.</p></div>
+          <div class="feature"><h4>Table window</h4><p>Every node in one grid: max level, cost curve values, currency and total cost to max. Shows the cost of maxing everything and exports to CSV.</p></div>
+          <div class="feature"><h4>Validation</h4><p>Duplicate or missing ids, unknown or unreachable requirements, cycles, missing effect classes, unknown stats and missing icons. Shown in the Inspector and graph, and logged when the asset is imported.</p></div>
+          <div class="feature"><h4>Play-mode debugger</h4><p>On the controller: grant currency, buy or refund nodes, max or reset everything, copy or load save JSON, and see every stat with its modifiers and the nodes they come from.</p></div>
+        </div>
+      </section>
+
+      <section id="api">
+        <h2>API reference</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Member</th><th>Does</th></tr></thead>
+            <tbody>
+              <tr><td><code>controller.GetLevel(id)</code> · <code>GetCost(id)</code> · <code>GetState(id)</code></td><td>Current level, price of the next level, node state</td></tr>
+              <tr><td><code>controller.CanPurchase(id)</code></td><td><code>Ok</code>, <code>UnknownNode</code>, <code>Maxed</code>, <code>Requirements</code>, <code>Conditions</code> or <code>Funds</code></td></tr>
+              <tr><td><code>controller.TryPurchase(id)</code></td><td>Buys the next level; returns false and changes nothing if it can't</td></tr>
+              <tr><td><code>controller.TryRefund(id, percent)</code> · <code>CanRefund(id)</code></td><td>Refunds a whole node when no owned node requires it</td></tr>
+              <tr><td><code>controller.ResetTree(percent)</code></td><td>Full respec with a refund percentage</td></tr>
+              <tr><td><code>controller.CaptureState()</code> · <code>RestoreState(state)</code></td><td>Save and load <code>{treeId, levels}</code></td></tr>
+              <tr><td><code>controller.NodeLevelChanged</code> · <code>TreeChanged</code></td><td>Events for UI and gameplay</td></tr>
+              <tr><td><code>controller.HasTag(tag)</code> · <code>RegisterService(x)</code> · <code>Initialize(...)</code></td><td>Tags from Grant Tag; services for effects; setup from code</td></tr>
+              <tr><td><code>tree.Stats.Get(id)</code> · <code>GetValue(id)</code> · <code>StatChanged</code></td><td>The tree's stats at runtime</td></tr>
+              <tr><td><code>statRef.Value</code> · <code>IntValue</code> · <code>AddTemporary(...)</code> · <code>RemoveModifiers(src)</code></td><td>Read a stat or buff it from game code</td></tr>
+              <tr><td><code>SkillFeatures.IsUnlocked(id)</code> · <code>Unlock(id, src)</code> · <code>Lock(id, src)</code></td><td>Feature unlock state, also usable without a tree</td></tr>
+              <tr><td><code>SkillTreeValidation.Validate(tree)</code></td><td>List of errors and warnings</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="case-study">
+        <h2>Case study: Gladiator Pits</h2>
+        <p>The package was extracted from the skill tree of Gladiator Pits, an incremental game, and the game was then moved onto it.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Before</th><th>After</th></tr></thead>
+            <tbody>
+              <tr><td>40 hand-placed node objects in the scene</td><td>40 entries in one tree asset; the shop is generated</td></tr>
+              <tr><td>25 variable assets and 38 effect assets</td><td>27 stats and inline effects in the same asset</td></tr>
+              <tr><td>An ability framework with an upgrade enum and switch statements</td><td>6 small feature components that read stats</td></tr>
+              <tr><td>Hunter's Frenzy overwrote two variables and restored them</td><td>Two temporary modifiers that expire on their own</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><b>Results.</b> With every node maxed, all 27 values match the old system. A bot played the full game through the generated shop and bought all 152 levels in 66 rounds, the same as before the move, with no errors or warnings. Five node costs changed by 1 coin, because the old float maths was 1 coin too high (159,721 where 15000 × 2.2³ is exactly 159,720). The new costs are exact.</p>
+      </section>
+
+      <section id="notes">
+        <h2>Good to know</h2>
+        <ul>
+          <li>Effects, conditions and cost curves are stored with <code>[SerializeReference]</code>. Before renaming or moving one of these classes, add <code>[MovedFrom(...)]</code>, or trees lose that entry. The validator reports any entry whose class went missing.</li>
+          <li>As with any Unity component, a <code>SkillFeature</code> or wallet component must live in a file named after its class.</li>
+          <li>Stats belong to the tree (<code>tree.Stats</code>). They reset when entering Play mode, even with domain reload turned off.</li>
+          <li>Costs and balances are <code>long</code>. Exponential costs multiply in decimal, so they are exact, and they cap at the largest <code>long</code> instead of overflowing.</li>
+          <li>The UI assembly is skipped when PrimeTween is missing, so a project without it still compiles.</li>
+        </ul>
+      </section>
+
+      <footer>SMPro Skill Tree 1.0.1 · Unity 6000.0+ · Performance figures measured on 2026-11-17.</footer>
+    </div>
+  </main>
+</div>
+
+<script>
+document.querySelectorAll("[data-copy]").forEach(function (button) {
+  button.addEventListener("click", function () {
+    var pre = button.closest(".code").querySelector("pre");
+    var text = pre.innerText;
+    function done(label) { button.textContent = label; setTimeout(function () { button.textContent = "Copy"; }, 1500); }
+    function selectText() {
+      var range = document.createRange();
+      range.selectNodeContents(pre);
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      done("Selected");
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done("Copied"); }, selectText);
+    } else {
+      selectText();
+    }
+  });
+});
+
+var links = Array.prototype.slice.call(document.querySelectorAll("nav.toc a"));
+var targets = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+function markActive() {
+  var current = 0;
+  targets.forEach(function (section, i) {
+    if (section && section.getBoundingClientRect().top < 140) current = i;
+  });
+  links.forEach(function (a, i) { a.classList.toggle("active", i === current); });
+}
+window.addEventListener("scroll", markActive, { passive: true });
+markActive();
+</script>
+</body>
+</html>

@@ -40,14 +40,14 @@ namespace SMPro.Inspector.EditorTools
             public List<StructureKey> Structure { get; }
         }
 
-        public static VisualElement Build(SerializedObject serializedObject)
+        public static VisualElement Build(SerializedObject serializedObject, bool showScript = true)
         {
-            VisualElement root = InspectorView.Create(serializedObject);
+            VisualElement root = InspectorView.Create(serializedObject, showScript);
             AddStyles(root);
             return root;
         }
 
-        internal static Result BuildContent(VisualElement root, SerializedObject serializedObject, Action requestRebuild)
+        internal static Result BuildContent(VisualElement root, SerializedObject serializedObject, Action requestRebuild, bool showScript = true)
         {
             var builder = new InspectorBuilder(requestRebuild);
             TypeModel model = TypeModel.For(serializedObject.targetObject.GetType());
@@ -59,7 +59,10 @@ namespace SMPro.Inspector.EditorTools
             for (bool enterChildren = true; iterator.NextVisible(enterChildren); enterChildren = false)
             {
                 SerializedProperty property = iterator.Copy();
-                if (property.propertyPath == ScriptPath) root.Add(ScriptField(property));
+                if (property.propertyPath == ScriptPath)
+                {
+                    if (showScript) root.Add(ScriptField(property));
+                }
                 else properties.Add(builder.BuildProperty(property, model, null, targets));
             }
             if (typeof(ISelfValidator).IsAssignableFrom(model.Type))

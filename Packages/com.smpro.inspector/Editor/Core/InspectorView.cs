@@ -15,9 +15,12 @@ namespace SMPro.Inspector.EditorTools
         List<StructureKey> structure = new();
         bool rebuildPending;
 
-        InspectorView(SerializedObject serializedObject)
+        readonly bool showScript;
+
+        InspectorView(SerializedObject serializedObject, bool showScript)
         {
             this.serializedObject = serializedObject;
+            this.showScript = showScript;
             root = new VisualElement { name = "SMInspectorPro" };
             root.userData = this;
             undoAction = Refresh;
@@ -30,14 +33,14 @@ namespace SMPro.Inspector.EditorTools
 
         public InspectorRefresher Refresher { get; private set; }
 
-        public static VisualElement Create(SerializedObject serializedObject) => new InspectorView(serializedObject).root;
+        public static VisualElement Create(SerializedObject serializedObject, bool showScript = true) => new InspectorView(serializedObject, showScript).root;
 
         public static InspectorView Of(VisualElement root) => root?.userData as InspectorView;
 
         void Build()
         {
             root.Clear();
-            InspectorBuilder.Result result = InspectorBuilder.BuildContent(root, serializedObject, RequestRebuild);
+            InspectorBuilder.Result result = InspectorBuilder.BuildContent(root, serializedObject, RequestRebuild, showScript);
             Refresher = result.Refresher;
             structure = result.Structure;
             Refresher.Refresh();

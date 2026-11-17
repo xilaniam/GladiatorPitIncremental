@@ -10,10 +10,10 @@ One asset holds the whole tree. Game code reads the results as stats. Adding or 
 2. Window ▸ Package Manager ▸ **+** ▸ **Add package from git URL** and paste:
 
    ```
-   https://github.com/<owner>/<repo>.git?path=/Packages/com.smpro.skilltree#v1.0.0
+   https://github.com/xilaniam/GladiatorPitIncremental.git?path=/Packages/com.smpro.skilltree#v1.0.0
    ```
 
-   Leave out `?path=...` if the package sits at the root of its own repository.
+   If the package later moves to its own repository, use that repository's URL and leave out `?path=...`.
 3. Optional: Package Manager ▸ SMPro Skill Tree ▸ Samples ▸ **Starter Tree** ▸ Import. The sample uses TextMesh Pro, so import TMP Essentials if Unity asks.
 
 ## Quick start

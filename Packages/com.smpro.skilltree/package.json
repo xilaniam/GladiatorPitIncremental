@@ -1,0 +1,17 @@
+{
+  "name": "com.smpro.skilltree",
+  "version": "0.1.0",
+  "displayName": "SMPro Skill Tree",
+  "description": "Data-driven skill, talent and upgrade trees: one tree asset, computed stats, pluggable effects, conditions, costs and currency.",
+  "unity": "6000.0",
+  "author": {
+    "name": "SMPro"
+  },
+  "keywords": [
+    "skill tree",
+    "talents",
+    "upgrades",
+    "progression"
+  ],
+  "dependencies": {}
+}

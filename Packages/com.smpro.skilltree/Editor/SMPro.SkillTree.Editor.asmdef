@@ -1,0 +1,18 @@
+{
+    "name": "SMPro.SkillTree.Editor",
+    "rootNamespace": "SMPro.SkillTree.EditorTools",
+    "references": [
+        "SMPro.SkillTree.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

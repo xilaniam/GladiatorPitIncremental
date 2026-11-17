@@ -1,0 +1,14 @@
+{
+    "name": "SMPro.SkillTree.Runtime",
+    "rootNamespace": "SMPro.SkillTree",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

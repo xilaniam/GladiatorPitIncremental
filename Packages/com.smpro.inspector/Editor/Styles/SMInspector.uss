@@ -57,6 +57,10 @@
     margin: 2px 3px 2px 3px;
 }
 
+.sm-validation > .unity-help-box {
+    margin: 1px 3px 3px 3px;
+}
+
 .sm-suffix {
     flex-direction: row;
     align-items: center;

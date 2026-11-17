@@ -13,6 +13,7 @@ namespace SMPro.Inspector.EditorTools
     internal sealed class InspectorBuilder
     {
         const string ScriptPath = "m_Script";
+        const string PropertyContainer = "sm-property-container";
         const string StylePath = "Packages/com.smpro.inspector/Editor/Styles/SMInspector.uss";
 
         static readonly HashSet<string> reportedErrors = new();
@@ -35,6 +36,7 @@ namespace SMPro.Inspector.EditorTools
             Object[] targets = serializedObject.targetObjects;
             var properties = new List<InspectorProperty>();
 
+            VisualElement topSlot = null;
             SerializedProperty iterator = serializedObject.GetIterator();
             for (bool enterChildren = true; iterator.NextVisible(enterChildren); enterChildren = false)
             {
@@ -42,10 +44,23 @@ namespace SMPro.Inspector.EditorTools
                 if (property.propertyPath == ScriptPath) root.Add(ScriptField(property));
                 else properties.Add(builder.BuildProperty(property, model, null, targets));
             }
+            if (typeof(ISelfValidator).IsAssignableFrom(model.Type))
+            {
+                topSlot = ValidationSlot("root");
+                root.Add(topSlot);
+            }
             builder.AddMembers(model, null, targets, properties);
             builder.Arrange(root, model.Type, properties);
-            root.userData = InspectorRefresher.Attach(root, serializedObject, builder.built, builder.collapsibles);
+            var validation = new InspectorValidation(serializedObject, builder.built, topSlot);
+            root.userData = InspectorRefresher.Attach(root, serializedObject, builder.built, builder.collapsibles, validation);
             return root;
+        }
+
+        static VisualElement ValidationSlot(string path)
+        {
+            var slot = new VisualElement { name = "sm-validation:" + path };
+            slot.AddToClassList("sm-validation");
+            return slot;
         }
 
         internal static InspectorRefresher RefresherOf(VisualElement root) => root?.userData as InspectorRefresher;
@@ -114,11 +129,51 @@ namespace SMPro.Inspector.EditorTools
 
         InspectorProperty Finish(InspectorProperty property)
         {
-            IFieldHandler field = CreateHandlers(property);
-            VisualElement element = Decorate(property, CreateField(property, field));
-            property.Element = WithProblems(property, element);
+            IFieldHandler fieldHandler = CreateHandlers(property);
+            VisualElement field = CreateField(property, fieldHandler);
+            NotifyFieldCreated(property, field);
+            VisualElement element = WithProblems(property, Decorate(property, field));
+            property.Element = NeedsValidationSlot(property) ? WithValidationSlot(property, element) : element;
             built.Add(property);
             return property;
+        }
+
+        static void NotifyFieldCreated(InspectorProperty property, VisualElement field)
+        {
+            foreach (AttributeHandler handler in property.Handlers)
+            {
+                try
+                {
+                    handler.OnFieldCreated(field);
+                }
+                catch (Exception exception)
+                {
+                    Report(property, handler.GetType(), exception);
+                }
+            }
+        }
+
+        static bool NeedsValidationSlot(InspectorProperty property)
+        {
+            if (property.SerializedProperty == null) return false;
+            foreach (AttributeHandler handler in property.Handlers)
+                if (handler is IValidatorHandler) return true;
+            return typeof(ISelfValidator).IsAssignableFrom(property.OwnerType) || typeof(ISelfValidator).IsAssignableFrom(property.Member?.ValueType);
+        }
+
+        static VisualElement WithValidationSlot(InspectorProperty property, VisualElement element)
+        {
+            VisualElement container = element;
+            if (!element.ClassListContains(PropertyContainer))
+            {
+                container = new VisualElement { name = PropertyName(property) };
+                container.AddToClassList(PropertyContainer);
+                if (element.name == container.name) element.name = null;
+                container.Add(element);
+            }
+            property.ValidationSlot = ValidationSlot(property.Path);
+            container.Add(property.ValidationSlot);
+            return container;
         }
 
         static string LabelFor(string displayName, MemberModel member)
@@ -193,6 +248,7 @@ namespace SMPro.Inspector.EditorTools
             if (problems == null) return element;
 
             var container = new VisualElement { name = PropertyName(property) };
+            container.AddToClassList(PropertyContainer);
             if (element.name == container.name) element.name = null;
             container.Add(element);
             foreach (string problem in problems)
@@ -321,6 +377,7 @@ namespace SMPro.Inspector.EditorTools
             reportedErrors.Clear();
             reportedProblems.Clear();
             GroupLayout.ClearReported();
+            InspectorValidation.ClearReported();
         }
     }
 }

@@ -30,6 +30,7 @@ namespace SMPro.Inspector.EditorTools
         public UnityEngine.Object[] Targets { get; }
         public VisualElement Element { get; internal set; }
         public string Label { get; internal set; }
+        internal VisualElement ValidationSlot { get; set; }
         public string Name => SerializedProperty != null ? SerializedProperty.name : Member?.Name;
         public string Path => SerializedProperty != null ? SerializedProperty.propertyPath : Parent != null ? Parent.Path + "." + Name : Name;
         public int TargetCount => Targets?.Length ?? 0;

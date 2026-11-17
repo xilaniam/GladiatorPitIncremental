@@ -32,6 +32,10 @@ namespace SMPro.Inspector.EditorTools
         {
         }
 
+        protected internal virtual void OnFieldCreated(VisualElement field)
+        {
+        }
+
         protected void ReportProblem(string message) => problems.Add(message);
 
         protected BoundGetter<T> ResolveValue<T>(string path) => BoundGetter<T>.Value(Property, path);

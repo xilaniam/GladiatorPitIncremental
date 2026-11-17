@@ -64,7 +64,7 @@ namespace SMPro.Inspector.EditorTools
         TypeModel(Type type)
         {
             Type = type;
-            UsesInspectorAttributes = type.IsDefined(typeof(InspectorAttribute), true);
+            UsesInspectorAttributes = type.IsDefined(typeof(InspectorAttribute), true) || typeof(ISelfValidator).IsAssignableFrom(type);
             foreach (Type declaring in UserHierarchy(type))
             {
                 CollectFields(declaring);

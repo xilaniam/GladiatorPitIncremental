@@ -1,0 +1,26 @@
+{
+    "name": "SMPro.Inspector.Tests",
+    "rootNamespace": "SMPro.Inspector.Tests",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "SMPro.Inspector",
+        "SMPro.Inspector.Editor",
+        "SMPro.Inspector.Tests.Fixtures"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

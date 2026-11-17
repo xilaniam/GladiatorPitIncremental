@@ -44,6 +44,13 @@ namespace SMPro.Inspector.Tests
             return editor;
         }
 
+        protected Editor EditorFor(Object[] targets)
+        {
+            Editor editor = Editor.CreateEditor(targets);
+            created.Add(editor);
+            return editor;
+        }
+
         protected VisualElement Inspect(Object target) => EditorFor(target).CreateInspectorGUI();
 
         protected static string[] ChildNames(VisualElement element) => element.Children().Select(child => child.name).ToArray();

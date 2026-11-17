@@ -42,6 +42,7 @@ namespace SMPro.Inspector.EditorTools
                 if (property.propertyPath == ScriptPath) root.Add(ScriptField(property));
                 else properties.Add(builder.BuildProperty(property, model, null, targets));
             }
+            builder.AddMembers(model, null, targets, properties);
             builder.Arrange(root, model.Type, properties);
             root.userData = InspectorRefresher.Attach(root, serializedObject, builder.built, builder.collapsibles);
             return root;
@@ -62,16 +63,57 @@ namespace SMPro.Inspector.EditorTools
             return field;
         }
 
-        void Arrange(VisualElement container, Type ownerType, List<InspectorProperty> properties) =>
-            collapsibles.AddRange(GroupLayout.Arrange(container, ownerType, properties));
+        void Arrange(VisualElement container, Type ownerType, List<InspectorProperty> properties)
+        {
+            List<InspectorProperty> ordered = InDeclarationOrder(properties);
+            collapsibles.AddRange(GroupLayout.Arrange(container, ownerType, ordered));
+        }
+
+        static List<InspectorProperty> InDeclarationOrder(List<InspectorProperty> properties)
+        {
+            var keyed = new List<(int key, int index, InspectorProperty property)>(properties.Count);
+            int previous = -1;
+            for (int i = 0; i < properties.Count; i++)
+            {
+                int key = properties[i].Member?.DeclarationOrder ?? previous;
+                previous = key;
+                keyed.Add((key, i, properties[i]));
+            }
+            keyed.Sort((a, b) => a.key != b.key ? a.key.CompareTo(b.key) : a.index.CompareTo(b.index));
+            return keyed.ConvertAll(entry => entry.property);
+        }
+
+        void AddMembers(TypeModel model, InspectorProperty parent, Object[] targets, List<InspectorProperty> properties)
+        {
+            foreach (MemberModel member in model.Members)
+            {
+                if (member.Kind == MemberKind.SerializedField) continue;
+                bool drawn = member.Kind == MemberKind.Method ? member.Has<ButtonAttribute>() : member.Has<ShowInInspectorAttribute>();
+                if (drawn) properties.Add(BuildMember(member, model, parent, targets));
+            }
+        }
 
         InspectorProperty BuildProperty(SerializedProperty serializedProperty, TypeModel ownerModel, InspectorProperty parent, Object[] targets)
         {
             MemberModel member = ownerModel?.Find(serializedProperty.name);
             var property = new InspectorProperty(serializedProperty, member, ownerModel?.Type, parent, targets)
             {
-                Label = LabelFor(serializedProperty, member)
+                Label = LabelFor(serializedProperty.displayName, member)
             };
+            return Finish(property);
+        }
+
+        InspectorProperty BuildMember(MemberModel member, TypeModel ownerModel, InspectorProperty parent, Object[] targets)
+        {
+            var property = new InspectorProperty(null, member, ownerModel.Type, parent, targets)
+            {
+                Label = LabelFor(ObjectNames.NicifyVariableName(member.Name), member)
+            };
+            return Finish(property);
+        }
+
+        InspectorProperty Finish(InspectorProperty property)
+        {
             IFieldHandler field = CreateHandlers(property);
             VisualElement element = Decorate(property, CreateField(property, field));
             property.Element = WithProblems(property, element);
@@ -79,7 +121,7 @@ namespace SMPro.Inspector.EditorTools
             return property;
         }
 
-        static string LabelFor(SerializedProperty serializedProperty, MemberModel member)
+        static string LabelFor(string displayName, MemberModel member)
         {
             if (member != null)
             {
@@ -87,7 +129,7 @@ namespace SMPro.Inspector.EditorTools
                 LabelTextAttribute labelText = member.Get<LabelTextAttribute>();
                 if (labelText != null) return labelText.Text ?? string.Empty;
             }
-            return serializedProperty.displayName;
+            return displayName;
         }
 
         VisualElement CreateField(InspectorProperty property, IFieldHandler field)
@@ -101,12 +143,19 @@ namespace SMPro.Inspector.EditorTools
                 }
                 catch (Exception exception)
                 {
-                    return WithError(DefaultField(property), Report(property, field.GetType(), exception));
+                    return WithError(Fallback(property), Report(property, field.GetType(), exception));
                 }
             }
 
+            if (property.SerializedProperty == null) return Fallback(property);
             Type nestedType = TakenOverNestedType(property);
             return nestedType != null ? NestedFoldout(property, TypeModel.For(nestedType)) : DefaultField(property);
+        }
+
+        static VisualElement Fallback(InspectorProperty property)
+        {
+            if (property.SerializedProperty != null) return DefaultField(property);
+            return new Label(property.Label) { name = "sm-member:" + property.Path };
         }
 
         static VisualElement Decorate(InspectorProperty property, VisualElement field)
@@ -220,6 +269,7 @@ namespace SMPro.Inspector.EditorTools
             SerializedProperty end = serializedProperty.GetEndProperty();
             for (bool enterChildren = true; child.NextVisible(enterChildren) && !SerializedProperty.EqualContents(child, end); enterChildren = false)
                 children.Add(BuildProperty(child.Copy(), nestedModel, property, property.Targets));
+            AddMembers(nestedModel, property, property.Targets, children);
             Arrange(content, nestedModel.Type, children);
             return container;
         }
@@ -264,7 +314,7 @@ namespace SMPro.Inspector.EditorTools
 
         static string FieldName(SerializedProperty serializedProperty) => "PropertyField:" + serializedProperty.propertyPath;
 
-        static string PropertyName(InspectorProperty property) => "sm-property:" + property.SerializedProperty.propertyPath;
+        static string PropertyName(InspectorProperty property) => "sm-property:" + property.Path;
 
         internal static void ClearReportedErrors()
         {

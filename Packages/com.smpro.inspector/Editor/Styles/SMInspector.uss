@@ -67,6 +67,28 @@
     opacity: 0.7;
 }
 
+.sm-button {
+    margin: 2px 3px;
+    height: 20px;
+}
+
+.sm-button--medium {
+    height: 26px;
+}
+
+.sm-button--large {
+    height: 32px;
+    -unity-font-style: bold;
+}
+
+.sm-button-box {
+    margin: 2px 0 4px 0;
+    padding: 3px 3px 1px 3px;
+    border-width: 1px;
+    border-radius: 3px;
+    border-color: var(--unity-colors-default-border);
+}
+
 .sm-horizontal {
     flex-direction: row;
 }

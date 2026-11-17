@@ -31,25 +31,27 @@ namespace SMPro.Inspector.EditorTools
         public VisualElement Element { get; internal set; }
         public string Label { get; internal set; }
         public string Name => SerializedProperty != null ? SerializedProperty.name : Member?.Name;
+        public string Path => SerializedProperty != null ? SerializedProperty.propertyPath : Parent != null ? Parent.Path + "." + Name : Name;
+        public int TargetCount => Targets?.Length ?? 0;
         public bool IsVisible { get; internal set; } = true;
         public bool IsEnabled { get; internal set; } = true;
 
         internal IReadOnlyList<AttributeHandler> Handlers => handlers;
 
-        public object GetOwner()
+        public object GetOwner(int targetIndex = 0)
         {
-            if (Parent != null) return Parent.GetValue();
-            return Targets != null && Targets.Length > 0 ? Targets[0] : null;
+            if (Parent != null) return Parent.GetValue(targetIndex);
+            return Targets != null && targetIndex < Targets.Length ? Targets[targetIndex] : null;
         }
 
-        public object GetValue()
+        public object GetValue(int targetIndex = 0)
         {
             if (!valueGetterResolved)
             {
-                valueGetter = OwnerType != null && Member != null ? MemberResolver.Value<object>(OwnerType, Member.Info.Name) : default;
+                valueGetter = OwnerType != null && Member != null && Member.Kind != MemberKind.Method ? MemberResolver.Value<object>(OwnerType, Member.Info.Name) : default;
                 valueGetterResolved = true;
             }
-            object owner = GetOwner();
+            object owner = GetOwner(targetIndex);
             return owner == null ? null : valueGetter.Get(owner);
         }
 

@@ -213,6 +213,12 @@ namespace SMPro.Inspector.EditorTools
         static Expression ArgumentAs(ParameterExpression argument, Type type) =>
             Expression.Condition(Expression.Equal(argument, Expression.Constant(null)), Expression.Default(type), Expression.Convert(argument, type));
 
+        internal static MethodInfo FindMethod(Type type, string name)
+        {
+            if (type == null || string.IsNullOrWhiteSpace(name)) return null;
+            return FindMember(type, name.Trim()) as MethodInfo;
+        }
+
         static MemberInfo FindMember(Type type, string name)
         {
             for (Type current = type; current != null; current = current.BaseType)

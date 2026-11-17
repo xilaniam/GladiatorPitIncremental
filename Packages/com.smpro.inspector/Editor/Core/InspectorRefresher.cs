@@ -26,16 +26,27 @@ namespace SMPro.Inspector.EditorTools
         readonly Action<PlayModeStateChange> playModeAction;
         IVisualElementScheduledItem poll;
 
-        InspectorRefresher(IEnumerable<InspectorProperty> properties, IEnumerable<Collapsible> groups)
+        readonly List<InspectorProperty> properties = new();
+
+        InspectorRefresher(IEnumerable<InspectorProperty> built, IEnumerable<Collapsible> groups)
         {
             refreshAction = Refresh;
             undoAction = Refresh;
             playModeAction = _ => Refresh();
+            properties.AddRange(built);
             foreach (InspectorProperty property in properties) Track(property);
             collapsibles.AddRange(groups);
         }
 
         public bool Polls { get; private set; }
+        public IReadOnlyList<InspectorProperty> Properties => properties;
+
+        public InspectorProperty Find(string path)
+        {
+            foreach (InspectorProperty property in properties)
+                if (property.Path == path) return property;
+            return null;
+        }
 
         public static InspectorRefresher Attach(VisualElement root, SerializedObject serializedObject, IEnumerable<InspectorProperty> properties, IEnumerable<Collapsible> groups)
         {

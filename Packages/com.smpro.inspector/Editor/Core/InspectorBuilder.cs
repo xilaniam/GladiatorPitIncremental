@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -52,14 +53,28 @@ namespace SMPro.Inspector.EditorTools
         static InspectorProperty BuildProperty(SerializedProperty serializedProperty, TypeModel ownerModel, InspectorProperty parent, Object[] targets)
         {
             MemberModel member = ownerModel?.Find(serializedProperty.name);
-            var property = new InspectorProperty(serializedProperty, member, ownerModel?.Type, parent, targets);
-            property.Element = CreateElement(property);
+            var property = new InspectorProperty(serializedProperty, member, ownerModel?.Type, parent, targets)
+            {
+                Label = LabelFor(serializedProperty, member)
+            };
+            IFieldHandler field = CreateHandlers(property);
+            property.Element = Decorate(property, CreateField(property, field));
             return property;
         }
 
-        static VisualElement CreateElement(InspectorProperty property)
+        static string LabelFor(SerializedProperty serializedProperty, MemberModel member)
         {
-            IFieldHandler field = CreateHandlers(property);
+            if (member != null)
+            {
+                if (member.Has<HideLabelAttribute>()) return string.Empty;
+                LabelTextAttribute labelText = member.Get<LabelTextAttribute>();
+                if (labelText != null) return labelText.Text ?? string.Empty;
+            }
+            return serializedProperty.displayName;
+        }
+
+        static VisualElement CreateField(InspectorProperty property, IFieldHandler field)
+        {
             if (field != null)
             {
                 try
@@ -69,12 +84,38 @@ namespace SMPro.Inspector.EditorTools
                 }
                 catch (Exception exception)
                 {
-                    return WithError(DefaultField(property.SerializedProperty), Report(property, field.GetType(), exception));
+                    return WithError(DefaultField(property), Report(property, field.GetType(), exception));
                 }
             }
 
             Type nestedType = TakenOverNestedType(property);
-            return nestedType != null ? NestedFoldout(property, TypeModel.For(nestedType)) : DefaultField(property.SerializedProperty);
+            return nestedType != null ? NestedFoldout(property, TypeModel.For(nestedType)) : DefaultField(property);
+        }
+
+        static VisualElement Decorate(InspectorProperty property, VisualElement field)
+        {
+            var decorators = new List<IDecoratorHandler>();
+            foreach (AttributeHandler handler in property.Handlers)
+                if (handler is IDecoratorHandler decorator) decorators.Add(decorator);
+            if (decorators.Count == 0) return field;
+
+            VisualElement element = field;
+            foreach (IDecoratorHandler decorator in decorators.OrderBy(decorator => decorator.Order))
+            {
+                try
+                {
+                    element = decorator.Decorate(element) ?? element;
+                }
+                catch (Exception exception)
+                {
+                    var container = new VisualElement();
+                    container.Add(element);
+                    container.Add(new HelpBox(Report(property, decorator.GetType(), exception), HelpBoxMessageType.Error));
+                    element = container;
+                }
+            }
+            if (element != field) element.name = "sm-property:" + property.SerializedProperty.propertyPath;
+            return element;
         }
 
         static IFieldHandler CreateHandlers(InspectorProperty property)
@@ -119,19 +160,30 @@ namespace SMPro.Inspector.EditorTools
             var container = new VisualElement { name = FieldName(serializedProperty) };
             AddUnityDecorators(container, property.Member.Info);
 
-            var foldout = new Foldout { text = serializedProperty.displayName, tooltip = serializedProperty.tooltip, value = serializedProperty.isExpanded };
-            foldout.RegisterValueChangedCallback(change =>
+            VisualElement content;
+            if (string.IsNullOrEmpty(property.Label))
             {
-                if (change.target == foldout) serializedProperty.isExpanded = change.newValue;
-            });
-            container.Add(foldout);
+                content = new VisualElement();
+                content.AddToClassList("sm-nested");
+                container.Add(content);
+            }
+            else
+            {
+                var foldout = new Foldout { text = property.Label, tooltip = serializedProperty.tooltip, value = serializedProperty.isExpanded };
+                foldout.RegisterValueChangedCallback(change =>
+                {
+                    if (change.target == foldout) serializedProperty.isExpanded = change.newValue;
+                });
+                container.Add(foldout);
+                content = foldout.contentContainer;
+            }
 
             var children = new List<InspectorProperty>();
             SerializedProperty child = serializedProperty.Copy();
             SerializedProperty end = serializedProperty.GetEndProperty();
             for (bool enterChildren = true; child.NextVisible(enterChildren) && !SerializedProperty.EqualContents(child, end); enterChildren = false)
                 children.Add(BuildProperty(child.Copy(), nestedModel, property, property.Targets));
-            GroupLayout.Arrange(foldout.contentContainer, nestedModel.Type, children);
+            GroupLayout.Arrange(content, nestedModel.Type, children);
             return container;
         }
 
@@ -153,7 +205,8 @@ namespace SMPro.Inspector.EditorTools
             }
         }
 
-        static PropertyField DefaultField(SerializedProperty serializedProperty) => new(serializedProperty) { name = FieldName(serializedProperty) };
+        static PropertyField DefaultField(InspectorProperty property) =>
+            new(property.SerializedProperty, property.Label) { name = FieldName(property.SerializedProperty) };
 
         static VisualElement WithError(VisualElement field, string message)
         {

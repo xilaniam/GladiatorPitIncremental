@@ -27,6 +27,7 @@ namespace SMPro.Inspector.EditorTools
         public IReadOnlyList<InspectorProperty> Children => children;
         public UnityEngine.Object[] Targets { get; }
         public VisualElement Element { get; internal set; }
+        public string Label { get; internal set; }
         public string Name => SerializedProperty != null ? SerializedProperty.name : Member?.Name;
 
         internal IReadOnlyList<AttributeHandler> Handlers => handlers;

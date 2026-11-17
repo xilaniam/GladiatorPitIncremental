@@ -15,4 +15,8 @@ namespace SMPro.Inspector.Tests
     public sealed class TestUnhandledAttribute : InspectorAttribute
     {
     }
+
+    public sealed class TestThrowingDecoratorAttribute : InspectorAttribute
+    {
+    }
 }

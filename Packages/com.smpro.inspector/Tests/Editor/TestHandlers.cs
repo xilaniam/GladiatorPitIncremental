@@ -25,6 +25,12 @@ namespace SMPro.Inspector.Tests
         public override VisualElement CreateField() => throw new InvalidOperationException("boom");
     }
 
+    [AttributeHandler(typeof(TestThrowingDecoratorAttribute))]
+    public sealed class TestThrowingDecoratorHandler : DecoratorHandler<TestThrowingDecoratorAttribute>
+    {
+        public override VisualElement Decorate(VisualElement field) => throw new InvalidOperationException("decorator boom");
+    }
+
     [CustomEditor(typeof(CustomEditorTestComponent))]
     public sealed class CustomEditorTestComponentEditor : Editor
     {

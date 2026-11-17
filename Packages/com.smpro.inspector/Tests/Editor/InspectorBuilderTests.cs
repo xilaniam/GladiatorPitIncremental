@@ -90,13 +90,17 @@ namespace SMPro.Inspector.Tests
         [Test]
         public void ThrowingHandler_FallsBackToTheDefaultField_WithAMessage()
         {
-            LogAssert.Expect(LogType.Exception, new Regex("boom"));
+            LogAssert.Expect(LogType.Exception, new Regex("InvalidOperationException: boom"));
+            LogAssert.Expect(LogType.Exception, new Regex("InvalidOperationException: decorator boom"));
 
             VisualElement root = Inspect(NewComponent<ThrowingTestComponent>());
 
             VisualElement broken = root.Q("PropertyField:broken");
             Assert.IsNotNull(broken.Q<PropertyField>());
             Assert.AreEqual("TestThrowingHandler failed on 'broken': boom", broken.Q<HelpBox>().text);
+            VisualElement brokenDecorator = root.Q("sm-property:brokenDecorator");
+            Assert.IsNotNull(brokenDecorator.Q<PropertyField>("PropertyField:brokenDecorator"));
+            Assert.AreEqual("TestThrowingDecoratorHandler failed on 'brokenDecorator': decorator boom", brokenDecorator.Q<HelpBox>().text);
             Assert.IsNotNull(root.Q<PropertyField>("PropertyField:healthy"));
         }
 

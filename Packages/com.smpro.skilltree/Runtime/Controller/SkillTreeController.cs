@@ -95,9 +95,19 @@ namespace SMPro.SkillTree
 
         public long GetCost(string nodeId) => definition.TryGetNode(nodeId, out SkillNodeDefinition node) ? node.GetCost(GetLevel(nodeId)) : 0;
 
-        public bool RequirementsMet(SkillNodeDefinition node) => node.requirements.All(r => GetLevel(r.nodeId) >= r.level);
+        public bool RequirementsMet(SkillNodeDefinition node)
+        {
+            foreach (NodeRequirement requirement in node.requirements)
+                if (requirement != null && GetLevel(requirement.nodeId) < requirement.level) return false;
+            return true;
+        }
 
-        public bool ConditionsMet(SkillNodeDefinition node) => node.conditions.All(c => c == null || c.IsMet(this));
+        public bool ConditionsMet(SkillNodeDefinition node)
+        {
+            foreach (ISkillCondition condition in node.conditions)
+                if (condition != null && !condition.IsMet(this)) return false;
+            return true;
+        }
 
         public NodeState GetState(string nodeId)
         {
@@ -221,8 +231,13 @@ namespace SMPro.SkillTree
             throw new InvalidOperationException($"No service of type {typeof(T).Name}. Register it with RegisterService.");
         }
 
-        bool ParentStarted(SkillNodeDefinition node) =>
-            node.requirements.Count == 0 || node.requirements.Any(r => GetLevel(r.nodeId) > 0);
+        bool ParentStarted(SkillNodeDefinition node)
+        {
+            if (node.requirements.Count == 0) return true;
+            foreach (NodeRequirement requirement in node.requirements)
+                if (requirement != null && GetLevel(requirement.nodeId) > 0) return true;
+            return false;
+        }
 
         IEnumerable<SkillNodeDefinition> LevelledNodes() => definition.nodes.Where(n => GetLevel(n.id) > 0).ToList();
 

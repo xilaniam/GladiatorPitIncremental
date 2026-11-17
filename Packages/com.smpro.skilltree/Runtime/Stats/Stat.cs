@@ -28,9 +28,31 @@ namespace SMPro.SkillTree
             Refresh();
         }
 
-        internal bool RemoveFrom(object source) => RemoveWhere(m => Equals(m.Source, source));
+        internal bool RemoveFrom(object source)
+        {
+            bool removed = false;
+            for (int i = modifiers.Count - 1; i >= 0; i--)
+            {
+                if (!Equals(modifiers[i].Source, source)) continue;
+                modifiers.RemoveAt(i);
+                removed = true;
+            }
+            if (removed) Refresh();
+            return removed;
+        }
 
-        internal bool RemoveExpired(float now) => RemoveWhere(m => m.ExpiresAt <= now);
+        internal bool RemoveExpired(float now)
+        {
+            bool removed = false;
+            for (int i = modifiers.Count - 1; i >= 0; i--)
+            {
+                if (modifiers[i].ExpiresAt > now) continue;
+                modifiers.RemoveAt(i);
+                removed = true;
+            }
+            if (removed) Refresh();
+            return removed;
+        }
 
         internal bool HasTemporary => modifiers.Exists(m => m.IsTemporary);
 

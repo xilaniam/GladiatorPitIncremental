@@ -27,6 +27,7 @@ namespace SMPro.SkillTree.UI
         SkillTreeView owner;
         bool isHovered;
         bool wasMystery;
+        int shownLevel = -1;
         Tween hoverTween;
         Sequence pulseSequence;
 
@@ -54,7 +55,8 @@ namespace SMPro.SkillTree.UI
             bool mystery = state == NodeState.Mystery;
             if (icon != null) icon.sprite = mystery && style.mysteryIcon != null ? style.mysteryIcon : Node.icon;
             if (levelFill != null) levelFill.fillAmount = (float)level / Node.maxLevel;
-            if (levelText != null) levelText.text = $"{level}/{Node.maxLevel}";
+            if (levelText != null && level != shownLevel) levelText.text = $"{level}/{Node.maxLevel}";
+            shownLevel = level;
             if (stateTint != null) stateTint.color = style.TintFor(state);
             if (button != null) button.interactable = state == NodeState.Available || mystery;
             if (highlight != null) highlight.SetActive(level == 0 && !string.IsNullOrEmpty(style.highlightTag) && Node.HasTag(style.highlightTag));

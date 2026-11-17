@@ -2,6 +2,8 @@
 
 Data-driven skill, talent, upgrade and research trees for Unity 6.
 
+Full documentation, with measured performance: `Documentation~/index.html` (open it in a browser).
+
 One asset holds the whole tree. Game code reads the results as stats. Adding or changing a node needs no new script, asset or scene object.
 
 ## Install

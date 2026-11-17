@@ -61,6 +61,8 @@ namespace SMPro.Inspector.EditorTools
             return model;
         }
 
+        internal static TypeModel Uncached(Type type) => new(type);
+
         TypeModel(Type type)
         {
             Type = type;

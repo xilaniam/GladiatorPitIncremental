@@ -14,5 +14,12 @@
     "validation",
     "tools"
   ],
-  "dependencies": {}
+  "dependencies": {},
+  "samples": [
+    {
+      "displayName": "Showcase",
+      "description": "A spawner and two enemy profiles that use most attributes, a broken profile for the validator, and two example tool windows.",
+      "path": "Samples~/Showcase"
+    }
+  ]
 }

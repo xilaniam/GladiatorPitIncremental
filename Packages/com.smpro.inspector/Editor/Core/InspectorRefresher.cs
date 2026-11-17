@@ -83,13 +83,18 @@ namespace SMPro.Inspector.EditorTools
         {
             if (serializedObject.targetObject == null) return;
             serializedObject.UpdateIfRequiredOrScript();
-            Validation?.Refresh();
             RefreshStates();
+            Validation?.Refresh();
+        }
+
+        public void RefreshVisibility()
+        {
+            for (int i = 0; i < entries.Count; i++) RefreshEntry(entries[i]);
         }
 
         public void RefreshStates()
         {
-            for (int i = 0; i < entries.Count; i++) RefreshEntry(entries[i]);
+            RefreshVisibility();
             for (int i = 0; i < collapsibles.Count; i++) collapsibles[i].Refresh();
             for (int i = 0; i < refreshables.Count; i++)
             {

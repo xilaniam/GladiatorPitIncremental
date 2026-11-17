@@ -181,7 +181,7 @@ namespace SMPro.Inspector.EditorTools
             if (property.ExtraValidators.Count > 0) return true;
             foreach (AttributeHandler handler in property.Handlers)
                 if (handler is IValidatorHandler) return true;
-            return typeof(ISelfValidator).IsAssignableFrom(property.OwnerType) || typeof(ISelfValidator).IsAssignableFrom(property.Member?.ValueType);
+            return typeof(ISelfValidator).IsAssignableFrom(property.OwnerType) || InspectorValidation.IsNestedSelfValidator(property.Member?.ValueType);
         }
 
         static VisualElement WithValidationSlot(InspectorProperty property, VisualElement element)

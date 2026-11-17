@@ -85,6 +85,7 @@ namespace SMPro.Inspector.EditorTools
 
             using var serializedObject = new SerializedObject(target);
             InspectorBuilder.Result built = InspectorBuilder.BuildContent(new VisualElement(), serializedObject, () => { });
+            built.Refresher.RefreshVisibility();
             built.Refresher.Validation.Run(report);
 
             report.Context = target;

@@ -60,6 +60,26 @@ namespace SMPro.Inspector.Tests
         }
 
         [Test]
+        public void Validate_SkipsHiddenFields()
+        {
+            var component = NewComponent<HiddenValidationTestComponent>();
+            Assert.IsEmpty(SMValidator.Validate(component).Issues);
+
+            component.needsTarget = true;
+            CollectionAssert.AreEqual(new[] { "Target is required" }, Messages(SMValidator.Validate(component)));
+        }
+
+        [Test]
+        public void Validate_DoesNotRunReferencedAssetsOwnChecks()
+        {
+            var component = NewComponent<HiddenValidationTestComponent>();
+            component.linked = NewAsset<SelfCheckingTestAsset>();
+
+            Assert.IsEmpty(SMValidator.Validate(component).Issues);
+            CollectionAssert.AreEqual(new[] { "Asset problem" }, Messages(SMValidator.Validate(component.linked)));
+        }
+
+        [Test]
         public void Validate_PlainComponent_HasNoIssues()
         {
             Assert.IsEmpty(SMValidator.Validate(NewComponent<PlainTestComponent>()).Issues);

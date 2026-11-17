@@ -35,7 +35,7 @@ namespace SMPro.Inspector.EditorTools
                     if (handler is IValidatorHandler validator) validators.Add(validator);
                 validators.AddRange(property.ExtraValidators);
                 if (validators.Count > 0) entries.Add(new Entry { Property = property, Validators = validators.ToArray() });
-                if (property.SerializedProperty != null && typeof(ISelfValidator).IsAssignableFrom(property.Member?.ValueType)) selfValidating.Add(property);
+                if (property.SerializedProperty != null && IsNestedSelfValidator(property.Member?.ValueType)) selfValidating.Add(property);
                 if (property.ValidationSlot != null) slots[property.Path] = new ValidationSlot(property.ValidationSlot);
             }
         }
@@ -59,6 +59,7 @@ namespace SMPro.Inspector.EditorTools
             report.Context = Target;
             foreach (Entry entry in entries)
             {
+                if (!IsShown(entry.Property)) continue;
                 report.PropertyPath = entry.Property.Path;
                 foreach (IValidatorHandler validator in entry.Validators)
                     Guard(report, validator.GetType().Name, () => validator.Validate(report));
@@ -70,11 +71,21 @@ namespace SMPro.Inspector.EditorTools
             }
             foreach (InspectorProperty property in selfValidating)
             {
-                if (property.GetValue() is not ISelfValidator nested) continue;
+                if (!IsShown(property) || property.GetValue() is not ISelfValidator nested) continue;
                 report.PropertyPath = property.Path;
                 Guard(report, nested.GetType().Name, () => nested.Validate(report));
             }
             report.PropertyPath = null;
+        }
+
+        internal static bool IsNestedSelfValidator(Type type) =>
+            type != null && typeof(ISelfValidator).IsAssignableFrom(type) && !typeof(Object).IsAssignableFrom(type);
+
+        static bool IsShown(InspectorProperty property)
+        {
+            for (InspectorProperty current = property; current != null; current = current.Parent)
+                if (!current.IsVisible) return false;
+            return true;
         }
 
         static void Guard(ValidationReport report, string source, Action validate)

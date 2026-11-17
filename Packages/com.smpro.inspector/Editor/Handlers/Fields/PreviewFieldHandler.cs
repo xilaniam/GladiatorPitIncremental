@@ -33,9 +33,16 @@ namespace SMPro.Inspector.EditorTools
             preview.AddToClassList("sm-preview");
             preview.style.width = Attribute.Height;
             preview.style.height = Attribute.Height;
-            var input = new VisualElement();
-            input.Add(preview);
-            container.Add(new FieldRow(" ", input));
+            if (string.IsNullOrEmpty(Property.Label))
+            {
+                container.Add(preview);
+            }
+            else
+            {
+                var input = new VisualElement();
+                input.Add(preview);
+                container.Add(new FieldRow(" ", input));
+            }
             Refresh();
             return container;
         }

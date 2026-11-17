@@ -189,6 +189,19 @@ namespace SMPro.Inspector.Tests
         }
 
         [Test]
+        public void HiddenFields_ShowNoMessages_UntilTheyAppear()
+        {
+            var hidden = NewComponent<HiddenValidationTestComponent>();
+            VisualElement hiddenRoot = Inspect(hidden);
+            Assert.IsEmpty(hiddenRoot.Q("sm-validation:target").Query<HelpBox>().ToList());
+
+            hidden.needsTarget = true;
+            InspectorBuilder.RefresherOf(hiddenRoot).Refresh();
+
+            CollectionAssert.AreEqual(new[] { "Target is required" }, hiddenRoot.Q("sm-validation:target").Query<HelpBox>().ToList().Select(box => box.text));
+        }
+
+        [Test]
         public void Messages_AreReplaced_NotDuplicated()
         {
             Build();

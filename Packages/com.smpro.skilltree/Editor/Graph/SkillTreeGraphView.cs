@@ -201,7 +201,10 @@ namespace SMPro.SkillTree.EditorTools
             if (change.movedElements != null)
             {
                 foreach (SkillNodeElement node in change.movedElements.OfType<SkillNodeElement>())
-                    node.Definition.position = ToTree(new Vector2(node.style.left.value.value, node.style.top.value.value));
+                {
+                    Vector2 moved = ToTree(new Vector2(node.style.left.value.value, node.style.top.value.value)) + Vector2.zero;
+                    if (moved != node.Definition.position) node.Definition.position = moved;
+                }
             }
 
             Commit();

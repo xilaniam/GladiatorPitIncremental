@@ -944,6 +944,7 @@ MonoBehaviour:
       type: {class: UnlockFeatureEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
       data:
         featureId: spawn_interval
+        label: 
     - rid: 8318600806399213730
       type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
       data:
@@ -1049,6 +1050,7 @@ MonoBehaviour:
       type: {class: UnlockFeatureEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
       data:
         featureId: double_coins
+        label: 
     - rid: 8318600806399213748
       type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
       data:
@@ -1166,6 +1168,7 @@ MonoBehaviour:
       type: {class: UnlockFeatureEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
       data:
         featureId: chain_lightning
+        label: 
     - rid: 8318600806399213768
       type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
       data:
@@ -1211,6 +1214,7 @@ MonoBehaviour:
       type: {class: UnlockFeatureEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
       data:
         featureId: breeding_season
+        label: 
     - rid: 8318600806399213776
       type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
       data:
@@ -1256,6 +1260,7 @@ MonoBehaviour:
       type: {class: UnlockFeatureEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
       data:
         featureId: ricochet
+        label: 
     - rid: 8318600806399213784
       type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
       data:
@@ -1325,6 +1330,7 @@ MonoBehaviour:
       type: {class: UnlockFeatureEffect, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
       data:
         featureId: hunters_frenzy
+        label: 
     - rid: 8318600806399213796
       type: {class: ExponentialCost, ns: SMPro.SkillTree, asm: SMPro.SkillTree.Runtime}
       data:

@@ -93,6 +93,51 @@
     border-color: var(--unity-colors-default-border);
 }
 
+.sm-enum-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.sm-enum-button {
+    flex-grow: 1;
+    margin: 0 1px;
+    border-radius: 0;
+}
+
+.sm-enum-button--selected {
+    background-color: var(--unity-colors-highlight-background);
+    color: var(--unity-colors-highlight-text);
+}
+
+.sm-progress-bar {
+    margin: 0;
+    height: 18px;
+}
+
+.sm-min-max {
+    flex-direction: row;
+    align-items: center;
+}
+
+.sm-min-max__number {
+    width: 52px;
+    margin-left: 2px;
+}
+
+.sm-path {
+    flex-direction: row;
+    align-items: center;
+}
+
+.sm-path__browse {
+    width: 24px;
+    margin: 1px 3px 1px 2px;
+}
+
+.sm-preview {
+    margin: 2px 0 4px 0;
+}
+
 .sm-horizontal {
     flex-direction: row;
 }

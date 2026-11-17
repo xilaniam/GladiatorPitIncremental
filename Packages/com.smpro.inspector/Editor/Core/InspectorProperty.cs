@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine.UIElements;
@@ -38,6 +39,9 @@ namespace SMPro.Inspector.EditorTools
         public bool IsEnabled { get; internal set; } = true;
 
         internal IReadOnlyList<AttributeHandler> Handlers => handlers;
+        internal List<string> BuilderProblems { get; } = new();
+
+        internal void AddBuilderProblem(string problem) => BuilderProblems.Add(problem);
 
         public object GetOwner(int targetIndex = 0)
         {
@@ -45,8 +49,15 @@ namespace SMPro.Inspector.EditorTools
             return Targets != null && targetIndex < Targets.Length ? Targets[targetIndex] : null;
         }
 
+        public int ElementIndex { get; internal set; } = -1;
+
         public object GetValue(int targetIndex = 0)
         {
+            if (ElementIndex >= 0)
+            {
+                IList list = Parent?.GetValue(targetIndex) as IList;
+                return list != null && ElementIndex < list.Count ? list[ElementIndex] : null;
+            }
             if (!valueGetterResolved)
             {
                 valueGetter = OwnerType != null && Member != null && Member.Kind != MemberKind.Method ? MemberResolver.Value<object>(OwnerType, Member.Info.Name) : default;

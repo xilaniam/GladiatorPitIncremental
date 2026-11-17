@@ -22,16 +22,34 @@ namespace SMPro.Inspector.EditorTools
 
         readonly List<InspectorProperty> built = new();
         readonly List<Collapsible> collapsibles = new();
+        readonly List<IRefreshable> extras = new();
+        readonly List<(SerializedProperty array, int size)> arrays = new();
+        readonly Action requestRebuild;
 
-        InspectorBuilder()
+        InspectorBuilder(Action requestRebuild) => this.requestRebuild = requestRebuild;
+
+        internal readonly struct Result
         {
+            public Result(InspectorRefresher refresher, List<(SerializedProperty array, int size)> arrays)
+            {
+                Refresher = refresher;
+                Arrays = arrays;
+            }
+
+            public InspectorRefresher Refresher { get; }
+            public List<(SerializedProperty array, int size)> Arrays { get; }
         }
 
         public static VisualElement Build(SerializedObject serializedObject)
         {
-            var root = new VisualElement { name = "SMInspectorPro" };
+            VisualElement root = InspectorView.Create(serializedObject);
             AddStyles(root);
-            var builder = new InspectorBuilder();
+            return root;
+        }
+
+        internal static Result BuildContent(VisualElement root, SerializedObject serializedObject, Action requestRebuild)
+        {
+            var builder = new InspectorBuilder(requestRebuild);
             TypeModel model = TypeModel.For(serializedObject.targetObject.GetType());
             Object[] targets = serializedObject.targetObjects;
             var properties = new List<InspectorProperty>();
@@ -52,8 +70,8 @@ namespace SMPro.Inspector.EditorTools
             builder.AddMembers(model, null, targets, properties);
             builder.Arrange(root, model.Type, properties);
             var validation = new InspectorValidation(serializedObject, builder.built, topSlot);
-            root.userData = InspectorRefresher.Attach(root, serializedObject, builder.built, builder.collapsibles, validation);
-            return root;
+            var refresher = new InspectorRefresher(serializedObject, builder.built, builder.collapsibles, builder.extras, validation);
+            return new Result(refresher, builder.arrays);
         }
 
         static VisualElement ValidationSlot(string path)
@@ -63,7 +81,7 @@ namespace SMPro.Inspector.EditorTools
             return slot;
         }
 
-        internal static InspectorRefresher RefresherOf(VisualElement root) => root?.userData as InspectorRefresher;
+        internal static InspectorRefresher RefresherOf(VisualElement root) => InspectorView.Of(root)?.Refresher;
 
         static void AddStyles(VisualElement root)
         {
@@ -108,12 +126,12 @@ namespace SMPro.Inspector.EditorTools
             }
         }
 
-        InspectorProperty BuildProperty(SerializedProperty serializedProperty, TypeModel ownerModel, InspectorProperty parent, Object[] targets)
+        InspectorProperty BuildProperty(SerializedProperty serializedProperty, TypeModel ownerModel, InspectorProperty parent, Object[] targets, string label = null)
         {
             MemberModel member = ownerModel?.Find(serializedProperty.name);
             var property = new InspectorProperty(serializedProperty, member, ownerModel?.Type, parent, targets)
             {
-                Label = LabelFor(serializedProperty.displayName, member)
+                Label = label ?? LabelFor(serializedProperty.displayName, member)
             };
             return Finish(property);
         }
@@ -203,8 +221,139 @@ namespace SMPro.Inspector.EditorTools
             }
 
             if (property.SerializedProperty == null) return Fallback(property);
+            Type elementType = TakenOverElementType(property);
+            if (elementType != null) return BuildList(property, elementType);
             Type nestedType = TakenOverNestedType(property);
             return nestedType != null ? NestedFoldout(property, TypeModel.For(nestedType)) : DefaultField(property);
+        }
+
+        static Type TakenOverElementType(InspectorProperty property)
+        {
+            SerializedProperty serializedProperty = property.SerializedProperty;
+            MemberModel member = property.Member;
+            if (member == null || !serializedProperty.isArray || serializedProperty.propertyType != SerializedPropertyType.Generic) return null;
+            Type elementType = ElementTypeOf(member.ValueType);
+            if (elementType == null) return null;
+            foreach (PropertyAttribute attribute in member.Info.GetCustomAttributes<PropertyAttribute>(true))
+                if (PropertyDrawerLookup.HasDrawerFor(attribute.GetType())) return null;
+            if (member.Has<ListSettingsAttribute>() || member.Has<TableListAttribute>()) return elementType;
+            return IsComplex(elementType) && !member.Info.IsDefined(typeof(SerializeReference), true) &&
+                   TypeModel.For(elementType).UsesInspectorAttributes && !PropertyDrawerLookup.HasDrawerFor(elementType)
+                ? elementType
+                : null;
+        }
+
+        static Type ElementTypeOf(Type type)
+        {
+            if (type.IsArray) return type.GetElementType();
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>) ? type.GetGenericArguments()[0] : null;
+        }
+
+        static bool IsComplex(Type type) =>
+            !type.IsPrimitive && !type.IsEnum && type != typeof(string) && !typeof(Object).IsAssignableFrom(type) &&
+            type.Namespace?.StartsWith("UnityEngine", StringComparison.Ordinal) != true;
+
+        VisualElement BuildList(InspectorProperty property, Type elementType)
+        {
+            SerializedProperty array = property.SerializedProperty;
+            arrays.Add((array.Copy(), array.arraySize));
+            TypeModel elementModel = TypeModel.For(elementType);
+            MemberModel member = property.Member;
+            bool complex = IsComplex(elementType) && !member.Info.IsDefined(typeof(SerializeReference), true);
+
+            var elements = new List<InspectorProperty>(array.arraySize);
+            for (int i = 0; i < array.arraySize; i++)
+            {
+                var element = new InspectorProperty(array.GetArrayElementAtIndex(i), null, null, property, property.Targets)
+                {
+                    ElementIndex = i,
+                    Label = "Element " + i
+                };
+                built.Add(element);
+                elements.Add(element);
+            }
+
+            TableListAttribute table = member.Get<TableListAttribute>();
+            if (table != null)
+            {
+                if (complex) return BuildTable(property, table, elementModel, elements);
+                property.AddBuilderProblem("TableList: only works on lists of serializable classes or structs");
+            }
+
+            ListSettingsAttribute settings = member.Get<ListSettingsAttribute>() ?? new ListSettingsAttribute();
+            Getter<object> elementLabel = default;
+            if (complex && !string.IsNullOrEmpty(settings.ElementLabel))
+            {
+                elementLabel = MemberResolver.Value<object>(elementType, settings.ElementLabel);
+                if (!elementLabel.IsValid) property.AddBuilderProblem($"ListSettings: {elementLabel.Error}");
+            }
+
+            var items = new List<VisualElement>(elements.Count);
+            foreach (InspectorProperty element in elements) items.Add(BuildElement(element, elementModel, complex, elementLabel));
+            return new ListDrawer(property, settings, items, requestRebuild).Element;
+        }
+
+        VisualElement BuildElement(InspectorProperty element, TypeModel elementModel, bool complex, Getter<object> label)
+        {
+            SerializedProperty serializedProperty = element.SerializedProperty;
+            if (!complex || serializedProperty.propertyType != SerializedPropertyType.Generic)
+            {
+                element.Element = new PropertyField(serializedProperty, element.Label) { name = FieldName(serializedProperty) };
+                return element.Element;
+            }
+
+            element.Element = NestedContent(element, elementModel, null, out Foldout foldout);
+            if (label.IsValid && foldout != null) extras.Add(new ElementLabel(element, label, foldout));
+            return element.Element;
+        }
+
+        VisualElement BuildTable(InspectorProperty property, TableListAttribute table, TypeModel elementModel, List<InspectorProperty> elements)
+        {
+            var columns = new List<MemberModel>();
+            foreach (MemberModel member in elementModel.Members)
+                if (member.Kind == MemberKind.SerializedField && !member.Info.IsDefined(typeof(HideInInspector), true)) columns.Add(member);
+            List<string> titles = columns.ConvertAll(column => LabelFor(ObjectNames.NicifyVariableName(column.Name), column));
+
+            var rows = new List<IReadOnlyList<VisualElement>>(elements.Count);
+            foreach (InspectorProperty element in elements)
+            {
+                var cells = new List<VisualElement>(columns.Count);
+                foreach (MemberModel column in columns)
+                {
+                    SerializedProperty cell = element.SerializedProperty.FindPropertyRelative(column.Name);
+                    cells.Add(cell == null ? new VisualElement() : BuildProperty(cell, elementModel, element, element.Targets, string.Empty).Element);
+                }
+                rows.Add(cells);
+                element.Element = new VisualElement();
+            }
+            return new TableDrawer(property, table, titles, rows, requestRebuild).Element;
+        }
+
+        sealed class ElementLabel : IRefreshable
+        {
+            readonly InspectorProperty element;
+            readonly Getter<object> getter;
+            readonly Foldout foldout;
+            string shown;
+
+            public ElementLabel(InspectorProperty element, Getter<object> getter, Foldout foldout)
+            {
+                this.element = element;
+                this.getter = getter;
+                this.foldout = foldout;
+            }
+
+            public bool NeedsPolling => false;
+
+            public void Refresh()
+            {
+                object value = element.GetValue();
+                string text = value == null ? null : getter.Get(value)?.ToString();
+                if (string.IsNullOrEmpty(text)) text = element.Label;
+                if (text == shown) return;
+                shown = text;
+                foldout.text = text;
+            }
         }
 
         static VisualElement Fallback(InspectorProperty property)
@@ -245,6 +394,8 @@ namespace SMPro.Inspector.EditorTools
             foreach (AttributeHandler handler in property.Handlers)
                 foreach (string problem in handler.Problems)
                     (problems ??= new List<string>()).Add(problem);
+            foreach (string problem in property.BuilderProblems)
+                (problems ??= new List<string>()).Add(problem);
             if (problems == null) return element;
 
             var container = new VisualElement { name = PropertyName(property) };
@@ -296,28 +447,32 @@ namespace SMPro.Inspector.EditorTools
             return type;
         }
 
-        VisualElement NestedFoldout(InspectorProperty property, TypeModel nestedModel)
+        VisualElement NestedFoldout(InspectorProperty property, TypeModel nestedModel) => NestedContent(property, nestedModel, property.Member.Info, out _);
+
+        VisualElement NestedContent(InspectorProperty property, TypeModel nestedModel, MemberInfo decorated, out Foldout foldout)
         {
             SerializedProperty serializedProperty = property.SerializedProperty;
             var container = new VisualElement { name = FieldName(serializedProperty) };
-            AddUnityDecorators(container, property.Member.Info);
+            if (decorated != null) AddUnityDecorators(container, decorated);
 
             VisualElement content;
             if (string.IsNullOrEmpty(property.Label))
             {
+                foldout = null;
                 content = new VisualElement();
                 content.AddToClassList("sm-nested");
                 container.Add(content);
             }
             else
             {
-                var foldout = new Foldout { text = property.Label, tooltip = serializedProperty.tooltip, value = serializedProperty.isExpanded };
-                foldout.RegisterValueChangedCallback(change =>
+                var expander = new Foldout { text = property.Label, tooltip = serializedProperty.tooltip, value = serializedProperty.isExpanded };
+                expander.RegisterValueChangedCallback(change =>
                 {
-                    if (change.target == foldout) serializedProperty.isExpanded = change.newValue;
+                    if (change.target == expander) serializedProperty.isExpanded = change.newValue;
                 });
-                container.Add(foldout);
-                content = foldout.contentContainer;
+                container.Add(expander);
+                content = expander.contentContainer;
+                foldout = expander;
             }
 
             var children = new List<InspectorProperty>();

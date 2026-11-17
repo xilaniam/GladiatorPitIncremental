@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -17,27 +16,28 @@ namespace SMPro.Inspector.EditorTools
             public IStateHandler[] States;
         }
 
+        readonly SerializedObject serializedObject;
+        readonly List<InspectorProperty> properties = new();
         readonly List<Entry> entries = new();
         readonly List<IRefreshable> refreshables = new();
         readonly List<Collapsible> collapsibles = new();
         readonly HashSet<object> failed = new();
         readonly Action pollAction;
-        readonly Undo.UndoRedoCallback undoAction;
-        readonly Action<PlayModeStateChange> playModeAction;
-        readonly List<InspectorProperty> properties = new();
         IVisualElementScheduledItem poll;
 
-        readonly SerializedObject serializedObject;
-
-        InspectorRefresher(SerializedObject serializedObject, IEnumerable<InspectorProperty> built, IEnumerable<Collapsible> groups, InspectorValidation validation)
+        public InspectorRefresher(SerializedObject serializedObject, IEnumerable<InspectorProperty> built, IEnumerable<Collapsible> groups,
+            IEnumerable<IRefreshable> extras, InspectorValidation validation)
         {
             this.serializedObject = serializedObject;
             pollAction = RefreshStates;
-            undoAction = Refresh;
-            playModeAction = _ => Refresh();
             Validation = validation;
             properties.AddRange(built);
             foreach (InspectorProperty property in properties) Track(property);
+            foreach (IRefreshable extra in extras)
+            {
+                refreshables.Add(extra);
+                Polls |= extra.NeedsPolling;
+            }
             collapsibles.AddRange(groups);
         }
 
@@ -50,16 +50,6 @@ namespace SMPro.Inspector.EditorTools
             foreach (InspectorProperty property in properties)
                 if (property.Path == path) return property;
             return null;
-        }
-
-        public static InspectorRefresher Attach(VisualElement root, SerializedObject serializedObject, IEnumerable<InspectorProperty> properties, IEnumerable<Collapsible> groups, InspectorValidation validation)
-        {
-            var refresher = new InspectorRefresher(serializedObject, properties, groups, validation);
-            root.TrackSerializedObjectValue(serializedObject, _ => refresher.Refresh());
-            root.RegisterCallback<AttachToPanelEvent>(_ => refresher.OnAttach(root));
-            root.RegisterCallback<DetachFromPanelEvent>(_ => refresher.OnDetach());
-            refresher.Refresh();
-            return refresher;
         }
 
         void Track(InspectorProperty property)
@@ -81,21 +71,14 @@ namespace SMPro.Inspector.EditorTools
             if (states.Count > 0) entries.Add(new Entry { Property = property, States = states.ToArray() });
         }
 
-        void OnAttach(VisualElement root)
+        public void Start(VisualElement root)
         {
-            Undo.undoRedoPerformed += undoAction;
-            EditorApplication.playModeStateChanged += playModeAction;
             if (!Polls) return;
             if (poll == null) poll = root.schedule.Execute(pollAction).Every(PollInterval);
             else poll.Resume();
         }
 
-        void OnDetach()
-        {
-            Undo.undoRedoPerformed -= undoAction;
-            EditorApplication.playModeStateChanged -= playModeAction;
-            poll?.Pause();
-        }
+        public void Stop() => poll?.Pause();
 
         public void Refresh()
         {

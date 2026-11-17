@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -10,41 +9,11 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UIElements;
 using Debug = UnityEngine.Debug;
-using Object = UnityEngine.Object;
 
 namespace SMPro.Inspector.Tests
 {
-    public class InspectorBuilderTests
+    public class InspectorBuilderTests : InspectorTestBase
     {
-        readonly List<Object> created = new();
-
-        [SetUp]
-        public void ClearReportedErrors() => InspectorBuilder.ClearReportedErrors();
-
-        [TearDown]
-        public void DestroyCreated()
-        {
-            foreach (Object item in created)
-                if (item != null) Object.DestroyImmediate(item);
-            created.Clear();
-        }
-
-        T NewComponent<T>() where T : Component
-        {
-            GameObject owner = EditorUtility.CreateGameObjectWithHideFlags(typeof(T).Name, HideFlags.HideAndDontSave, typeof(T));
-            created.Add(owner);
-            return owner.GetComponent<T>();
-        }
-
-        Editor EditorFor(Object target)
-        {
-            Editor editor = Editor.CreateEditor(target);
-            created.Add(editor);
-            return editor;
-        }
-
-        VisualElement Inspect(Object target) => EditorFor(target).CreateInspectorGUI();
-
         static string[] FieldNames(VisualElement root) => root.Query<PropertyField>().ToList().Select(field => field.name).ToArray();
 
         [Test]
@@ -134,8 +103,7 @@ namespace SMPro.Inspector.Tests
         [Test]
         public void ScriptableObject_WithAttributes_IsBuiltToo()
         {
-            var asset = ScriptableObject.CreateInstance<AttributedTestAsset>();
-            created.Add(asset);
+            var asset = NewAsset<AttributedTestAsset>();
 
             Editor editor = EditorFor(asset);
 

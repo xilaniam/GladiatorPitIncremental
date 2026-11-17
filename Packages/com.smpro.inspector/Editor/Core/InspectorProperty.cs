@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine.UIElements;
@@ -9,10 +10,11 @@ namespace SMPro.Inspector.EditorTools
         readonly List<InspectorProperty> children = new();
         readonly List<AttributeHandler> handlers = new();
 
-        internal InspectorProperty(SerializedProperty serializedProperty, MemberModel member, InspectorProperty parent, UnityEngine.Object[] targets)
+        internal InspectorProperty(SerializedProperty serializedProperty, MemberModel member, Type ownerType, InspectorProperty parent, UnityEngine.Object[] targets)
         {
             SerializedProperty = serializedProperty;
             Member = member;
+            OwnerType = ownerType;
             Parent = parent;
             Targets = targets;
             parent?.children.Add(this);
@@ -20,6 +22,7 @@ namespace SMPro.Inspector.EditorTools
 
         public SerializedProperty SerializedProperty { get; }
         public MemberModel Member { get; }
+        public Type OwnerType { get; }
         public InspectorProperty Parent { get; }
         public IReadOnlyList<InspectorProperty> Children => children;
         public UnityEngine.Object[] Targets { get; }

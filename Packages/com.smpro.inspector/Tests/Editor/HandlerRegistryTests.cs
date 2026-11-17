@@ -21,7 +21,7 @@ namespace SMPro.Inspector.Tests
         [Test]
         public void Create_GivesAHandlerBoundToItsPropertyAndAttribute()
         {
-            var property = new InspectorProperty(null, null, null, null);
+            var property = new InspectorProperty(null, null, null, null, null);
             var attribute = new TestFieldAttribute();
 
             var handler = HandlerRegistry.Create(property, attribute) as TestFieldHandler;

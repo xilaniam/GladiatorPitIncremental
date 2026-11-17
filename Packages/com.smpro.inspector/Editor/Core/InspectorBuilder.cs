@@ -12,23 +12,34 @@ namespace SMPro.Inspector.EditorTools
     internal static class InspectorBuilder
     {
         const string ScriptPath = "m_Script";
+        const string StylePath = "Packages/com.smpro.inspector/Editor/Styles/SMInspector.uss";
 
         static readonly HashSet<string> reportedErrors = new();
+        static StyleSheet styles;
 
         public static VisualElement Build(SerializedObject serializedObject)
         {
             var root = new VisualElement { name = "SMInspectorPro" };
+            AddStyles(root);
             TypeModel model = TypeModel.For(serializedObject.targetObject.GetType());
             Object[] targets = serializedObject.targetObjects;
+            var properties = new List<InspectorProperty>();
 
             SerializedProperty iterator = serializedObject.GetIterator();
             for (bool enterChildren = true; iterator.NextVisible(enterChildren); enterChildren = false)
             {
                 SerializedProperty property = iterator.Copy();
                 if (property.propertyPath == ScriptPath) root.Add(ScriptField(property));
-                else root.Add(BuildProperty(property, model, null, targets).Element);
+                else properties.Add(BuildProperty(property, model, null, targets));
             }
+            GroupLayout.Arrange(root, model.Type, properties);
             return root;
+        }
+
+        static void AddStyles(VisualElement root)
+        {
+            if (styles == null) styles = AssetDatabase.LoadAssetAtPath<StyleSheet>(StylePath);
+            if (styles != null) root.styleSheets.Add(styles);
         }
 
         static VisualElement ScriptField(SerializedProperty property)
@@ -41,7 +52,7 @@ namespace SMPro.Inspector.EditorTools
         static InspectorProperty BuildProperty(SerializedProperty serializedProperty, TypeModel ownerModel, InspectorProperty parent, Object[] targets)
         {
             MemberModel member = ownerModel?.Find(serializedProperty.name);
-            var property = new InspectorProperty(serializedProperty, member, parent, targets);
+            var property = new InspectorProperty(serializedProperty, member, ownerModel?.Type, parent, targets);
             property.Element = CreateElement(property);
             return property;
         }
@@ -72,6 +83,7 @@ namespace SMPro.Inspector.EditorTools
             IFieldHandler field = null;
             foreach (InspectorAttribute attribute in property.Member.Attributes)
             {
+                if (attribute is GroupAttribute) continue;
                 AttributeHandler handler;
                 try
                 {
@@ -114,10 +126,12 @@ namespace SMPro.Inspector.EditorTools
             });
             container.Add(foldout);
 
+            var children = new List<InspectorProperty>();
             SerializedProperty child = serializedProperty.Copy();
             SerializedProperty end = serializedProperty.GetEndProperty();
             for (bool enterChildren = true; child.NextVisible(enterChildren) && !SerializedProperty.EqualContents(child, end); enterChildren = false)
-                foldout.Add(BuildProperty(child.Copy(), nestedModel, property, property.Targets).Element);
+                children.Add(BuildProperty(child.Copy(), nestedModel, property, property.Targets));
+            GroupLayout.Arrange(foldout.contentContainer, nestedModel.Type, children);
             return container;
         }
 
@@ -150,7 +164,7 @@ namespace SMPro.Inspector.EditorTools
             return container;
         }
 
-        static string Report(InspectorProperty property, Type handlerType, Exception exception)
+        internal static string Report(InspectorProperty property, Type handlerType, Exception exception)
         {
             string message = $"{handlerType?.Name ?? "Handler"} failed on '{property.Name}': {exception.Message}";
             string key = $"{property.Member?.Info.DeclaringType?.FullName}.{property.Name}.{handlerType?.FullName}";
@@ -160,6 +174,10 @@ namespace SMPro.Inspector.EditorTools
 
         static string FieldName(SerializedProperty serializedProperty) => "PropertyField:" + serializedProperty.propertyPath;
 
-        internal static void ClearReportedErrors() => reportedErrors.Clear();
+        internal static void ClearReportedErrors()
+        {
+            reportedErrors.Clear();
+            GroupLayout.ClearReported();
+        }
     }
 }

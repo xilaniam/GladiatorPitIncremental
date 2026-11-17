@@ -10,6 +10,7 @@ public class RoundManager : GameEventListener
     [SerializeField] private RoundUI RoundUI;
 
     public bool IsRoundActive { get; private set; }
+    public int RoundNumber { get; private set; }
 
     private float currentTime = 0;
 
@@ -61,7 +62,8 @@ public class RoundManager : GameEventListener
             return;
 
         IsRoundActive = true;
-        EventManager.RoundStartedEvent?.Invoke();
+        RoundNumber++;
+        EventManager.InvokeRoundStartedEvent();
     }
 
     private void EndRound()
@@ -71,7 +73,8 @@ public class RoundManager : GameEventListener
 
         IsRoundActive = false;
         currentTime = 0;
-        EventManager.RoundEndedEvent?.Invoke();
+        EventManager.InvokeRoundEndedEvent();
+        EventManager.InvokeRoundResultsReadyEvent();
     }
 
     private void OnDestroy()

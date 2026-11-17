@@ -1,17 +1,21 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Timeline;
 
 public class EconomyManager : GameEventListener
 {
     [SerializeField] int balance;
-    [SerializeField] IntVariable additiveMultiplier;
+    [SerializeField] FloatVariable coinMultiplier;
+    [SerializeField] FloatVariable coinBonusPerTier;
+    [SerializeField] IntVariable unlockedTiers;
     [SerializeField] FloatVariable bonusPercentage;
 
-    private readonly List<System.Func<int,int>> coinModifiers = new List<System.Func<int, int>>();
+    private readonly List<Func<float, float>> coinModifiers = new List<Func<float, float>>();
     private int roundCollection;
+    private float coinRemainder;
 
     public int Balance => balance;
+    public int LastRoundBonus { get; private set; }
     public static EconomyManager Instance { get; private set; }
 
     #region ------Initialization And Subscription -------
@@ -36,32 +40,43 @@ public class EconomyManager : GameEventListener
     {
         EventManager.RoundStartedEvent += ResetRoundCollection;
         EventManager.RoundEndedEvent += HandleRoundEndBalance;
-        EventManager.OnCoinDroppedEvent += CollectCoin;
+        EventManager.OnEnemyDeadEvent += CollectCoins;
     }
     protected override void UnsubscribeEvents()
     {
         EventManager.RoundStartedEvent -= ResetRoundCollection;
         EventManager.RoundEndedEvent -= HandleRoundEndBalance;
-        EventManager.OnCoinDroppedEvent -= CollectCoin;
+        EventManager.OnEnemyDeadEvent -= CollectCoins;
     }
     #endregion
 
-    void CollectCoin(int value)
+    void CollectCoins(Enemy enemy)
     {
-        int finalValue = value;
+        float coins = enemy.CoinValue * coinMultiplier.Value * (1f + coinBonusPerTier.Value * unlockedTiers.Value);
         foreach (var modifier in coinModifiers)
         {
-            finalValue = modifier(finalValue);
+            coins = modifier(coins);
         }
-        finalValue += additiveMultiplier.Value;
-        roundCollection += finalValue;
-        balance += finalValue;
+
+        coinRemainder += coins;
+        int earned = Mathf.FloorToInt(coinRemainder);
+        coinRemainder -= earned;
+
+        roundCollection += earned;
+        balance += earned;
+        EventManager.InvokeCoinsEarnedEvent(enemy, earned);
         EventManager.InvokeBalanceUpdatedEvent(balance);
     }
 
     public void DeductAmount(int amount)
     {
         balance -= amount;
+        EventManager.InvokeBalanceUpdatedEvent(balance);
+    }
+
+    public void AddCoins(int amount)
+    {
+        balance += amount;
         EventManager.InvokeBalanceUpdatedEvent(balance);
     }
 
@@ -73,10 +88,11 @@ public class EconomyManager : GameEventListener
     void HandleRoundEndBalance()
     {
         int additionalBonus = Mathf.CeilToInt((bonusPercentage.Value / 100) * roundCollection);
+        LastRoundBonus = additionalBonus;
         balance += additionalBonus;
         EventManager.InvokeBalanceUpdatedEvent(balance);
     }
 
-    public void RegisterCoinModifier(System.Func<int, int> modifier) => coinModifiers.Add(modifier);
-    public void UnregisterCoinModifier(System.Func<int, int> modifier) => coinModifiers.Remove(modifier);
+    public void RegisterCoinModifier(Func<float, float> modifier) => coinModifiers.Add(modifier);
+    public void UnregisterCoinModifier(Func<float, float> modifier) => coinModifiers.Remove(modifier);
 }

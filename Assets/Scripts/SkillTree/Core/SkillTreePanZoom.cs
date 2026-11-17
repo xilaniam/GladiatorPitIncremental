@@ -1,59 +1,117 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SkillTreePanZoom : MonoBehaviour, IScrollHandler, IDragHandler, IBeginDragHandler
+public class SkillTreePanZoom : MonoBehaviour, IScrollHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [SerializeField] RectTransform content;      
-    [SerializeField] RectTransform viewport;      
+    [SerializeField] RectTransform content;
+    [SerializeField] RectTransform viewport;
 
-
-    [SerializeField] float zoomSpeed = 0.1f;
+    [Header("Zoom")]
+    [SerializeField, Tooltip("Zoom change per scroll notch (0.15 = 15%)")] float zoomStep = 0.15f;
+    [SerializeField, Tooltip("Higher = snappier, lower = floatier")] float zoomSmoothing = 12f;
     [SerializeField] float minZoom = 0.5f;
     [SerializeField] float maxZoom = 2f;
 
-    Vector2 lastDragPos;
+    [Header("Pan")]
+    [SerializeField] float panLimit = 1500f;
+    [SerializeField, Tooltip("How quickly the glide after a drag slows down")] float inertiaDamping = 6f;
+    [SerializeField, Tooltip("A drag that stopped for this long before release does not glide")] float inertiaReleaseWindow = 0.05f;
+
+    private RectTransform contentParent;
+    private Camera canvasCamera;
+    private float targetZoom = 1f;
+    private Vector2 zoomFocus;
+    private Vector2 lastDragPoint;
+    private Vector2 velocity;
+    private float lastDragTime;
+    private bool isDragging;
+
+    private void Awake()
+    {
+        contentParent = (RectTransform)content.parent;
+        Canvas canvas = viewport.GetComponentInParent<Canvas>().rootCanvas;
+        canvasCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
+    }
+
+    private void OnEnable()
+    {
+        targetZoom = content.localScale.x;
+        velocity = Vector2.zero;
+        isDragging = false;
+    }
 
     public void OnScroll(PointerEventData eventData)
     {
-        float zoomDelta = eventData.scrollDelta.y * zoomSpeed;
-        float newScale = Mathf.Clamp(content.localScale.x + zoomDelta, minZoom, maxZoom);
+        if (!TryGetParentPoint(eventData.position, out zoomFocus)) return;
 
-        Vector2 localCursorBefore;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            content, eventData.position, eventData.pressEventCamera, out localCursorBefore);
-
-        content.localScale = Vector3.one * newScale;
-
-        Vector2 localCursorAfter;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            content, eventData.position, eventData.pressEventCamera, out localCursorAfter);
-
-        content.anchoredPosition += (localCursorAfter - localCursorBefore) * newScale;
-
-        ClampToBounds();
+        targetZoom = Mathf.Clamp(targetZoom * Mathf.Pow(1f + zoomStep, eventData.scrollDelta.y), minZoom, maxZoom);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        lastDragPos = eventData.position;
+        isDragging = TryGetParentPoint(eventData.position, out lastDragPoint);
+        velocity = Vector2.zero;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        Vector2 delta = eventData.position - lastDragPos;
-        content.anchoredPosition += delta;
-        lastDragPos = eventData.position;
+        if (!isDragging || !TryGetParentPoint(eventData.position, out Vector2 point)) return;
 
+        Vector2 delta = point - lastDragPoint;
+        lastDragPoint = point;
+        content.anchoredPosition += delta;
+
+        float dt = Mathf.Max(Time.unscaledDeltaTime, 0.0001f);
+        velocity = Vector2.Lerp(velocity, delta / dt, 0.5f);
+        lastDragTime = Time.unscaledTime;
         ClampToBounds();
     }
 
-    void ClampToBounds()
+    public void OnEndDrag(PointerEventData eventData)
     {
-        // Optional: prevent panning the tree completely off-screen.
-        // Tune these limits to your tree's actual size.
-        float maxOffset = 1500f * content.localScale.x;
+        isDragging = false;
+        if (Time.unscaledTime - lastDragTime > inertiaReleaseWindow) velocity = Vector2.zero;
+    }
+
+    private void Update()
+    {
+        float dt = Time.unscaledDeltaTime;
+        UpdateZoom(dt);
+        UpdateInertia(dt);
+        ClampToBounds();
+    }
+
+    private void UpdateZoom(float dt)
+    {
+        float current = content.localScale.x;
+        if (Mathf.Approximately(current, targetZoom)) return;
+
+        float next = Mathf.Lerp(current, targetZoom, 1f - Mathf.Exp(-zoomSmoothing * dt));
+        if (Mathf.Abs(next - targetZoom) < 0.0005f) next = targetZoom;
+
+        Vector2 pivot = content.localPosition;
+        content.localPosition = zoomFocus - (zoomFocus - pivot) * (next / current);
+        content.localScale = Vector3.one * next;
+    }
+
+    private void UpdateInertia(float dt)
+    {
+        if (isDragging || velocity.sqrMagnitude < 1f) return;
+
+        content.anchoredPosition += velocity * dt;
+        velocity *= Mathf.Exp(-inertiaDamping * dt);
+    }
+
+    private void ClampToBounds()
+    {
+        float maxOffset = panLimit * content.localScale.x;
         content.anchoredPosition = new Vector2(
             Mathf.Clamp(content.anchoredPosition.x, -maxOffset, maxOffset),
             Mathf.Clamp(content.anchoredPosition.y, -maxOffset, maxOffset));
+    }
+
+    private bool TryGetParentPoint(Vector2 screenPosition, out Vector2 point)
+    {
+        return RectTransformUtility.ScreenPointToLocalPointInRectangle(contentParent, screenPosition, canvasCamera, out point);
     }
 }

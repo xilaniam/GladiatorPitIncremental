@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2f14e72f9ac28b45b4b377252d7165b, type: 3}
+  m_Name: RicochetSpears
+  m_EditorClassIdentifier: 
+  bounceCount: 1
+  bounceDamagePercent: 0.4
+  splinterDamagePercent: 0
+  bounceProjectile: {fileID: 7056894154658952689, guid: 462fdb714e4f0a7448d9920e2d81c7df, type: 3}
+  shardProjectile: {fileID: 1817559782789613314, guid: be3ff2b94d1020b4a91c5e9804122c53, type: 3}

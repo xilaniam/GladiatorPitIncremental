@@ -1,65 +1,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChainLightningAbility : IAbility,IModifiableAbility
+public class ChainLightningAbility : IAbility, IModifiableAbility
 {
-    private readonly ChainLightningConfig definition;
-
-    private float damage;
+    private float damagePercent;
     private float chance;
     private int chainCount;
 
     private SkillContext context;
-    static readonly Collider[] hitBuffer = new Collider[10];
-    readonly HashSet<Enemy> currentChaining = new HashSet<Enemy>();
+    private readonly List<Enemy> targets = new List<Enemy>();
 
     public ChainLightningAbility(ChainLightningConfig config)
     {
-        this.definition = config;
-
-        damage = config.Damage;
+        damagePercent = config.DamagePercent;
         chance = config.Chance;
         chainCount = config.ChainCount;
-        
     }
 
     public void Enable(SkillContext context)
     {
         this.context = context;
-        EventManager.OnEnemyDamagedEvent += OnEnemyDamaged;
+        EventManager.OnSpearHitEvent += OnSpearHit;
     }
 
     public void Disable()
     {
-        EventManager.OnEnemyDamagedEvent -= OnEnemyDamaged;
+        EventManager.OnSpearHitEvent -= OnSpearHit;
     }
 
-    private void OnEnemyDamaged(Enemy enemy)
+    private void OnSpearHit(Enemy source, float spearDamage)
     {
-        if(currentChaining.Contains(enemy)) return;
-        TriggerChain(enemy);
-    }
+        if (Random.value >= chance) return;
 
-    private void TriggerChain(Enemy source)
-    {
-        if(Random.value > chance) return;
-
-        int hitCount = Physics.OverlapSphereNonAlloc(
-            source.transform.position,
-            5f,
-            hitBuffer,
-            LayerMask.GetMask("Enemy")
-        );
-        int chained = 0;
-
-        for( int i = 0; i< hitCount &&  chained < chainCount; i++ )
+        Vector3 origin = source.transform.position;
+        targets.Clear();
+        foreach (Enemy enemy in context.EnemyManager.AliveEnemies)
         {
-            Enemy target = hitBuffer[i].GetComponent<Enemy>();
-            if (target == null || target.IsDead || target == source || currentChaining.Contains(target)) continue;
-            currentChaining.Add(target);
-            target.TakeDamage(damage);
-            currentChaining.Remove(target);
-            chained++;
+            if (enemy != source) targets.Add(enemy);
+        }
+        targets.Sort((a, b) =>
+            (a.transform.position - origin).sqrMagnitude.CompareTo((b.transform.position - origin).sqrMagnitude));
+
+        float jumpDamage = spearDamage * damagePercent;
+        int jumps = Mathf.Min(chainCount, targets.Count);
+        for (int i = 0; i < jumps; i++)
+        {
+            targets[i].TakeDamage(jumpDamage);
         }
     }
 
@@ -68,28 +54,16 @@ public class ChainLightningAbility : IAbility,IModifiableAbility
         switch (stat)
         {
             case AbilityStat.Damage:
-                damage = ApplyOperation( damage, value, operation);
+                damagePercent = operation.Apply(damagePercent, value);
                 break;
 
             case AbilityStat.Chance:
-                chance = ApplyOperation( chance, value,operation );
-                chance = Mathf.Clamp01(chance);
+                chance = Mathf.Clamp01(operation.Apply(chance, value));
                 break;
 
             case AbilityStat.ChainCount:
-                chainCount = Mathf.RoundToInt(ApplyOperation(chainCount,value,operation));
+                chainCount = Mathf.RoundToInt(operation.Apply(chainCount, value));
                 break;
         }
-    }
-
-    private float ApplyOperation( float current,float value,StatOperation operation)
-    {
-        return operation switch
-        {
-            StatOperation.Add => current + value,
-            StatOperation.Multiply => current * value,
-            StatOperation.Set => value,
-            _ => current
-        };
     }
 }

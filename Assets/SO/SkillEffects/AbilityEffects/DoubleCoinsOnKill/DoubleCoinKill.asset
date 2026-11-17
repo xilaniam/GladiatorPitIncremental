@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ecce6f0b85d03d4db19329120482079, type: 3}
   m_Name: DoubleCoinKill
   m_EditorClassIdentifier: 
-  chance: 0.1
+  chance: 0.08

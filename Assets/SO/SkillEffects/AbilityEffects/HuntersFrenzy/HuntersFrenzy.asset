@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22e6397cc12cbf14484c6679c76b104f, type: 3}
+  m_Name: HuntersFrenzy
+  m_EditorClassIdentifier: 
+  killsToTrigger: 25
+  minKillsToTrigger: 10
+  duration: 5
+  attackSpeedMultiplier: 2
+  damageMultiplier: 1.5
+  coinBonus: 0.5
+  attackInterval: {fileID: 11400000, guid: 1b827488f26a1844e9a0ae2d75b032d7, type: 2}
+  spearDamageMultiplier: {fileID: 11400000, guid: 8f2d2d1184889f6418fc5a87d01172d1, type: 2}

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class RoundUI : MonoBehaviour
 {
-    [SerializeField] Image fillImage;
+    [SerializeField] TMP_Text timerText;
     [SerializeField] TextMeshProUGUI balance;
 
     private void Start()
@@ -25,6 +25,6 @@ public class RoundUI : MonoBehaviour
 
     public void UpdateRoundTimerUI(float current , float max)
     {
-        fillImage.fillAmount = 1  - (current / max);
+        timerText.text = Mathf.CeilToInt(Mathf.Max(0f, max - current)).ToString();
     }
 }

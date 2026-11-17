@@ -12,5 +12,9 @@ public enum AbilityStat
     ChainCount,
     Duration,
     Speed,
-    Radius
+    Radius,
+    BounceCount,
+    SplinterDamage,
+    KillThreshold,
+    CoinBonus
 }

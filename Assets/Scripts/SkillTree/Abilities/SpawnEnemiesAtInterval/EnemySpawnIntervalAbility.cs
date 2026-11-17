@@ -24,18 +24,13 @@ public class EnemySpawnIntervalAbility : IAbility, IModifiableAbility
     {
         EventManager.RoundStartedEvent -= StartSpawningEnemies;
         EventManager.RoundEndedEvent -= StopSpawningEnemies;
+        StopSpawningEnemies();
     }
 
     public void Modify(AbilityStat stat, StatOperation operation, float value)
     {
         if (stat != AbilityStat.Duration) return;
-        spawnInterval = operation switch
-        {
-            StatOperation.Add => spawnInterval + value,
-            StatOperation.Multiply => spawnInterval * value,
-            StatOperation.Set => value,
-            _ => spawnInterval
-        };
+        spawnInterval = operation.Apply(spawnInterval, value);
     }
 
     void StartSpawningEnemies()
@@ -57,7 +52,7 @@ public class EnemySpawnIntervalAbility : IAbility, IModifiableAbility
         while (true)
         {
             yield return new WaitForSeconds(spawnInterval);
-            context.EnemyManager.SpawnEnemy();
+            context.EnemyManager.TrySpawnExtra();
         }
     }
 }

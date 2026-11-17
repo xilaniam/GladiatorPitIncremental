@@ -4,6 +4,8 @@ using UnityEngine;
 public class ThrowableWeapon : MonoBehaviour
 {
     [SerializeField] FloatVariable damageAmount;
+    [SerializeField] FloatVariable damageMultiplier;
+    [SerializeField] FloatVariable bonusDamage;
     [SerializeField] FloatVariable critChance;
     [SerializeField] FloatVariable critMultiplier;
 
@@ -24,6 +26,7 @@ public class ThrowableWeapon : MonoBehaviour
     private float duration;
 
     private bool isLaunched;
+    private bool hasHit;
 
     private void Awake()
     {
@@ -133,22 +136,33 @@ public class ThrowableWeapon : MonoBehaviour
 
     private void HandleHit(GameObject hitObject)
     {
+        if (hasHit) return;
         if (((1 << hitObject.layer) & hitMask) == 0)
             return;
+
+        hasHit = true;
 
         if (hitObject.TryGetComponent<IDamageable>(
             out var damageable))
         {
-            float finalDamage = damageAmount.Value * CalculateCritMultiplier();
+            float finalDamage = CalculateDamage();
             damageable.TakeDamage(finalDamage, travelDirection);
+
+            if (damageable is Enemy enemy)
+                EventManager.InvokeSpearHitEvent(enemy, finalDamage);
         }
 
         Destroy(gameObject);
     }
 
+    private float CalculateDamage()
+    {
+        return damageAmount.Value * damageMultiplier.Value * (1f + bonusDamage.Value) * CalculateCritMultiplier();
+    }
+
     private float CalculateCritMultiplier()
     {
-        if (Random.value <= critChance.Value)
+        if (Random.value < critChance.Value)
         {
             return critMultiplier.Value;
         }

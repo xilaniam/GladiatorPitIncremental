@@ -162,6 +162,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: {fileID: 11400000, guid: fc3c2959dfc8dfb40b6c355b0bd31736, type: 2}
+  damageMultiplier: {fileID: 11400000, guid: 8f2d2d1184889f6418fc5a87d01172d1, type: 2}
+  bonusDamage: {fileID: 11400000, guid: c39831e9352426b4b9acd33734cb4d45, type: 2}
   critChance: {fileID: 11400000, guid: 627342dfdd7ddcc4aaa1c295bbcfd778, type: 2}
   critMultiplier: {fileID: 11400000, guid: 82b39232b6e79da42bb35376eb50e5a0, type: 2}
   defaultSpeed: 30

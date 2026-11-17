@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,11 +9,11 @@ public class SkillManager : BaseUIPopup
     [SerializeField] EnemyManager enemyManager;
 
     [SerializeField] Button ContinueButton;
-    [SerializeField] SkillNode rootSkillNode;
-    [SerializeField] List<SkillNode> nodes = new List<SkillNode>();
     [SerializeField] TMP_Text balance;
+    [SerializeField] SkillTooltip tooltip;
 
     private SkillContext context;
+    private SkillNode[] nodes;
 
     public static event Action OnContinueButtonClickedEvent;
     public SkillContext Context => context;
@@ -28,14 +27,13 @@ public class SkillManager : BaseUIPopup
         enemyManager
          );
 
+        nodes = GetComponentsInChildren<SkillNode>(true);
         foreach (SkillNode node in nodes)
         {
             node.OnNodeClickedAction += TrySkillUpgrade;
-            node.gameObject.SetActive(false);
+            node.OnHoverStartAction += tooltip.Show;
+            node.OnHoverEndAction += tooltip.Hide;
         }
-
-        rootSkillNode.SetNodeActive();
-        rootSkillNode.OnNodeClickedAction += TrySkillUpgrade;
 
         ContinueButton.onClick.AddListener(OnContinueButtonClicked);
         RefreshSkillNodes();
@@ -44,11 +42,13 @@ public class SkillManager : BaseUIPopup
     private void OnDestroy()
     {
         ContinueButton.onClick.RemoveListener(OnContinueButtonClicked);
+        if (nodes == null) return;
         foreach (SkillNode node in nodes)
         {
             node.OnNodeClickedAction -= TrySkillUpgrade;
+            node.OnHoverStartAction -= tooltip.Show;
+            node.OnHoverEndAction -= tooltip.Hide;
         }
-        rootSkillNode.OnNodeClickedAction -= TrySkillUpgrade;
     }
 
     public void OnContinueButtonClicked()
@@ -65,14 +65,13 @@ public class SkillManager : BaseUIPopup
 
     void TrySkillUpgrade(SkillNode skillNode)
     {
-        Debug.Log("Trying to upgrade skill: " + skillNode.name);
-        if (skillNode.IsMaxLevel) return;
-        int balance = EconomyManager.Instance.Balance;
+        if (!skillNode.CanUpgrade) return;
 
-        if (balance < skillNode.Cost)
+        int cost = skillNode.Cost;
+        if (EconomyManager.Instance.Balance < cost)
             return;
 
-        EconomyManager.Instance.DeductAmount(skillNode.Cost);
+        EconomyManager.Instance.DeductAmount(cost);
 
         skillNode.ApplyUpgrade(context);
         RefreshSkillNodes();
@@ -80,12 +79,13 @@ public class SkillManager : BaseUIPopup
 
     void RefreshSkillNodes()
     {
-        int balance = EconomyManager.Instance.Balance;
-        this.balance.text = balance.ToString();
+        if (nodes == null) return;
+
+        balance.text = EconomyManager.Instance.Balance.ToString();
         foreach (SkillNode node in nodes)
         {
-            if (node.isActiveAndEnabled)
-                node.SetUpgradeStatus(balance);
+            node.Refresh();
         }
+        tooltip.RefreshText();
     }
 }

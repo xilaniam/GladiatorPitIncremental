@@ -184,6 +184,8 @@ MonoBehaviour:
   health: 36
   coinValue: {fileID: 11400000, guid: 9ffa104fab289994898c5aa69c49f74a, type: 2}
   animalType: 1
+  displayName: Fox
+  portrait: {fileID: 21300000, guid: 8ce3264d2ab3cd24ca851ac5914266cb, type: 3}
   moveSpeed: 2
   rotationSpeed: 5
   minWaitTime: 1
@@ -204,3 +206,6 @@ MonoBehaviour:
   maxWobbleAngle: 30
   meshRenderers:
   - {fileID: 2248347868729415387}
+  goldenCoinMultiplier: 10
+  goldenColor: {r: 4, g: 2.8, b: 0.4, a: 1}
+  goldenGlow: 0.35

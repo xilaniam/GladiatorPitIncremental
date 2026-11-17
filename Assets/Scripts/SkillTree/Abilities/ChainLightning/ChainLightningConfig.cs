@@ -5,16 +5,16 @@ public class ChainLightningConfig : AbilityConfiguration
 {
     [Header("Base Stats")]
 
-    [SerializeField]
-    private float damage = 10f;
+    [SerializeField, Range(0f, 1f), Tooltip("Share of the spear's damage dealt by each jump")]
+    private float damagePercent = 0.4f;
 
     [SerializeField, Range(0f, 1f)]
-    private float chance = 0.2f;
+    private float chance = 0.1f;
 
     [SerializeField]
-    private int chainCount = 3;
+    private int chainCount = 2;
 
-    public float Damage => damage;
+    public float DamagePercent => damagePercent;
     public float Chance => chance;
     public int ChainCount => chainCount;
 

@@ -135,6 +135,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   coinValue: {fileID: 11400000, guid: 3d609b0f963316746a7d3ec5f3eb43a4, type: 2}
+  animalType: 0
+  displayName: Rabbit
+  portrait: {fileID: 21300000, guid: 2a73fc42d0bbd3841a632ca5232ede66, type: 3}
   moveSpeed: 2
   rotationSpeed: 5
   minWaitTime: 2.5
@@ -155,6 +158,9 @@ MonoBehaviour:
   maxWobbleAngle: 30
   meshRenderers:
   - {fileID: 2248347868729415387}
+  goldenCoinMultiplier: 10
+  goldenColor: {r: 4, g: 2.8, b: 0.4, a: 1}
+  goldenGlow: 0.35
   hopHeight: 0.5
   hopDuration: 1
   minHopDistance: 1

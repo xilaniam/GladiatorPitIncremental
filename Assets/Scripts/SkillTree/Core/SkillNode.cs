@@ -1,91 +1,180 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
+using System.Text;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
+[Serializable]
+public class SkillRequirement
+{
+    public SkillNode node;
+    public int level = 1;
+
+    public bool IsMet => node == null || node.Level >= level;
+}
+
 [RequireComponent(typeof(Button))]
 public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] string displayName;
+    [SerializeField, TextArea] string effectDescription;
     [SerializeField] List<SkillEffect> effects = new();
-    [SerializeField] List<SkillNode> connectedNodes = new List<SkillNode>();
+    [SerializeField] List<SkillRequirement> requirements = new();
     [Header("References")]
     [SerializeField] RectTransform rectTransform;
     [SerializeField] Image fillMeter;
     [SerializeField] LineRenderer connectorLinePrefab;
-    [SerializeField] GameObject DetailsPanel;
-    [SerializeField] TMP_Text description;
     [Header("Settings")]
     [SerializeField] int maxLevel = 3;
-    [SerializeField] int requiredLevelToExpand = 1;
-    [SerializeField] int initialCost = 2;
-    [SerializeField] float costIncreasePerLevel = 0.25f;
+    [FormerlySerializedAs("initialCost")]
+    [SerializeField] int baseCost = 2;
+    [FormerlySerializedAs("costIncreasePerLevel")]
+    [SerializeField] float costGrowth = 1.5f;
+    [Header("Animation")]
+    [SerializeField] float hoverScale = 1.2f;
+    [SerializeField] float pressedScale = 0.8f;
+    [SerializeField] float hoverDuration = 0.12f;
+    [SerializeField] float pulseDuration = 0.3f;
+    [Header("Mystery (keystones)")]
+    [SerializeField, Tooltip("Shown from the start as a '?' until all requirements are met")] bool isMystery;
+    [SerializeField] Sprite mysteryIcon;
+    [SerializeField] Image iconImage;
+    [SerializeField] GameObject mysteryGlow;
+    [SerializeField, TextArea] string mysteryDescription = "A special power lies down this path.\nKeep upgrading this branch to reveal it.";
 
-    int currentLevel = 0;
+    int currentLevel;
+    Sprite revealedIcon;
+    bool wasHiddenMystery;
+    bool isHovered;
+    Tween hoverTween;
+    Sequence pulseSequence;
+    readonly HashSet<SkillNode> connectedFrom = new();
     Button button;
-    int currentCost;
 
-    public int Cost => currentCost;
     public Action<SkillNode> OnNodeClickedAction;
+    public Action<SkillNode> OnHoverStartAction;
+    public Action<SkillNode> OnHoverEndAction;
+
+    public string TooltipText { get; private set; }
+    public string DisplayName => string.IsNullOrEmpty(displayName) ? name : displayName;
+    public int Level => currentLevel;
+    public int Cost => Mathf.CeilToInt(baseCost * Mathf.Pow(costGrowth, currentLevel));
     public bool IsMaxLevel => currentLevel >= maxLevel;
-    void Start()
+    public bool RequirementsMet => requirements.All(r => r.IsMet);
+    public bool CanUpgrade => !IsMaxLevel && RequirementsMet;
+
+    public bool IsRevealed => isMystery || requirements.Count == 0 || requirements.Any(r => r.node != null && r.node.Level > 0);
+
+    bool IsHiddenMystery => isMystery && currentLevel == 0 && !RequirementsMet;
+
+    float RestScale => isHovered ? hoverScale : 1f;
+
+    Button Button
     {
-        button = GetComponent<Button>();
-        currentCost = initialCost;
-
-        button.onClick.AddListener(OnButtonClicked);
-
-        if (DetailsPanel != null)
-            DetailsPanel.SetActive(false);
-
-        UpdateDescription();
-    }
-
-    void UpdateDescription()
-    {
-        description.text = "";
-        foreach (SkillEffect effect in effects)
+        get
         {
-            description.text += effect.GetDescription() + "\n" + "cost : " + currentCost + "\n" + currentLevel + "/" + maxLevel;
+            if (button == null) button = GetComponent<Button>();
+            return button;
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    void Awake()
     {
-        DetailsPanel.SetActive(true);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        DetailsPanel.SetActive(false);
-    }
-
-    public void SetNodeActive()
-    {
-        gameObject.SetActive(true);
+        Button.onClick.AddListener(OnButtonClicked);
     }
 
     private void OnDestroy()
     {
-        button.onClick.RemoveListener(OnButtonClicked);
+        Button.onClick.RemoveListener(OnButtonClicked);
     }
 
-    public void SetUpgradeStatus(int balance)
+    private void OnDisable()
     {
-        //if (button == null) return;
-        //if (balance < currentCost || currentLevel >= maxLevel)
-        //{
-        //    button.interactable = false;
-        //}
-        //else
-        //{
-        //    button.interactable = true;
-        //}
+        StopScaleAnimation();
+        isHovered = false;
+        transform.localScale = Vector3.one;
+    }
+
+    public void Refresh()
+    {
+        bool revealed = IsRevealed;
+        gameObject.SetActive(revealed);
+        if (!revealed) return;
+
+        DrawConnections();
+
+        Button.interactable = RequirementsMet || IsHiddenMystery;
+        fillMeter.fillAmount = (float)currentLevel / maxLevel;
+        RefreshMystery();
+        BuildTooltipText();
+    }
+
+    void RefreshMystery()
+    {
+        if (!isMystery) return;
+
+        if (revealedIcon == null && iconImage != null) revealedIcon = iconImage.sprite;
+
+        bool hidden = IsHiddenMystery;
+        if (iconImage != null) iconImage.sprite = hidden ? mysteryIcon : revealedIcon;
+        if (mysteryGlow != null) mysteryGlow.SetActive(currentLevel == 0);
+
+        if (wasHiddenMystery && !hidden) PlayPurchasePulse();
+        wasHiddenMystery = hidden;
+    }
+
+    public void ApplyUpgrade(SkillContext context)
+    {
+        if (!CanUpgrade) return;
+
+        currentLevel++;
+        foreach (SkillEffect effect in effects)
+        {
+            if (effect == null) continue;
+            effect.Apply(context);
+        }
+        PlayPurchasePulse();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        isHovered = true;
+        AnimateScale(RestScale);
+        OnHoverStartAction?.Invoke(this);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        isHovered = false;
+        AnimateScale(RestScale);
+        OnHoverEndAction?.Invoke(this);
+    }
+
+    void AnimateScale(float target)
+    {
+        StopScaleAnimation();
+        hoverTween = Tween.Scale(transform, target, hoverDuration, Ease.OutQuad, useUnscaledTime: true);
+    }
+
+    void PlayPurchasePulse()
+    {
+        StopScaleAnimation();
+        pulseSequence = Sequence.Create(useUnscaledTime: true)
+            .Chain(Tween.Scale(transform, pressedScale, pulseDuration * 0.3f, Ease.OutQuad))
+            .Chain(Tween.Scale(transform, RestScale, pulseDuration * 0.7f, Ease.OutBack));
+    }
+
+    void StopScaleAnimation()
+    {
+        if (hoverTween.isAlive) hoverTween.Stop();
+        if (pulseSequence.isAlive) pulseSequence.Stop();
     }
 
     void OnButtonClicked()
@@ -93,40 +182,55 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         OnNodeClickedAction?.Invoke(this);
     }
 
-    public void ApplyUpgrade(SkillContext context)
+    void BuildTooltipText()
     {
-        if (currentLevel >= maxLevel) return;
-
-        currentLevel++;
-        currentCost = Mathf.CeilToInt(initialCost * Mathf.Pow(1f + costIncreasePerLevel, currentLevel));
-
-        fillMeter.fillAmount = (float)currentLevel / maxLevel;
-        if (currentLevel == requiredLevelToExpand) ExpandSkillNodes();
-        foreach (SkillEffect effect in effects)
+        if (IsHiddenMystery)
         {
-            if (effect == null) continue;
-            effect.Apply(context);
+            TooltipText = "???\n" + mysteryDescription;
+            return;
         }
-        UpdateDescription();
-        //Here do what this skill does, like increasing damage, health, etc.
+
+        StringBuilder text = new StringBuilder();
+        text.AppendLine(DisplayName);
+
+        if (!string.IsNullOrEmpty(effectDescription))
+        {
+            text.AppendLine(effectDescription);
+        }
+        else
+        {
+            foreach (SkillEffect effect in effects)
+            {
+                if (effect != null) text.AppendLine(effect.GetDescription());
+            }
+        }
+
+        text.AppendLine(IsMaxLevel ? "MAX" : $"Cost: {Cost}");
+        text.Append($"Level {currentLevel}/{maxLevel}");
+
+        var unmet = requirements.Where(r => !r.IsMet).Select(r => $"{r.node.DisplayName} Lv{r.level}").ToList();
+        if (unmet.Count > 0)
+            text.Append("\nRequires: ").Append(string.Join(", ", unmet));
+
+        TooltipText = text.ToString();
     }
 
-    void ExpandSkillNodes()
+    void DrawConnections()
     {
-        if(connectedNodes.Count == 0) return;
-        foreach (SkillNode node in connectedNodes)
+        foreach (SkillRequirement requirement in requirements)
         {
-            CreateConnectionTo(node);
-            node.SetNodeActive();    
+            SkillNode parent = requirement.node;
+            if (parent == null || !parent.IsRevealed) continue;
+            if (connectedFrom.Add(parent)) CreateConnectionFrom(parent);
         }
     }
 
-    void CreateConnectionTo(SkillNode node)
+    void CreateConnectionFrom(SkillNode node)
     {
-       LineRenderer lr = Instantiate(connectorLinePrefab, transform.parent);
-       lr.positionCount = 2;
-       lr.SetPosition(0, rectTransform.anchoredPosition);
-       lr.SetPosition(1, node.rectTransform.anchoredPosition);
+        LineRenderer lr = Instantiate(connectorLinePrefab, transform.parent);
+        lr.positionCount = 2;
+        lr.SetPosition(0, node.rectTransform.anchoredPosition);
+        lr.SetPosition(1, rectTransform.anchoredPosition);
     }
 
     #region EditorHepler
@@ -138,17 +242,18 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (Application.isPlaying) return;
         if (rectTransform == null) rectTransform = GetComponent<RectTransform>();
 
-        RenameToFirstEffect();
+        RenameToDisplayName();
 
         EditorApplication.delayCall += HandleEditorValidate;
     }
 
-    void RenameToFirstEffect()
+    void RenameToDisplayName()
     {
-        if (effects.Count == 0 || effects[0] == null) return;
+        string desiredName = displayName;
+        if (string.IsNullOrEmpty(desiredName) && effects.Count > 0 && effects[0] != null)
+            desiredName = effects[0].name;
 
-        string desiredName = effects[0].name;
-        if (gameObject.name != desiredName)
+        if (!string.IsNullOrEmpty(desiredName) && gameObject.name != desiredName)
         {
             gameObject.name = desiredName;
         }
@@ -169,7 +274,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         Undo.RecordObject(this, "Reset Duplicated Skill Node");
         nodeGuid = Guid.NewGuid().ToString();
-        connectedNodes.Clear();
+        requirements.Clear();
         EditorUtility.SetDirty(this);
 
         TryAutoConnectToNearestParent(allNodes);
@@ -194,11 +299,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             }
         }
 
-        if (nearestParent != null && !nearestParent.connectedNodes.Contains(this))
+        if (nearestParent != null)
         {
-            Undo.RecordObject(nearestParent, "Auto Connect Skill Node");
-            nearestParent.connectedNodes.Add(this);
-            EditorUtility.SetDirty(nearestParent);
+            Undo.RecordObject(this, "Auto Connect Skill Node");
+            requirements.Add(new SkillRequirement { node = nearestParent, level = 1 });
+            EditorUtility.SetDirty(this);
         }
     }
 
@@ -221,7 +326,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         {
             if (node == null) continue;
 
-            int removed = node.connectedNodes.RemoveAll(n => n == null);
+            int removed = node.requirements.RemoveAll(r => r.node == null);
             if (removed > 0)
             {
                 Undo.RecordObject(node, "Clean Null Skill Node References");
@@ -232,28 +337,27 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     void OnDrawGizmos()
     {
-        if (connectedNodes == null || connectedNodes.Count == 0) return;
+        if (requirements == null || requirements.Count == 0) return;
 
         Gizmos.color = Color.cyan;
-        foreach (var node in connectedNodes)
+        foreach (var requirement in requirements)
         {
-            if (node == null) continue; // in case cleanup hasn't run yet
-            Gizmos.DrawLine(transform.position, node.transform.position);
+            if (requirement.node == null) continue; // in case cleanup hasn't run yet
+            Gizmos.DrawLine(requirement.node.transform.position, transform.position);
         }
     }
     void OnDrawGizmosSelected()
     {
-        // Highlight this node and its direct connections when selected
+        // Highlight this node and the nodes it requires
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, 0.5f);
 
-        if (connectedNodes == null) return;
-        foreach (var node in connectedNodes)
+        if (requirements == null) return;
+        foreach (var requirement in requirements)
         {
-            if (node == null) continue;
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawLine(transform.position, node.transform.position);
-            Gizmos.DrawWireSphere(node.transform.position, 0.5f);
+            if (requirement.node == null) continue;
+            Gizmos.DrawLine(requirement.node.transform.position, transform.position);
+            Gizmos.DrawWireSphere(requirement.node.transform.position, 0.5f);
         }
     }
 #endif

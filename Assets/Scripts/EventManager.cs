@@ -7,7 +7,7 @@ public static class EventManager
     public static Action<List<Transform>> OnCircleTickEvent;
 
     //Balance
-    public static Action<int> OnCoinDroppedEvent;
+    public static Action<Enemy, int> OnCoinsEarnedEvent;
     public static Action<int> OnBalanceUpdatedEvent;
 
     //Enemy
@@ -15,9 +15,13 @@ public static class EventManager
     public static Action<Enemy> OnEnemyDamagedEvent;
     public static Action OnAllEnemyClearedEvent;
 
+    //Combat
+    public static Action<Enemy, float> OnSpearHitEvent;
+
     //Round
     public static Action RoundStartedEvent;
     public static Action RoundEndedEvent;
+    public static Action RoundResultsReadyEvent;
 
     #region------Event Invoke-------
     //Enemy
@@ -27,14 +31,16 @@ public static class EventManager
 
     //Attack
     public static void InvokeCircleTick(List<Transform> position) => OnCircleTickEvent?.Invoke(position);
+    public static void InvokeSpearHitEvent(Enemy target, float damage) => OnSpearHitEvent?.Invoke(target, damage);
 
     //Balance
-    public static void InvokeCoinDroppedEvent(int amount) => OnCoinDroppedEvent?.Invoke(amount);
+    public static void InvokeCoinsEarnedEvent(Enemy enemy, int coins) => OnCoinsEarnedEvent?.Invoke(enemy, coins);
     public static void InvokeBalanceUpdatedEvent(int amount) => OnBalanceUpdatedEvent?.Invoke(amount);
 
     //Round
     public static void InvokeRoundStartedEvent() => RoundStartedEvent?.Invoke();
     public static void InvokeRoundEndedEvent() => RoundEndedEvent?.Invoke();
+    public static void InvokeRoundResultsReadyEvent() => RoundResultsReadyEvent?.Invoke();
     #endregion
 
 }

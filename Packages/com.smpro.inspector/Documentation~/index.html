@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SMInspectorPro</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky contents rail on the left, one 74ch reading column; sections are anchored chapters. */
+:root {
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --sunken: #eceef3;
+  --fg: #1a1d26;
+  --muted: #5b6172;
+  --line: #d9dce5;
+  --accent: #2f5bd3;
+  --accent-soft: #e4ebfb;
+  --gold: #b07a12;
+  --gold-soft: #f6ecd4;
+  --good: #1f7a4d;
+  --code-bg: #f0f2f7;
+  --font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12141a; --surface: #191c24; --sunken: #20242e; --fg: #e6e8ee; --muted: #9aa1b2; --line: #2d323f;
+    --accent: #7d9ef2; --accent-soft: #1f2a47; --gold: #e0b452; --gold-soft: #3a2f17; --good: #5cc48f; --code-bg: #1d2029;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12141a; --surface: #191c24; --sunken: #20242e; --fg: #e6e8ee; --muted: #9aa1b2; --line: #2d323f;
+  --accent: #7d9ef2; --accent-soft: #1f2a47; --gold: #e0b452; --gold-soft: #3a2f17; --good: #5cc48f; --code-bg: #1d2029;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 48px;
+  padding-block: 40px 96px;
+}
+nav.toc {
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 24px);
+  align-self: start;
+  font-size: 14px;
+}
+nav.toc .brand { font-family: var(--font-display); font-weight: 600; font-size: 15px; margin-bottom: 14px; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+nav.toc a {
+  display: block; padding: 5px 10px; border-radius: 6px; color: var(--muted); text-decoration: none;
+  border-left: 2px solid transparent;
+}
+nav.toc a:hover { color: var(--fg); background: var(--sunken); }
+nav.toc a.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-soft); }
+main { min-width: 0; }
+.col { max-width: 78ch; }
+header.hero { padding-bottom: 28px; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.2; }
+h1 { font-size: clamp(34px, 5vw, 48px); margin: 10px 0 14px; letter-spacing: -0.02em; }
+h2 { font-size: 28px; margin: 0 0 14px; letter-spacing: -0.01em; }
+h3 { font-size: 19px; margin: 28px 0 8px; }
+p { margin: 0 0 14px; }
+.lede { font-size: 18px; color: var(--muted); max-width: 64ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.chip {
+  font-family: var(--font-mono); font-size: 12.5px; padding: 4px 10px; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--line); color: var(--muted); white-space: nowrap;
+}
+.chip b { color: var(--fg); font-weight: 500; }
+section { padding-top: 56px; scroll-margin-top: 16px; }
+a { color: var(--accent); }
+code { font-family: var(--font-mono); font-size: 0.88em; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+.code {
+  position: relative; background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px;
+  margin: 12px 0 18px; overflow-x: auto;
+}
+.code pre { margin: 0; padding: 16px 18px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.55; }
+.code .lang {
+  position: absolute; top: 8px; right: 10px; font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+  display: flex; gap: 8px; align-items: center;
+}
+.code button {
+  font: inherit; font-size: 11px; color: var(--muted); background: var(--surface); border: 1px solid var(--line);
+  border-radius: 5px; padding: 2px 8px; cursor: pointer;
+}
+.code button:hover { color: var(--fg); }
+.code button:focus-visible, nav.toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.c { color: var(--muted); }
+.k { color: var(--accent); }
+.s { color: var(--good); }
+.t { color: var(--gold); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; margin: 18px 0; }
+.feature { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+.feature h4 { font-family: var(--font-display); font-size: 16px; margin: 0 0 6px; }
+.feature p { margin: 0; font-size: 14.5px; color: var(--muted); }
+.table-wrap { overflow-x: auto; margin: 14px 0 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); background: var(--sunken); }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; font-family: var(--font-mono); font-size: 13.5px; }
+.zero { color: var(--good); font-weight: 500; }
+.note {
+  border-left: 3px solid var(--gold); background: var(--gold-soft); padding: 12px 16px; border-radius: 0 8px 8px 0;
+  margin: 16px 0; font-size: 15px;
+}
+ol.steps { padding-left: 22px; margin: 10px 0 18px; }
+ol.steps li { margin-bottom: 8px; padding-left: 4px; }
+.formula {
+  font-family: var(--font-mono); font-size: 15px; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 8px; padding: 14px 18px; margin: 12px 0 18px; overflow-x: auto; white-space: nowrap;
+}
+.diagram { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin: 16px 0 20px; overflow-x: auto; }
+.diagram svg { display: block; width: 100%; min-width: 640px; height: auto; }
+.diagram svg text { font-family: var(--font-body); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+footer { margin-top: 72px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+@media (max-width: 900px) {
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 8px; padding-block: 24px 64px; }
+  nav.toc { position: static; border: 1px solid var(--line); border-radius: 10px; padding: 14px; background: var(--surface); }
+  nav.toc ol { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .two { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <nav class="toc" aria-label="Contents">
+    <div class="brand">SMInspectorPro</div>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how-it-works">How it works</a></li>
+      <li><a href="#attributes">Attributes</a></li>
+      <li><a href="#validation">Validation</a></li>
+      <li><a href="#collections">Lists and references</a></li>
+      <li><a href="#windows">Tool windows</a></li>
+      <li><a href="#settings">Settings</a></li>
+      <li><a href="#performance">Performance</a></li>
+      <li><a href="#install">Install</a></li>
+      <li><a href="#quick-start">Quick start</a></li>
+      <li><a href="#extend">Extend it</a></li>
+      <li><a href="#modularity">Modularity</a></li>
+      <li><a href="#notes">Good to know</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="hero col" id="overview">
+      <div class="eyebrow">Unity package · com.smpro.inspector · v1.0.0</div>
+      <h1>SMInspectorPro</h1>
+      <p class="lede">Attribute-driven inspectors for Unity 6. Put attributes on your fields and methods and get grouped layouts, conditional fields, buttons, validation, richer value pickers, tables and tool windows, without writing editor code. Classes that use none of its attributes keep Unity's default inspector, unchanged.</p>
+      <div class="facts">
+        <span class="chip"><b>Unity</b> 6000.0+</span>
+        <span class="chip"><b>Dependencies</b> none</span>
+        <span class="chip"><b>Attributes</b> 40</span>
+        <span class="chip"><b>Tests</b> 170 edit-mode</span>
+        <span class="chip"><b>Refresh GC</b> 0 allocations</span>
+      </div>
+    </header>
+
+    <div class="col">
+      <section id="features">
+        <h2>What it offers</h2>
+        <p>Everything runs on UI Toolkit and Unity's own serialization. Removing the package never loses data: attributes are plain metadata, and the one serialized type it adds stores an ordinary list.</p>
+        <div class="grid">
+          <div class="feature"><h4>Layout</h4><p>Boxes, foldouts, tabs, rows and columns that nest by path, plus titles, info boxes, labels, suffixes and indents.</p></div>
+          <div class="feature"><h4>Conditions</h4><p>Show, hide, enable or disable fields from a bool, an enum, a value or a method. Groups hide when all their fields are hidden.</p></div>
+          <div class="feature"><h4>Buttons and members</h4><p>Methods become buttons with fields for their parameters. Properties and private fields can be shown read-only. Methods can run when a value changes.</p></div>
+          <div class="feature"><h4>Validation</h4><p>Required references, custom rules, limits that clamp, asset or scene restrictions, and rules across fields, shown under each field.</p></div>
+          <div class="feature"><h4>Project validator</h4><p>Scan open scenes, build scenes, prefabs and assets with the same rules. Optional build check and a command-line entry for CI.</p></div>
+          <div class="feature"><h4>Value pickers</h4><p>Dropdowns from members, enum buttons, draggable progress bars, range sliders, previews and file or folder paths.</p></div>
+          <div class="feature"><h4>Lists and tables</h4><p>Attributes work inside list elements. Element labels, add, remove and drag settings, tables for class lists, and a serializable dictionary.</p></div>
+          <div class="feature"><h4>Polymorphism</h4><p>A type picker for <code>[SerializeReference]</code> fields, and inline editors for referenced assets.</p></div>
+          <div class="feature"><h4>Tool windows</h4><p><code>SMEditorWindow</code> draws a window from its fields. <code>SMMenuWindow</code> adds a searchable tree menu for databases.</p></div>
+          <div class="feature"><h4>Extensible</h4><p>Every attribute is one attribute class and one handler class. A project's handler replaces a built-in one for the same attribute.</p></div>
+        </div>
+      </section>
+
+      <section id="how-it-works">
+        <h2>How it works</h2>
+        <p>A fallback editor checks whether a type uses any SMInspectorPro attribute. If it doesn't, Unity's default inspector is built, exactly as before. If it does, the inspector is built from a cached model of the type, one property at a time, through a fixed chain of handlers. Every edit goes through <code>SerializedProperty</code>, so undo, prefab overrides and multi-object editing keep working.</p>
+        <div class="diagram" role="img" aria-label="The fallback editor asks the cached type model; attributed types run each property through group, state, decorator, field and validator handlers; a refresh loop updates states and messages">
+          <svg viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0L10 5L0 10z" fill="var(--muted)"/>
+              </marker>
+            </defs>
+            <g fill="none" stroke="var(--muted)" stroke-width="1.3">
+              <path d="M226 64H268" marker-end="url(#arrow)"/>
+              <path d="M492 64H534" marker-end="url(#arrow)"/>
+              <path d="M380 100V160" marker-end="url(#arrow)"/>
+              <path d="M136 210V236" marker-end="url(#arrow)"/>
+              <path d="M624 210V236" marker-end="url(#arrow)"/>
+              <path d="M150 300H170" marker-end="url(#arrow)"/>
+              <path d="M290 300H310" marker-end="url(#arrow)"/>
+              <path d="M430 300H450" marker-end="url(#arrow)"/>
+              <path d="M570 300H590" marker-end="url(#arrow)"/>
+
+            </g>
+            <g font-size="13">
+              <rect x="24" y="30" width="202" height="68" rx="8" fill="var(--surface)" stroke="var(--line)"/>
+              <text x="40" y="56" font-weight="600" fill="var(--fg)">Fallback editor</text>
+              <text x="40" y="76" font-size="12" fill="var(--muted)">for your scripts and assets</text>
+              <rect x="270" y="30" width="222" height="68" rx="8" fill="var(--surface)" stroke="var(--line)"/>
+              <text x="286" y="56" font-weight="600" fill="var(--fg)">TypeModel</text>
+              <text x="286" y="76" font-size="12" fill="var(--muted)">built once per type, cached</text>
+              <rect x="536" y="30" width="200" height="68" rx="8" fill="var(--surface)" stroke="var(--line)" stroke-dasharray="4 4"/>
+              <text x="552" y="56" font-weight="600" fill="var(--fg)">Unity default inspector</text>
+              <text x="552" y="76" font-size="12" fill="var(--muted)">types with no attributes</text>
+              <rect x="24" y="160" width="224" height="50" rx="8" fill="var(--surface)" stroke="var(--line)"/>
+              <text x="40" y="182" font-weight="600" fill="var(--fg)">HandlerRegistry</text>
+              <text x="40" y="200" font-size="12" fill="var(--muted)">attribute to handler, via TypeCache</text>
+              <rect x="512" y="160" width="224" height="50" rx="8" fill="var(--surface)" stroke="var(--line)"/>
+              <text x="528" y="182" font-weight="600" fill="var(--fg)">MemberResolver</text>
+              <text x="528" y="200" font-size="12" fill="var(--muted)">names to compiled getters</text>
+              <rect x="20" y="236" width="720" height="114" rx="10" fill="var(--sunken)" stroke="var(--line)"/>
+              <text x="34" y="258" font-weight="600" fill="var(--fg)">Handler chain, per property, in this order</text>
+              <rect x="34" y="276" width="116" height="48" rx="7" fill="var(--surface)" stroke="var(--line)"/>
+              <text x="92" y="297" text-anchor="middle" font-weight="600" fill="var(--fg)">Group</text>
+              <text x="92" y="314" text-anchor="middle" font-size="11.5" fill="var(--muted)">box, tab, row</text>
+              <rect x="172" y="276" width="118" height="48" rx="7" fill="var(--surface)" stroke="var(--line)"/>
+              <text x="231" y="297" text-anchor="middle" font-weight="600" fill="var(--fg)">State</text>
+              <text x="231" y="314" text-anchor="middle" font-size="11.5" fill="var(--muted)">show, enable</text>
+              <rect x="312" y="276" width="118" height="48" rx="7" fill="var(--surface)" stroke="var(--line)"/>
+              <text x="371" y="297" text-anchor="middle" font-weight="600" fill="var(--fg)">Decorator</text>
+              <text x="371" y="314" text-anchor="middle" font-size="11.5" fill="var(--muted)">title, info box</text>
+              <rect x="452" y="276" width="118" height="48" rx="7" fill="var(--accent-soft)" stroke="var(--accent)"/>
+              <text x="511" y="297" text-anchor="middle" font-weight="600" fill="var(--fg)">Field</text>
+              <text x="511" y="314" text-anchor="middle" font-size="11.5" fill="var(--muted)">PropertyField or custom</text>
+              <rect x="592" y="276" width="134" height="48" rx="7" fill="var(--surface)" stroke="var(--line)"/>
+              <text x="659" y="297" text-anchor="middle" font-weight="600" fill="var(--fg)">Validator</text>
+              <text x="659" y="314" text-anchor="middle" font-size="11.5" fill="var(--muted)">messages</text>
+              <text x="24" y="382" font-size="12" fill="var(--muted)">Refresh: on change, undo and play mode; polls only for conditions on non-serialized members</text>
+            </g>
+          </svg>
+        </div>
+        <ol class="steps">
+          <li><b>Model.</b> <code>TypeModel</code> lists a type's serialized fields in Unity's order, plus any field, property or method that has an attribute. It is built once per type with reflection and cached.</li>
+          <li><b>Handlers.</b> Each attribute maps to a handler class found through <code>TypeCache</code>. A property gets one handler instance per attribute, created when the inspector is built.</li>
+          <li><b>Build.</b> Group handlers place the property, the highest-priority field handler draws it (the default is <code>PropertyField</code>, so existing property drawers keep working), decorators wrap it, and validators get a message area under it.</li>
+          <li><b>Refresh.</b> After a change, conditions are re-evaluated with compiled getters, validation runs, and only elements whose state changed are touched. Nothing is rebuilt, except when a list changes size or a <code>[SerializeReference]</code> changes type.</li>
+        </ol>
+      </section>
+
+      <section id="attributes">
+        <h2>Attributes</h2>
+        <p>All attributes live in the <code>SMPro.Inspector</code> namespace. Member names are best passed with <code>nameof</code>; a name can also be negated (<code>"!flag"</code>) or nested (<code>"settings.enabled"</code>), and is looked up on the field's own class first, then on the classes that contain it.</p>
+        <div class="code"><div class="lang">C#<button type="button" data-copy>Copy</button></div><pre><span class="k">using</span> SMPro.Inspector;
+
+<span class="k">public class</span> <span class="t">Spawner</span> : MonoBehaviour
+{
+    [BoxGroup(<span class="s">"Wave"</span>)] <span class="k">public bool</span> useCurve;
+    [BoxGroup(<span class="s">"Wave"</span>), ShowIf(<span class="k">nameof</span>(useCurve))] <span class="k">public</span> AnimationCurve countCurve;
+    [BoxGroup(<span class="s">"Wave"</span>), HideIf(<span class="k">nameof</span>(useCurve)), MinValue(1)] <span class="k">public int</span> count = 5;
+
+    [Required, AssetsOnly] <span class="k">public</span> GameObject prefab;
+    [ValueDropdown(<span class="k">nameof</span>(SpawnPoints))] <span class="k">public string</span> spawnPoint;
+
+    [Button(ButtonSize.Large)] <span class="k">void</span> SpawnNow(<span class="k">int</span> extra = 0) { }
+    IEnumerable&lt;<span class="k">string</span>&gt; SpawnPoints =&gt; <span class="k">new</span>[] { <span class="s">"North"</span>, <span class="s">"South"</span> };
+}</pre></div>
+
+        <h3>Layout</h3>
+        <div class="table-wrap"><table>
+          <tr><th>Attribute</th><th>What it does</th></tr>
+          <tr><td><code>BoxGroup(path, showLabel)</code></td><td>Framed box with the last path segment as its title.</td></tr>
+          <tr><td><code>FoldoutGroup(path, expanded)</code></td><td>Collapsible section; open state remembered per user.</td></tr>
+          <tr><td><code>TabGroup(path, tab)</code></td><td>Tabs. Each tab is a nestable path: <code>BoxGroup("Tabs/Combat/Crits")</code> lands inside the Combat tab.</td></tr>
+          <tr><td><code>HorizontalGroup(path, width)</code></td><td>Fields side by side. Width 0 shares the row, 0–1 is a fraction, above 1 is pixels.</td></tr>
+          <tr><td><code>VerticalGroup(path)</code></td><td>A column, usually inside a row.</td></tr>
+          <tr><td><code>PropertyOrder(n)</code></td><td>Moves a member; ties keep declaration order. A group sits where its first member would.</td></tr>
+          <tr><td><code>Title</code>, <code>InfoBox</code>, <code>LabelText</code>, <code>HideLabel</code>, <code>Suffix</code>, <code>Indent</code></td><td>Decorations. They stack in a fixed order whatever the declaration order. <code>InfoBox</code> takes an optional <code>visibleIf</code>. <code>HideLabel</code> on a nested class draws its fields inline.</td></tr>
+        </table></div>
+
+        <h3>Conditions and members</h3>
+        <div class="table-wrap"><table>
+          <tr><th>Attribute</th><th>What it does</th></tr>
+          <tr><td><code>ShowIf</code>, <code>HideIf</code>, <code>EnableIf</code>, <code>DisableIf</code></td><td>Take a member name and optional values. With values, the member must equal any of them; for flags enums, any flag set matches.</td></tr>
+          <tr><td><code>ReadOnly</code>, <code>ShowInPlayMode</code>, <code>HideInPlayMode</code></td><td>Fixed states.</td></tr>
+          <tr><td><code>Button(label, size)</code></td><td>Method as a button, with fields for supported parameters and their defaults. Records undo and runs on every selected object; static methods run once.</td></tr>
+          <tr><td><code>ShowInInspector</code></td><td>Shows a non-serialized field or property read-only, refreshed while open.</td></tr>
+          <tr><td><code>OnValueChanged(method)</code></td><td>Calls a method, optionally with the new value, after a serialized field changes.</td></tr>
+        </table></div>
+
+        <h3>Value pickers</h3>
+        <div class="table-wrap"><table>
+          <tr><th>Attribute</th><th>Works on</th><th>What it does</th></tr>
+          <tr><td><code>ValueDropdown(member)</code></td><td>any serialized field</td><td>Dropdown from a list, array or method; <code>ValueDropdownItem</code> gives text and value pairs. Values outside the list show as text.</td></tr>
+          <tr><td><code>EnumToggleButtons</code></td><td>enums</td><td>A row of buttons; flags toggle.</td></tr>
+          <tr><td><code>ProgressBar(min, max)</code></td><td>numbers</td><td>Drag to set. <code>MinMember</code> and <code>MaxMember</code> read limits from members.</td></tr>
+          <tr><td><code>MinMaxSlider(min, max)</code></td><td>Vector2, Vector2Int</td><td>Range slider with exact number fields.</td></tr>
+          <tr><td><code>PreviewField(height)</code></td><td>object references</td><td>Thumbnail under the field.</td></tr>
+          <tr><td><code>FilePath</code>, <code>FolderPath</code></td><td>strings</td><td>Browse button; stores project-relative paths unless <code>AbsolutePath</code>.</td></tr>
+        </table></div>
+        <p>Used on the wrong field type, an attribute falls back to Unity's field and shows a red message instead of breaking the inspector.</p>
+      </section>
+
+      <section id="validation">
+        <h2>Validation</h2>
+        <p>Validators write to a <code>ValidationReport</code>. In the inspector, messages show under their field and update after each change. The same rules run in the project validator, where nothing is changed.</p>
+        <div class="table-wrap"><table>
+          <tr><th>Rule</th><th>Behaviour</th></tr>
+          <tr><td><code>Required(message)</code></td><td>Object references, strings and <code>[SerializeReference]</code>. Tells a missing reference apart from an empty one.</td></tr>
+          <tr><td><code>ValidateInput(method, message, type)</code></td><td>Method returns <code>bool</code> or a message string; it may take the field's value.</td></tr>
+          <tr><td><code>MinValue</code>, <code>MaxValue</code></td><td>Numbers and vectors. Clamp in the inspector, report in a scan. Limits can be members.</td></tr>
+          <tr><td><code>AssetsOnly</code>, <code>SceneObjectsOnly</code>, <code>ChildrenOnly</code></td><td>Where a reference may live. <code>AssetsOnly</code> also hides scene objects from the picker.</td></tr>
+          <tr><td><code>ISelfValidator</code></td><td>Rules across fields on a component, ScriptableObject or nested class. Messages go to the named field or the top.</td></tr>
+        </table></div>
+        <div class="code"><div class="lang">C#<button type="button" data-copy>Copy</button></div><pre><span class="k">public class</span> <span class="t">EnemyProfile</span> : ScriptableObject, ISelfValidator
+{
+    [MinValue(1)] <span class="k">public int</span> maxHealth = 100;
+    <span class="k">public int</span> startingHealth = 100;
+
+    <span class="k">public void</span> Validate(ValidationReport report)
+    {
+        <span class="k">if</span> (startingHealth &gt; maxHealth) report.Error(<span class="s">"Starting health is above max health"</span>, <span class="k">nameof</span>(startingHealth));
+    }
+}</pre></div>
+        <p>Fields hidden by a condition are not validated. A referenced asset that implements <code>ISelfValidator</code> is validated on its own, not through the field that points at it. A validator that throws becomes an error message.</p>
+        <h3>Project validator</h3>
+        <p><b>Window ▸ SMPro ▸ Validator</b> scans open scenes, scenes in the build list, prefabs and ScriptableObjects in chosen folders. It reports rule failures, attribute misuse (for example a <code>ShowIf</code> naming a member that doesn't exist), missing scripts and <code>[SerializeReference]</code> data whose class is gone. Click a result to select the object.</p>
+        <div class="code"><div class="lang">C#<button type="button" data-copy>Copy</button></div><pre>ValidationResult result = SMValidator.ValidateProject(<span class="k">new</span> ValidationOptions { folders = <span class="k">new</span>[] { <span class="s">"Assets/Data"</span> } });
+ValidationReport report = SMValidator.Validate(someComponentOrAsset);</pre></div>
+        <div class="code"><div class="lang">Shell<button type="button" data-copy>Copy</button></div><pre>Unity -batchmode -projectPath . -executeMethod SMPro.Inspector.EditorTools.SMValidator.RunFromCommandLine</pre></div>
+        <p>The command exits with code 1 when there are errors. Turn on <b>Validate before build</b> in the settings to run the same scan before every build.</p>
+      </section>
+
+      <section id="collections">
+        <h2>Lists, dictionaries and references</h2>
+        <p>A list is drawn by the package when its element class uses SMInspectorPro attributes, or when the field has <code>ListSettings</code> or <code>TableList</code>. Each element is built with the full handler chain, so conditions, validators and pickers work inside elements. Other lists stay Unity's.</p>
+        <div class="code"><div class="lang">C#<button type="button" data-copy>Copy</button></div><pre>[ListSettings(ElementLabel = <span class="k">nameof</span>(Wave.name), Draggable = <span class="k">true</span>)] <span class="k">public</span> List&lt;Wave&gt; waves;
+[TableList] <span class="k">public</span> List&lt;Drop&gt; drops;
+<span class="k">public</span> SerializableDictionary&lt;<span class="k">string</span>, <span class="k">int</span>&gt; scoreTable = <span class="k">new</span>();
+[SerializeReference, TypePicker] <span class="k">public</span> IEffect onHit;
+[InlineEditor] <span class="k">public</span> EnemyProfile profile;</pre></div>
+        <ul>
+          <li><b>Adding, removing, moving, undo</b> and changes made in code rebuild the inspector, on the next frame while it is open.</li>
+          <li><b><code>SerializableDictionary&lt;TKey, TValue&gt;</code></b> stores its entries as a list, which is the saved data. The lookup is rebuilt from it, and the first of any duplicate keys wins. The list is only rewritten after code changes it, so a duplicate key typed in the inspector is reported, not dropped.</li>
+          <li><b><code>TypePicker</code></b> lists every concrete <code>[Serializable]</code> type that fits the field. A chosen object whose class uses SMInspectorPro attributes is drawn by the package.</li>
+          <li><b><code>InlineEditor</code></b> shows the referenced object's inspector under the field. It won't show an object inside itself, and it stops at three levels of nesting.</li>
+        </ul>
+      </section>
+
+      <section id="windows">
+        <h2>Tool windows</h2>
+        <div class="two">
+          <div>
+            <h3>SMEditorWindow</h3>
+            <p>Derive from it and add fields and buttons. The window draws itself with every attribute, with undo and validation, and without the script field.</p>
+          </div>
+          <div>
+            <h3>SMMenuWindow</h3>
+            <p>A searchable tree menu on the left and the selected object's inspector on the right. Fill it by path or with every asset of a type.</p>
+          </div>
+        </div>
+        <div class="code"><div class="lang">C#<button type="button" data-copy>Copy</button></div><pre><span class="k">public class</span> <span class="t">EnemyDatabase</span> : SMMenuWindow
+{
+    [MenuItem(<span class="s">"Tools/Enemy Database"</span>)] <span class="k">static void</span> Open() =&gt; GetWindow&lt;EnemyDatabase&gt;();
+
+    <span class="k">protected override void</span> BuildMenu(MenuTree tree)
+    {
+        tree.AddAllAssetsOf&lt;EnemyProfile&gt;(<span class="s">"Enemies"</span>);
+        tree.Add(<span class="s">"Settings/Balance"</span>, balanceAsset);
+    }
+}</pre></div>
+      </section>
+
+      <section id="settings">
+        <h2>Settings</h2>
+        <p><b>Project Settings ▸ SMPro ▸ Inspector</b>, stored as text in <code>ProjectSettings/SMInspectorSettings.asset</code>.</p>
+        <div class="table-wrap"><table>
+          <tr><th>Setting</th><th>Default</th><th>Effect</th></tr>
+          <tr><td>Use the inspector for attributed types</td><td>On</td><td>Off gives Unity's default inspector everywhere. Editors deriving from <code>SMInspectorEditor</code> are not affected.</td></tr>
+          <tr><td>Namespaces to skip</td><td>none</td><td>Types in these namespaces, and below, keep Unity's inspector.</td></tr>
+          <tr><td>Poll interval</td><td>100 ms</td><td>For conditions that read properties or methods. Minimum 16 ms.</td></tr>
+          <tr><td>Validate before build</td><td>Off</td><td>Runs the project validator before every build.</td></tr>
+          <tr><td>Fail the build on errors</td><td>On</td><td>Stops the build on errors; warnings never stop it.</td></tr>
+        </table></div>
+      </section>
+
+      <section id="performance">
+        <h2>Performance</h2>
+        <p>Measured in the Unity 6000.0.40f1 editor (Mono) on a Ryzen 7 5800H laptop, from the package's own benchmark tests.</p>
+        <div class="table-wrap"><table>
+          <tr><th>Measure</th><th class="num">Result</th><th class="num">Target</th></tr>
+          <tr><td>Extra cost for a type with no attributes</td><td class="num">0.023 µs</td><td class="num">&lt; 10 µs</td></tr>
+          <tr><td>Type model, 50 members, uncached</td><td class="num">0.65 ms</td><td class="num">&lt; 2 ms</td></tr>
+          <tr><td>Inspector build, 50 fields in 5 boxes (Unity default: 0.23 ms)</td><td class="num">0.60 ms</td><td class="num">&lt; 8 ms</td></tr>
+          <tr><td>Condition getter call</td><td class="num">0.0038 µs</td><td class="num">&lt; 0.05 µs</td></tr>
+          <tr><td>State refresh, 50 conditions</td><td class="num">0.002 ms, <span class="zero">0 B</span></td><td class="num">&lt; 0.1 ms</td></tr>
+          <tr><td>Validate one 15-field component</td><td class="num">0.46 ms</td><td class="num">&lt; 1 ms</td></tr>
+          <tr><td>Scan of the Gladiator Pits project (24 objects)</td><td class="num">44 ms</td><td class="num">–</td></tr>
+          <tr><td>Stress inspector: 200 fields, 10 nested levels, 1,000 list elements (4,232 properties), build</td><td class="num">138 ms</td><td class="num">–</td></tr>
+          <tr><td>Same inspector: state refresh / full refresh with validation</td><td class="num">0.067 / 1.6 ms</td><td class="num">–</td></tr>
+        </table></div>
+        <p>Polling only runs while an inspector is open and only when a condition reads something that isn't serialized. Lists are built in full when the inspector opens, so very large lists of attributed classes cost more to open, not to keep open.</p>
+      </section>
+
+      <section id="install">
+        <h2>Install</h2>
+        <ol class="steps">
+          <li>Window ▸ Package Manager ▸ <b>+</b> ▸ <b>Add package from git URL</b> and paste:</li>
+        </ol>
+        <div class="code"><div class="lang">URL<button type="button" data-copy>Copy</button></div><pre>https://github.com/xilaniam/GladiatorPitIncremental.git?path=/Packages/com.smpro.inspector#inspector-v1.0.0</pre></div>
+        <ol class="steps" start="2">
+          <li>Optional: Package Manager ▸ SMInspectorPro ▸ Samples ▸ <b>Showcase</b> ▸ Import. Open <code>Scenes/Showcase.unity</code> and select <b>Spawner</b>.</li>
+        </ol>
+      </section>
+
+      <section id="quick-start">
+        <h2>Quick start</h2>
+        <ol class="steps">
+          <li>Add <code>using SMPro.Inspector;</code> to a MonoBehaviour or ScriptableObject.</li>
+          <li>Put attributes on its fields and methods. The inspector changes on the next compile; there is no editor class to write.</li>
+          <li>Open <b>Window ▸ SMPro ▸ Validator</b> and press Validate to check the whole project.</li>
+          <li>To keep your own custom editor and still use the attributes, derive it from <code>SMInspectorEditor</code>.</li>
+        </ol>
+      </section>
+
+      <section id="extend">
+        <h2>Extend it</h2>
+        <p>An attribute is a class deriving from <code>InspectorAttribute</code> in a runtime assembly; its handler is a class in an editor assembly with <code>[AttributeHandler(typeof(...))]</code>. The handler kind decides its stage.</p>
+        <div class="table-wrap"><table>
+          <tr><th>Base class</th><th>Override</th><th>Use it for</th></tr>
+          <tr><td><code>FieldHandler&lt;T&gt;</code></td><td><code>CreateField()</code>, <code>Priority</code></td><td>Drawing the value. Return <code>null</code> to keep the default field.</td></tr>
+          <tr><td><code>DecoratorHandler&lt;T&gt;</code></td><td><code>Decorate(field)</code>, <code>Order</code></td><td>Wrapping the field.</td></tr>
+          <tr><td><code>StateHandler&lt;T&gt;</code></td><td><code>Apply(ref PropertyState)</code></td><td>Visibility and enabled state.</td></tr>
+          <tr><td><code>ValidatorHandler&lt;T&gt;</code></td><td><code>Validate(report)</code></td><td>Rules that also run in project scans.</td></tr>
+          <tr><td><code>GroupHandler&lt;T&gt;</code></td><td><code>CreateGroup()</code>, <code>ContentFor(child)</code></td><td>New layout groups.</td></tr>
+        </table></div>
+        <div class="code"><div class="lang">C#<button type="button" data-copy>Copy</button></div><pre><span class="c">// Runtime assembly</span>
+<span class="k">public sealed class</span> <span class="t">EvenAttribute</span> : InspectorAttribute { }
+
+<span class="c">// Editor assembly</span>
+[AttributeHandler(<span class="k">typeof</span>(EvenAttribute))]
+<span class="k">public sealed class</span> <span class="t">EvenHandler</span> : ValidatorHandler&lt;EvenAttribute&gt;
+{
+    <span class="k">public override void</span> Validate(ValidationReport report)
+    {
+        <span class="k">if</span> (Property.SerializedProperty.intValue % 2 != 0) report.Error(<span class="s">$"</span>{DisplayName}<span class="s"> must be even"</span>);
+    }
+}</pre></div>
+        <p>Handlers can resolve member names with <code>ResolveValue&lt;T&gt;</code> and <code>ResolveCondition</code>, report misuse with <code>ReportProblem</code>, and ask for a rebuild with <code>RequestRebuild</code>. A handler that throws falls back to the default field with a message, and the error is logged once.</p>
+      </section>
+
+      <section id="modularity">
+        <h2>Modularity</h2>
+        <div class="table-wrap"><table>
+          <tr><th>Assembly</th><th>Holds</th><th>References</th></tr>
+          <tr><td><code>SMPro.Inspector</code></td><td>Attributes, <code>ValidationReport</code>, <code>ISelfValidator</code>, <code>SerializableDictionary</code>. Safe in player builds.</td><td>UnityEngine</td></tr>
+          <tr><td><code>SMPro.Inspector.Editor</code></td><td>Fallback editor, type model, resolver, handlers, validator, windows, settings. Namespace <code>SMPro.Inspector.EditorTools</code>.</td><td>Runtime, UnityEditor</td></tr>
+          <tr><td><code>SMPro.Inspector.Tests</code></td><td>170 edit-mode tests and benchmarks.</td><td>Editor, nunit</td></tr>
+        </table></div>
+        <p>The 40 built-in attributes use the same public API as your own. Registering a handler for a built-in attribute in your project replaces the built-in handler. Nothing in the runtime assembly depends on the editor, and no built-in type is required in your data except <code>SerializableDictionary</code> where you choose to use it.</p>
+      </section>
+
+      <section id="notes">
+        <h2>Good to know</h2>
+        <ul>
+          <li><b>One fallback editor per type.</b> Unity allows only one fallback editor. With another attribute package that also uses one installed, only one wins; turn ours off in the settings if needed.</li>
+          <li><b>Member order.</b> Buttons and <code>ShowInInspector</code> members come after the fields of their class; use <code>PropertyOrder</code> to move them.</li>
+          <li><b>Name clash.</b> <code>SMPro.Inspector.FilePath</code> has the same name as <code>UnityEditor.FilePath</code>. Editor code that imports both namespaces must write one of them in full.</li>
+          <li><b>Nested structs.</b> Buttons on a method of a nested struct run on a copy, so their changes aren't saved; use a class.</li>
+          <li><b>Editing non-serialized values</b> is read-only in 1.0; editing in Play mode is planned for 1.1, along with the 38 extra attributes in the design document.</li>
+          <li><b>License.</b> Not decided yet.</li>
+        </ul>
+      </section>
+
+      <footer>SMInspectorPro 1.0.0 · Built for Unity 6 with UI Toolkit.</footer>
+    </div>
+  </main>
+</div>
+
+<script>
+document.querySelectorAll("[data-copy]").forEach(function (button) {
+  button.addEventListener("click", function () {
+    var pre = button.closest(".code").querySelector("pre");
+    var text = pre.innerText;
+    function done(label) { button.textContent = label; setTimeout(function () { button.textContent = "Copy"; }, 1500); }
+    function selectText() {
+      var range = document.createRange();
+      range.selectNodeContents(pre);
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      done("Selected");
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done("Copied"); }, selectText);
+    } else {
+      selectText();
+    }
+  });
+});
+
+var links = Array.prototype.slice.call(document.querySelectorAll("nav.toc a"));
+var targets = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+function markActive() {
+  var current = 0;
+  targets.forEach(function (section, i) {
+    if (section && section.getBoundingClientRect().top < 140) current = i;
+  });
+  links.forEach(function (a, i) { a.classList.toggle("active", i === current); });
+}
+window.addEventListener("scroll", markActive, { passive: true });
+markActive();
+</script>
+</body>
+</html>

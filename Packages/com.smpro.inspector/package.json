@@ -1,6 +1,6 @@
 {
   "name": "com.smpro.inspector",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "displayName": "SMInspectorPro",
   "description": "Attribute-driven inspectors for Unity 6. Group fields into boxes, foldouts and tabs, show or enable fields from other values, turn methods into buttons, validate references and values, and build editor windows with the same attributes. Runs on UI Toolkit and Unity's own serialization.",
   "unity": "6000.0",
